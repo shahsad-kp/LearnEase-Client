@@ -3,22 +3,39 @@ import {useState} from "react";
 import {AiFillEye, AiFillEyeInvisible} from "react-icons/ai";
 
 export const PasswordField = (props) => {
+    let touchTimer = null;
+
     const [showPassword, setShowPassword] = useState(false);
-    const toggleShowPassword = (event) => {
-        event.preventDefault();
+    const toggleShowPassword = () => {
         setShowPassword(true);
     }
-    const toggleHidePassword = (event) => {
-        event.preventDefault();
+    const toggleHidePassword = () => {
         setShowPassword(false);
     }
+    const handleTouchStart = () => {
+        toggleShowPassword()
+        touchTimer = setTimeout(() => {
+            toggleHidePassword();
+        }, 10000);
+    };
+
+    const handleTouchEnd = () => {
+        clearTimeout(touchTimer);
+        toggleHidePassword();
+    };
     return (
-        <div className={bannerPageInputClass} style={{padding: 0, display: "flex", flexDirection: "row"}}>
+        <div className={bannerPageInputClass}
+             style={{padding: 0, display: "flex", flexDirection: "row", alignItems: "center"}}>
             <input {...props} type={showPassword ? 'text' : 'password'}
                    className={'w-full h-full focus:outline-0 bg-primary p-3 rounded-md'}/>
-            <button onClick={(event) => event.preventDefault()} onMouseDown={toggleShowPassword} onMouseUp={toggleHidePassword} style={{paddingRight: ".75rem", outline: 'none'}}>
+            <i onTouchStart={handleTouchStart}
+               onTouchEnd={handleTouchEnd}
+               onClick={(e) => e.preventDefault()}
+               onMouseDown={toggleShowPassword}
+               onMouseUp={toggleHidePassword}
+               style={{paddingRight: ".75rem", outline: 'none'}}>
                 {showPassword ? <AiFillEyeInvisible/> : <AiFillEye/>}
-            </button>
+            </i>
         </div>
     )
 }

@@ -1,4 +1,4 @@
-import {useNavigate} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {useState} from "react";
@@ -10,9 +10,8 @@ export const SignupForm = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [repeatPassword, setRepeatPassword] = useState('');
-    const navigator = useNavigate()
     return (
-        <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-8'}>
+        <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
             <div className={'w-3/4'}>
                 <img src={LogoBanner} className={'object-cover'} alt={'Logo'}/>
             </div>
@@ -33,7 +32,7 @@ export const SignupForm = () => {
                     className={bannerPageButtonClass}
                 >Signup
                 </button>
-                <span className={'cursor-pointer italic'} onClick={() => navigator('/login/')}>Already have account? Click here</span>
+                <Link className={' italic'} to={'/login/'}>Already have account? Click here</Link>
             </form>
         </section>
     )

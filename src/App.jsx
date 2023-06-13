@@ -1,6 +1,7 @@
 import {Fragment} from "react";
 import {Route, Routes} from "react-router-dom";
 import {HomePage, LoginPage, SignupPage} from "./pages/";
+import PrivateRoute from "./utils/PrivateRouter.jsx";
 
 function App() {
     return (

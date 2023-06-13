@@ -21,7 +21,7 @@ const bannerPageInputClass = classNames(
     'border',
     'focus:outline-none',
     'p-3',
-    'max-w-sm',
+    'max-w-xs',
 )
 
 export {
