@@ -1,10 +1,10 @@
-export const BannerPage = ({children, banner}) => {
-    return (<div className={'bg-secondary flex flex-row justify-center align-middle h-screen'}>
+// eslint-disable-next-line react/prop-types
+export const BannerPage = ({children, banner, reverse}) => {
+    return (<div
+        className={'bg-secondary flex justify-center align-middle h-screen' + (reverse ? ' flex-row-reverse' : ' flex-row')}>
         <section className={'hidden md:flex w-2/4 justify-center'}>
             <img className={'object-contain w-3/4'} src={banner} alt={'Banner'}/>
         </section>
-        <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-16 p-8'}>
-			{children}
-        </section>
+        {children}
     </div>)
 }
