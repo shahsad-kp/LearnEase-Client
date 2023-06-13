@@ -1,6 +1,6 @@
 import {Fragment} from "react";
 import {Route, Routes} from "react-router-dom";
-import {HomePage, LoginPage} from "./pages/";
+import {HomePage, LoginPage, SignupPage} from "./pages/";
 
 function App() {
     return (
@@ -8,6 +8,7 @@ function App() {
             <Routes>
                 <Route path={'/'} exact element={<HomePage/>}/>
                 <Route path={'/login/'} element={<LoginPage/>} />
+                <Route path={'/register/'} element={<SignupPage/>} />
             </Routes>
         </Fragment>
     )

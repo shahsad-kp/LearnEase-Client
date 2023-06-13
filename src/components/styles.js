@@ -20,7 +20,8 @@ const bannerPageInputClass = classNames(
     'border-accent-color-one',
     'border',
     'focus:outline-none',
-    'p-3'
+    'p-3',
+    'max-w-sm',
 )
 
 export {
