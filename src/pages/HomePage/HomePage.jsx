@@ -1,7 +1,10 @@
 import {HomeOutside} from "../../components/HomeOutside/HomeOutside.jsx";
+import {BannerPage} from "../../components/BannerPage/BannerPage.jsx";
 
 export const HomePage = () => {
 	return (
-		<HomeOutside/>
+		<BannerPage banner={'/images/banner-images/home-page-banner.jpg'}>
+			<HomeOutside/>
+		</BannerPage>
 	)
 }

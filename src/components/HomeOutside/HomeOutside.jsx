@@ -3,11 +3,8 @@ import {useNavigate} from "react-router-dom";
 export const HomeOutside = () => {
     const navigator = useNavigate();
 
-    return (<div className={'bg-secondary flex flex-row justify-center align-middle h-screen'}>
-        <section className={'hidden md:flex w-2/4 justify-center'}>
-            <img className={'object-contain w-3/4'} src={'/images/banner-images/home-page-banner.jpg'} alt={'Banner'}/>
-        </section>
-        <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-16 p-8'}>
+    return (
+        <>
             <div className={'w-3/4'}>
                 <img src={'/images/logo/logo-banner.png'} className={'object-cover'} alt={'Logo'}/>
             </div>
@@ -20,6 +17,6 @@ export const HomeOutside = () => {
                     }}>
                 Get Started
             </button>
-        </section>
-    </div>)
+        </>
+    )
 }
