@@ -2,8 +2,7 @@ import {useNavigate} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {useState} from "react";
-import {InputField} from "../UtilityComponents/InputFields/InputField.jsx";
-import {PasswordField} from "../UtilityComponents/InputFields/PasswordField.jsx";
+import {InputField, PasswordField} from "../";
 
 
 export const SignupForm = () => {
