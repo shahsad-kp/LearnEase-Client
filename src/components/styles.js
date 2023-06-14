@@ -24,7 +24,21 @@ const bannerPageInputClass = classNames(
     'max-w-xs',
 )
 
+const homePageButton = classNames(
+    'bg-logo-green',
+    'box-border',
+    'px-5',
+    'py-2',
+    'rounded-md',
+    'accent-white',
+    'font-semibold',
+    'text-white',
+    'hover:bg-logo-green-hover',
+    'fit-content',
+)
+
 export {
     bannerPageButtonClass,
-    bannerPageInputClass
+    bannerPageInputClass,
+    homePageButton
 }

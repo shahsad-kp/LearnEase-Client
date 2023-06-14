@@ -4,6 +4,9 @@ import {BannerPage} from "./BannerPage/BannerPage.jsx";
 import {SignupForm} from "./SignupForm/SignupForm.jsx";
 import {InputField} from "./UtilityComponents/InputFields/InputField.jsx";
 import {PasswordField} from "./UtilityComponents/InputFields/PasswordField.jsx";
+import {NavBarDropDown} from "./UtilityComponents/NavBarDropDown/NavBarDropDown.jsx";
+import {NavBar} from "./LandingPage/NavBar/NavBar.jsx";
+import {HomeBody} from "./LandingPage/HomeBody/HomeBody.jsx";
 
 export {
     LoginForm,
@@ -11,5 +14,8 @@ export {
     BannerPage,
     SignupForm,
     InputField,
-    PasswordField
+    PasswordField,
+    NavBarDropDown,
+    NavBar,
+    HomeBody
 }

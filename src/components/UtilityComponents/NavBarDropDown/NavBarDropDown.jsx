@@ -68,7 +68,7 @@ export const NavBarDropDown = () => {
                         </div>
                         <div className={'w-max'}>
                             <p className={'text-sm font-thin'}>Logined as</p>
-                            <p className={'text-sm font-semibold'}>{user.name}</p>
+                            <p className={'text-sm font-semibold'}>Mohammed Shahsad KP</p>
                         </div>
                     </div>
                     <ul className={'w-full flex flex-col'}>

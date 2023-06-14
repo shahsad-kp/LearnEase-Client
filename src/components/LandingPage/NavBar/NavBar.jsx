@@ -2,7 +2,7 @@ import LogoSmall from '../../../assets/logo/logo-smaller.png'
 import {useSelector} from "react-redux";
 import {NavBarDropDown} from "../../UtilityComponents/NavBarDropDown/NavBarDropDown.jsx";
 
-const NavBar = () => {
+export const NavBar = () => {
     useSelector(state => state.auth.user);
     return (
         <nav className="flex flex-row h-14 justify-between p-3 bg-white shadow">
@@ -13,5 +13,3 @@ const NavBar = () => {
         </nav>
     )
 }
-
-export default NavBar
