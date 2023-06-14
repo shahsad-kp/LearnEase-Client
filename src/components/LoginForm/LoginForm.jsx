@@ -28,7 +28,7 @@ export const LoginForm = () => {
                 email: values.email,
                 name: 'John Doe',
                 id: 1,
-                profilePicture: 'https://picsum.photos/200/300'
+                profilePicture: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
             }
             dispatcher(login(user))
             navigator('/')
