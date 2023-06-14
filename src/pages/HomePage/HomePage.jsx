@@ -1,4 +1,4 @@
-import {BannerPage, HomeBody, HomeOutside, NavBar} from "../../components/";
+import {BannerPage, HomeBody, HomeOutside} from "../../components/";
 import BannerImage from '../../assets/banner-images/home-page-banner.jpg'
 import {useSelector} from "react-redux";
 
@@ -7,10 +7,7 @@ export const HomePage = () => {
 
 	if (user){
 		return (
-			<div className={'w-screen h-screen bg-primary flex flex-col'}>
-				<NavBar/>
-				<HomeBody/>
-			</div>
+			<HomeBody/>
 		)
 	}else{
 		return (
