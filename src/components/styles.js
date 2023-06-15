@@ -24,6 +24,19 @@ const bannerPageInputClass = classNames(
     'max-w-xs',
 )
 
+const homePageTextAreaClass = classNames(
+    'bg-primary',
+    'h-10',
+    'w-full',
+    'resize-none',
+    'rounded',
+    'focus:outline-none',
+    'border-accent-color-one',
+    'border',
+    'h-[30vh]',
+    'p-3',
+)
+
 const homePageButton = classNames(
     'bg-logo-green',
     'box-border',
@@ -34,11 +47,13 @@ const homePageButton = classNames(
     'font-semibold',
     'text-white',
     'hover:bg-logo-green-hover',
-    'fit-content',
+    'w-fit',
+
 )
 
 export {
     bannerPageButtonClass,
     bannerPageInputClass,
-    homePageButton
+    homePageButton,
+    homePageTextAreaClass
 }

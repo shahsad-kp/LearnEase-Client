@@ -2,6 +2,7 @@ import {Fragment} from "react";
 import {Route, Routes} from "react-router-dom";
 import {HomePage, LoginPage, SignupPage} from "./pages/";
 import PrivateRoute from "./utils/PrivateRouter.jsx";
+import {Tooltip} from "react-tooltip";
 
 function App() {
     return (
@@ -11,6 +12,7 @@ function App() {
                 <Route path={'/login/'} element={<LoginPage/>} />
                 <Route path={'/register/'} element={<SignupPage/>} />
             </Routes>
+            <Tooltip id={'tooltip'} className={'rounded-lg'}/>
         </Fragment>
     )
 }

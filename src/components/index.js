@@ -7,6 +7,7 @@ import {PasswordField} from "./UtilityComponents/InputFields/PasswordField.jsx";
 import {NavBarDropDown} from "./UtilityComponents/NavBarDropDown/NavBarDropDown.jsx";
 import {NavBar} from "./LandingPage/NavBar/NavBar.jsx";
 import {HomeBody} from "./LandingPage/HomeBody/HomeBody.jsx";
+import {Modal} from "./UtilityComponents/Modal/Modal.jsx";
 
 export {
     LoginForm,
@@ -17,5 +18,6 @@ export {
     PasswordField,
     NavBarDropDown,
     NavBar,
-    HomeBody
+    HomeBody,
+    Modal
 }

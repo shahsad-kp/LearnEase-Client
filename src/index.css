@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+*::-webkit-scrollbar {
+    /*display: none;*/
+    width: 0.3em;
+    height: 0.3em;
+}
+
+@media screen and (max-width: 768px) {
+    *::-webkit-scrollbar {
+        display: none;
+    }
+}
+
+
+*::-webkit-scrollbar-track {
+    display: none;
+}
+
+*::-webkit-scrollbar-thumb {
+    background: rgba(49, 130, 122, 0.3);
+    border-radius: 0.8em;
+}
+
+*::-webkit-scrollbar-thumb:hover {
+    background: rgba(49, 130, 122, 0.76);
+}
+
+*::-webkit-scrollbar-track {
+    position: absolute;
+    top: 0;
+}
+
+*{
+    text-overflow: ellipsis;
+}
