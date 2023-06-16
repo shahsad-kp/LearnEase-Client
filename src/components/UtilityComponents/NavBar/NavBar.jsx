@@ -1,6 +1,6 @@
 import LogoSmall from '../../../assets/logo/logo-smaller.png'
 import {useSelector} from "react-redux";
-import {NavBarDropDown} from "../../UtilityComponents/NavBarDropDown/NavBarDropDown.jsx";
+import {NavBarDropDown} from "../../";
 
 export const NavBar = () => {
     useSelector(state => state.auth.user);

@@ -3,7 +3,7 @@ import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {Fragment, useState} from "react";
 import {InputField, PasswordField} from "../";
-import {ProgressBar} from "../UtilityComponents/ProgressBar/ProgressBar.jsx";
+import {ProgressBar} from "../";
 
 
 export const SignupForm = () => {
@@ -13,7 +13,6 @@ export const SignupForm = () => {
         "Must contain at least one lowercase letter.",
         "Must contain at least one number."
     ]
-
 
     const [values, setValues] = useState({
         name: '',

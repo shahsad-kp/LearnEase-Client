@@ -1,7 +1,6 @@
-import {InputField} from "../../UtilityComponents/InputFields/InputField.jsx";
 import {GrAdd, GrFormClose} from "react-icons/gr";
 import {homePageButton, homePageTextAreaClass} from "../../styles.js";
-import {Modal} from "../../UtilityComponents/Modal/Modal.jsx";
+import {Modal, InputField} from "../../";
 import {useEffect, useRef, useState} from "react";
 
 
