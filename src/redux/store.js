@@ -5,7 +5,7 @@ import ClassReducer from './classRoomSlice/classRoomSlice.js';
 const store = configureStore({
     reducer: {
         auth: AuthReducer,
-        class: ClassReducer,
+        classRoom: ClassReducer,
     }
 })
 

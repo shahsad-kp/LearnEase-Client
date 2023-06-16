@@ -11,6 +11,10 @@ import {Modal} from "./UtilityComponents/Modal/Modal.jsx";
 import {ClassRoomBody} from "./RoomPage/ClassRoomBody/ClassRoomBody.jsx";
 import {ProgressBar} from "./UtilityComponents/ProgressBar/ProgressBar.jsx";
 import {CreateRoomModal} from "./LandingPage/CreateRoomModal/CreateRoomModal.jsx";
+import {ClassRoomMain} from "./RoomPage/ClassRoomMain/ClassRoomMain.jsx";
+import {ClassRoomSideBar} from "./RoomPage/ClassRoomSideBar/ClassRoomSideBar.jsx";
+import {ClassRoomToolbar} from "./RoomPage/ClassRoomToolbar/ClassRoomToolbar.jsx";
+import {SideBarBottom} from "./RoomPage/SideBarBottom/SideBarBottom.jsx";
 
 export {
     LoginForm,
@@ -25,5 +29,9 @@ export {
     Modal,
     ClassRoomBody,
     ProgressBar,
-    CreateRoomModal
+    CreateRoomModal,
+    ClassRoomMain,
+    ClassRoomSideBar,
+    ClassRoomToolbar,
+    SideBarBottom
 }

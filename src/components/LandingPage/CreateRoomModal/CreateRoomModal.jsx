@@ -2,6 +2,9 @@ import {GrAdd, GrFormClose} from "react-icons/gr";
 import {homePageButton, homePageTextAreaClass} from "../../styles.js";
 import {Modal, InputField} from "../../";
 import {useEffect, useRef, useState} from "react";
+import {useDispatch} from "react-redux";
+import {joinClassRoom} from "../../../redux/classRoomSlice/classRoomSlice.js";
+import {useNavigate} from "react-router-dom";
 
 
 // eslint-disable-next-line react/prop-types
@@ -15,6 +18,8 @@ export const CreateRoomModal = ({closeFunction}) => {
     }]);
     const [selectedTopicIdx, setSelectedTopicIdx] = useState(0);
     const topicsRef = useRef(null);
+    const dispatcher = useDispatch();
+    const navigator = useNavigate();
 
     const addNewTopic = (event) => {
         event.preventDefault();
@@ -83,6 +88,8 @@ export const CreateRoomModal = ({closeFunction}) => {
             setTopicError('At least one topic is required');
         }
 
+        // TODO: Add room to database
+        navigator('/123456789/room/');
     }
 
     useEffect(() => {
