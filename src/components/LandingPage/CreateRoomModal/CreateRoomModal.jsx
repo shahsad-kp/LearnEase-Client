@@ -18,7 +18,6 @@ export const CreateRoomModal = ({closeFunction}) => {
     }]);
     const [selectedTopicIdx, setSelectedTopicIdx] = useState(0);
     const topicsRef = useRef(null);
-    const dispatcher = useDispatch();
     const navigator = useNavigate();
 
     const addNewTopic = (event) => {

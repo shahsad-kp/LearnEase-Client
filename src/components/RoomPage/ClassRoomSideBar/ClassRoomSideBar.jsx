@@ -1,12 +1,15 @@
-import {Participants, SideBarBottom} from "../../";
+import {SideBarBottom, SideBarParticipants, VideoCall} from "../../";
 import {useState} from "react";
+import {useSelector} from "react-redux";
 
 export const ClassRoomSideBar = () => {
+	const classRoom = useSelector(state => state.classRoom.classRoom);
+
 	const [selected, setSelected] = useState('participants');
 
 	let content = null;
 	if (selected === 'participants'){
-		content = <div>Participants</div>
+		content = <SideBarParticipants/>
 	}
 	else if (selected === 'chatting'){
 		content = <div>Chat</div>
@@ -20,11 +23,16 @@ export const ClassRoomSideBar = () => {
 	else{
 		content = <div>Settings</div>
 	}
+	if (!classRoom){
+		return <div/>
+	}
 
 	return (
-		<div className={'flex flex-col w-[25%] h-full bg-green-800'}>
-			<div className={'w-full h-[200px] bg-red-800'} style={{}}/>
-			<div className={'w-full h-full rounded bg-secondary'}>
+		<div className={'flex flex-col flex-1 justify-between h-full'}>
+			<div className={'w-full h-[200px] shadow rounded p-2 bg-white'} style={{}}>
+				<VideoCall isSelf={classRoom.lecturer.isSelf} name={classRoom.lecturer.name} isLecturer={true}/>
+			</div>
+			<div className={'w-full h-[calc(100vh-385px)] shadow rounded bg-secondary'}>
 				{content}
 			</div>
 			<SideBarBottom selected={selected} setSelected={setSelected}/>

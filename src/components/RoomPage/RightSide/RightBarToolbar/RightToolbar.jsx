@@ -257,7 +257,7 @@ export const RightToolbar = () => {
                         className={'w-min h-10 box-border p-2 xl:bg-dangerColor rounded active:bg-red-400'}
                         onClick={() => leaveClass()}
                     >
-                        <MdLogout className={'w-12 h-full'} color={'white'}/>
+                        <MdLogout className={'w-12 h-full xl:fill-white fill-dangerColor'} color={'white'}/>
                     </button>
                     <span
                         className={'w-full font-medium text-[10px] text-center'}>{isLecturer ? 'End Class' : 'Leave Class'}

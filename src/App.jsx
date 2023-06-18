@@ -3,7 +3,7 @@ import {Navigate, Route, Routes} from "react-router-dom";
 import {HomePage, LoginPage, RoomPage, SignupPage} from "./pages/";
 import {Tooltip} from "react-tooltip";
 import {useSelector} from "react-redux";
-import {RightSideParticipants} from "./components/";
+import {RightSideParticipants, RightSideWhiteboard} from "./components/";
 
 function App() {
     const user = useSelector(state => state.auth.user)
@@ -16,6 +16,7 @@ function App() {
                 <Route path={'/register/'} element={<SignupPage/>}/>
                 <Route path={':roomId'} element={user? <RoomPage/> : <Navigate to={'/login/'}/>}>
                     <Route index path={'room/'} element={<RightSideParticipants/>}/>
+                    <Route index path={'whiteboard/'} element={<RightSideWhiteboard/>}/>
                 </Route>
             </Routes>
 

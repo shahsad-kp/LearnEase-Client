@@ -35,13 +35,13 @@ export const RightSideParticipants = () => {
     }, [studentsPages, pageNumber]);
 
     return (
-        <div className={'flex flex-col bg-secondary gap-1.5 shadow rounded p-2 w-full h-full'}>
-            <div className={'flex-1 max-h-full rounded'}>
+        <div className={'flex flex-col bg-secondary gap-1.5 shadow rounded p-2 w-full h-[calc(100vh-173px)]'}>
+            <div className={'h-full rounded'}>
                 <div className={'max-h-full h-full flex flex-col gap-1.5'}>
                     {page.map((row, index) => (
                         <div key={index} className={'flex flex-row h-1/3 gap-1.5'}>
                             {row.map((student, index) => (
-                                <div key={index} className={'flex flex-col w-1/3 gap-1.5 rounded'}>
+                                <div key={index} className={'flex flex-col w-1/3 rounded'}>
                                     <VideoCall isLecturer={false} name={student.name} isSelf={student.isSelf}/>
                                 </div>
                             ))}

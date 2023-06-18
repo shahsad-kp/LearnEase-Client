@@ -13,12 +13,13 @@ import {ProgressBar} from "./UtilityComponents/ProgressBar/ProgressBar.jsx";
 import {CreateRoomModal} from "./LandingPage/CreateRoomModal/CreateRoomModal.jsx";
 import {RightSide} from "./RoomPage/RightSide/RightSide.jsx";
 import {ClassRoomSideBar} from "./RoomPage/ClassRoomSideBar/ClassRoomSideBar.jsx";
-import {ClassRoomToolbar} from "./RoomPage/ClassRoomToolbar/ClassRoomToolbar.jsx";
 import {SideBarBottom} from "./RoomPage/SideBarBottom/SideBarBottom.jsx";
-import {Participants} from "./RoomPage/SideBarComponents/Participants/Participants.jsx";
+import {SideBarParticipants} from "./RoomPage/ClassRoomSideBar/Participants/SideBarParticipants.jsx";
 import {RightToolbar} from "./RoomPage/RightSide/RightBarToolbar/RightToolbar.jsx";
 import {RightSideParticipants} from "./RoomPage/RightSide/RightSideMain/RightSideParticipants/RightSidePartcipants.jsx";
 import {VideoCall} from "./UtilityComponents/VideoCall/VideoCall.jsx";
+import {RightSideWhiteboard} from "./RoomPage/RightSide/RightSideMain/RightSideWhiteboard/RightSideWhiteboard.jsx";
+import {RightSmallVideos} from "./RoomPage/RightSide/RightSideMain/RightSmallVideos/RightSmallVideos.jsx";
 
 export {
     LoginForm,
@@ -36,10 +37,11 @@ export {
     CreateRoomModal,
     RightSide,
     ClassRoomSideBar,
-    ClassRoomToolbar,
     SideBarBottom,
-    Participants,
+    SideBarParticipants,
     RightToolbar,
     RightSideParticipants,
     VideoCall,
+    RightSideWhiteboard,
+    RightSmallVideos,
 }
