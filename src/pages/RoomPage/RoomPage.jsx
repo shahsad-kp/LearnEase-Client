@@ -6,143 +6,653 @@ import {joinClassRoom, leaveClassRoom} from "../../redux/classRoomSlice/classRoo
 
 
 export const RoomPage = () => {
-	const classRoom = useSelector(state => state.classRoom);
-	const dispatcher = useDispatch()
-	const {roomId} = useParams();
+    const classRoom = useSelector(state => state.classRoom.classRoom);
+    const dispatcher = useDispatch()
+    const {roomId} = useParams();
 
-	useEffect(() => {
-		// TODO: Join classroom
-		const room = {
+    useEffect(() => {
+        // TODO: Join classroom
+        const room = {
             id: roomId,
             name: 'History 101',
-            topics:[
-				{
-					id: '1',
-					name: 'Topic 1',
-					content: 'Instructior posidonium ornatus posidonium suas. Omittantur velit constituam eam' +
-						' tacimates eloquentiam quaerendum. Pertinacia fames at saperet sociosqu his fabulas' +
-						' patrioque per. Harum his hinc natum pulvinar contentiones. Litora qualisque autem ' +
-						'necessitatibus brute sale pri volutpat hac.'
-				},
-				{
-					id: '2',
-					name: 'Topic 2',
-					content: 'Instructior posidonium ornatus posidonium suas. Omittantur velit constituam eam' +
-						' tacimates eloquentiam quaerendum. Pertinacia fames at saperet sociosqu his fabulas' +
-						' patrioque per. Harum his hinc natum pulvinar contentiones. Litora qualisque autem ' +
-						'necessitatibus brute sale pri volutpat hac.'
-				},
-				{
-					id: '3',
-					name: 'Topic 3',
-					content: 'Instructior posidonium ornatus posidonium suas. Omittantur velit constituam eam' +
-						' tacimates eloquentiam quaerendum. Pertinacia fames at saperet sociosqu his fabulas' +
-						' patrioque per. Harum his hinc natum pulvinar contentiones. Litora qualisque autem ' +
-						'necessitatibus brute sale pri volutpat hac.'
-				},
-				{
-					id: '4',
-					name: 'Topic 4',
-					content: 'Instructior posidonium ornatus posidonium suas. Omittantur velit constituam eam' +
-						' tacimates eloquentiam quaerendum. Pertinacia fames at saperet sociosqu his fabulas' +
-						' patrioque per. Harum his hinc natum pulvinar contentiones. Litora qualisque autem ' +
-						'necessitatibus brute sale pri volutpat hac.'
-				},
-				{
-					id: '5',
-					name: 'Topic 5',
-					content: 'Instructior posidonium ornatus posidonium suas. Omittantur velit constituam eam' +
-						' tacimates eloquentiam quaerendum. Pertinacia fames at saperet sociosqu his fabulas' +
-						' patrioque per. Harum his hinc natum pulvinar contentiones. Litora qualisque autem ' +
-						'necessitatibus brute sale pri volutpat hac.'
-				},
-			],
-			participants: [
-				{
-					id: 1,
-					name: 'Participant 1',
-					role: 'instructor',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: true
-				},
-				{
-					id: 2,
-					name: 'Participant 2',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 3,
-					name: 'Participant 3',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 4,
-					name: 'Participant 4',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 5,
-					name: 'Participant 5',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 6,
-					name: 'Participant 6',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 7,
-					name: 'Participant 7',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 8,
-					name: 'Participant 8',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				{
-					id: 9,
-					name: 'Participant 9',
-					role: 'student',
-					profilePicture: 'https://picsum.photos/200/300',
-					isSelf: false
-				},
-				
-			],
-			isLecture: true,
+            topics: null,
+            documents: null,
+            messages: null,
+            activities: null,
+            students: [
+                {
+                    "id": 1,
+                    "name": "Emma Smith",
+                    "profilePicture": "https://example.com/profiles/1.jpg",
+                    "isSelf": true,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Liam Johnson",
+                    "profilePicture": "https://example.com/profiles/2.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 3,
+                    "name": "Olivia Brown",
+                    "profilePicture": "https://example.com/profiles/3.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 4,
+                    "name": "Noah Davis",
+                    "profilePicture": "https://example.com/profiles/4.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 5,
+                    "name": "Sophia Wilson",
+                    "profilePicture": "https://example.com/profiles/5.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 6,
+                    "name": "Jackson Taylor",
+                    "profilePicture": "https://example.com/profiles/6.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 7,
+                    "name": "Ava Anderson",
+                    "profilePicture": "https://example.com/profiles/7.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 8,
+                    "name": "Lucas Martinez",
+                    "profilePicture": "https://example.com/profiles/8.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 9,
+                    "name": "Mia Thompson",
+                    "profilePicture": "https://example.com/profiles/9.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 10,
+                    "name": "Aiden Thomas",
+                    "profilePicture": "https://example.com/profiles/10.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 11,
+                    "name": "Charlotte Clark",
+                    "profilePicture": "https://example.com/profiles/11.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 12,
+                    "name": "Henry Lewis",
+                    "profilePicture": "https://example.com/profiles/12.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 13,
+                    "name": "Amelia Walker",
+                    "profilePicture": "https://example.com/profiles/13.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 14,
+                    "name": "Alexander Rodriguez",
+                    "profilePicture": "https://example.com/profiles/14.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 15,
+                    "name": "Harper Perez",
+                    "profilePicture": "https://example.com/profiles/15.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 16,
+                    "name": "Daniel Hall",
+                    "profilePicture": "https://example.com/profiles/16.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 17,
+                    "name": "Emily Young",
+                    "profilePicture": "https://example.com/profiles/17.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 18,
+                    "name": "Sebastian Hernandez",
+                    "profilePicture": "https://example.com/profiles/18.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 19,
+                    "name": "Elizabeth King",
+                    "profilePicture": "https://example.com/profiles/19.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 20,
+                    "name": "Benjamin Scott",
+                    "profilePicture": "https://example.com/profiles/20.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 21,
+                    "name": "Victoria Green",
+                    "profilePicture": "https://example.com/profiles/21.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 22,
+                    "name": "Joseph Adams",
+                    "profilePicture": "https://example.com/profiles/22.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 23,
+                    "name": "Penelope Baker",
+                    "profilePicture": "https://example.com/profiles/23.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": false,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": false,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 24,
+                    "name": "Levi Turner",
+                    "profilePicture": "https://example.com/profiles/24.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                },
+                {
+                    "id": 25,
+                    "name": "Olivia Powell",
+                    "profilePicture": "https://example.com/profiles/25.jpg",
+                    "isSelf": false,
+                    "settings": {
+                        "audio": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "video": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "whiteBoard": {
+                            "permission": true,
+                            "enabled": false
+                        },
+                        "screenShare": {
+                            "permission": true,
+                            "enabled": false
+                        }
+                    }
+                }
+            ]
+            ,
+            lecturer: {
+                id: 1,
+                name: 'Lecturer 1',
+                profilePicture: 'https://picsum.photos/200/300',
+                isSelf: false,
+                settings: {
+                    audio: true,
+                    video: true,
+                    whiteBoard: true,
+                    screenShare: false,
+                }
+            },
+            isLecturer: false,
         };
-		
-		if (classRoom.id !== roomId) {
-			dispatcher(joinClassRoom(room));
-		}
-		document.title = room.name;
-		return () => {
-			dispatcher(leaveClassRoom())
-		}
 
-	}, []);
+        if (!(classRoom && (classRoom.id === room.id))) {
+            dispatcher(joinClassRoom(room));
+        }
+        document.title = room.name;
+        return () => {
+            dispatcher(leaveClassRoom())
+        }
 
+    }, [roomId]);
 
-	return (
-		<section className={'h-screen w-screen flex flex-col bg-primary'}>
-			<NavBar/>
-			<ClassRoomBody>
-				<Outlet/>
-			</ClassRoomBody>
-		</section>
-	)
+    return (
+        <section className={'h-screen w-screen flex flex-col bg-primary'}>
+            <NavBar/>
+            <ClassRoomBody>
+                <Outlet/>
+            </ClassRoomBody>
+        </section>
+    )
 }

@@ -3,7 +3,7 @@ import {IoDocumentsOutline, IoPeopleOutline, IoSchoolOutline, IoChatboxOutline} 
 // eslint-disable-next-line react/prop-types
 export const SideBarBottom = ({selected, setSelected}) => {
 	return (
-		<div className={'bg-secondary p-2 shadow rounded-md flex flex-row justify-around'}>
+		<div className={'bg-secondary p-2 h-min shadow rounded-md flex flex-row justify-around'}>
 			<div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'} onClick={() => setSelected('participants')}>
 				<div className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (selected==='participants' ? ' !bg-accent-color-one': '')}>
 					<IoPeopleOutline className={'w-12 h-full'}/>

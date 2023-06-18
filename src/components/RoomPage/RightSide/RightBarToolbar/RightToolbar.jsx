@@ -1,15 +1,23 @@
-import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
-import {useSelector} from "react-redux";
-import {HiOutlineHandRaised, HiOutlineVideoCameraSlash} from "react-icons/hi2";
-import {HiOutlineVideoCamera} from "react-icons/hi";
+import {IoMicOffOutline, IoMicOutline, IoStopCircleOutline} from "react-icons/io5";
+import {useDispatch, useSelector} from "react-redux";
+import {HiOutlineHandRaised} from "react-icons/hi2";
 import {LuScreenShare, LuScreenShareOff} from "react-icons/lu";
 import {useCallback, useState} from "react";
-import {VscRecord} from "react-icons/vsc";
 import {MdLogout} from "react-icons/md";
+import {useNavigate} from "react-router-dom";
+import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
+import {IoMdRadioButtonOn} from "react-icons/io";
+import {
+    changeAudioSetting,
+    changeScreenShareSetting,
+    changeVideoSetting
+} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 
-export const RightBarToolbar = () => {
+export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const [recording, setRecording] = useState(false);
+    const navigator = useNavigate();
+    const dispatcher = useDispatch();
 
     const takeUserData = useCallback(() => {
         if (!classRoom) {
@@ -17,7 +25,7 @@ export const RightBarToolbar = () => {
         }
         let userSettings = null;
         let userData;
-        if (classRoom.isLecture) {
+        if (classRoom.isLecturer) {
             userSettings = {
                 audio: {
                     permission: true,
@@ -42,7 +50,7 @@ export const RightBarToolbar = () => {
                 profilePicture: classRoom.lecturer.profilePicture,
             }
         } else {
-            for (let student in classRoom.students) {
+            for (let student of classRoom.students) {
                 if (student.isSelf) {
                     userSettings = student.settings
                     userData = {
@@ -50,6 +58,7 @@ export const RightBarToolbar = () => {
                         name: student.name,
                         profilePicture: student.profilePicture,
                     }
+                    break;
                 }
             }
         }
@@ -69,8 +78,7 @@ export const RightBarToolbar = () => {
                 status: true,
                 permission: true,
             }
-        }
-        else {
+        } else {
             if (userSettings.audio.permission) {
                 audioControl = {
                     icon: <IoMicOutline className={'w-12 h-full'}/>,
@@ -79,7 +87,7 @@ export const RightBarToolbar = () => {
                 }
             } else {
                 audioControl = {
-                    icon: <IoMicOffOutline className={'w-12 h-full'}/>,
+                    icon: <IoMicOffOutline className={'w-12 h-full'} color={'white'}/>,
                     status: false,
                     permission: false,
                 }
@@ -88,21 +96,20 @@ export const RightBarToolbar = () => {
 
         if (userSettings.video.permission && userSettings.video.enabled) {
             videoControl = {
-                icon: <HiOutlineVideoCameraSlash className={'w-12 h-full'}/>,
+                icon: <BsCameraVideoOff className={'w-12 h-full'}/>,
                 status: true,
                 permission: true,
             }
-        }
-        else {
+        } else {
             if (userSettings.video.permission) {
                 videoControl = {
-                    icon: <HiOutlineVideoCamera className={'w-12 h-full'}/>,
+                    icon: <BsCameraVideo className={'w-12 h-full'}/>,
                     status: false,
                     permission: true,
                 }
             } else {
                 videoControl = {
-                    icon: <HiOutlineVideoCameraSlash className={'w-12 h-full'}/>,
+                    icon: <BsCameraVideoOff className={'w-12 h-full'} color={'white'}/>,
                     status: false,
                     permission: false,
                 }
@@ -115,8 +122,7 @@ export const RightBarToolbar = () => {
                 status: true,
                 permission: true,
             }
-        }
-        else {
+        } else {
             if (userSettings.screenShare.permission) {
                 screenShareControl = {
                     icon: <LuScreenShare className={'w-12 h-full'}/>,
@@ -125,7 +131,7 @@ export const RightBarToolbar = () => {
                 }
             } else {
                 screenShareControl = {
-                    icon: <LuScreenShareOff className={'w-12 h-full'}/>,
+                    icon: <LuScreenShareOff className={'w-12 h-full'} color={'white'}/>,
                     status: false,
                     permission: false,
                 }
@@ -133,35 +139,45 @@ export const RightBarToolbar = () => {
         }
     }
 
-    let shareScreenIcon;
-    if (!screenShareControl) {
-        shareScreenIcon = <LuScreenShareOff className={'w-12 h-full'}/>
-    } else {
-        if (screenShareControl.permission) {
-            if (screenShareControl.status) {
-                shareScreenIcon = <LuScreenShareOff className={'w-12 h-full'}/>
-            } else {
-                shareScreenIcon = <LuScreenShare className={'w-12 h-full'}/>
-            }
-        } else {
-            shareScreenIcon = <LuScreenShareOff className={'w-12 h-full'}/>
-        }
-    }
-
     const controlMic = (status) => {
         // TODO: control mic
+        if (!userSettings.audio.permission){
+            return;
+        }
+        dispatcher(changeAudioSetting({
+            userId: userData.id,
+            value: !status,
+            isLecturer: isLecturer
+        }))
     }
 
     const controlVideo = (status) => {
         // TODO: control video
+        if (!userSettings.video.permission){
+            return;
+        }
+        dispatcher(changeVideoSetting({
+            userId: userData.id,
+            value: !status,
+            isLecturer: isLecturer
+        }))
     }
 
     const controlScreenShare = (status) => {
         // TODO: control screen share
+        if (!userSettings.screenShare.permission){
+            return;
+        }
+        dispatcher(changeScreenShareSetting({
+            userId: userData.id,
+            value: !status,
+            isLecturer: isLecturer
+        }))
     }
 
     const recordVideo = () => {
         // TODO: record video
+        setRecording(!recording)
     }
 
     const raiseHand = () => {
@@ -170,6 +186,7 @@ export const RightBarToolbar = () => {
 
     const leaveClass = () => {
         // TODO: leave class
+        navigator('/');
     }
 
     if (!userSettings) {
@@ -181,32 +198,32 @@ export const RightBarToolbar = () => {
             <div className={'flex flex-row gap-2.5'}>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (audioControl.permission ? (audioControl.status ? ' !bg-accent-color-one' : '') : ' !bg-gray-600')}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (audioControl.permission ? (audioControl.status ? ' !bg-accent-color-one' : '') : ' !bg-red-400')}
                         onClick={() => controlMic(audioControl.status)}
                     >
                         {audioControl.icon}
                     </button>
                     <span
                         className={'w-full font-medium text-[10px] text-center'}
-                    >{audioControl.permission ? (audioControl.status ? "Mute" : "Unmute") : "Muted"}</span>
+                    >{audioControl.permission ? (audioControl.status ? "Mute" : "Unmute") : "Restricted"}</span>
                 </div>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (videoControl.permission ? (videoControl.status ? ' !bg-accent-color-one' : '') : ' !bg-gray-600')}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (videoControl.permission ? (videoControl.status ? ' !bg-accent-color-one' : '') : ' !bg-red-300')}
                         onClick={() => controlVideo(videoControl.status)}
                     >
                         {videoControl.icon}
                     </button>
                     <span
-                        className={'w-full font-medium text-[10px] text-center'}>{videoControl.permission ? (videoControl.status ? "Video Off" : "Video On") : "Video Off"}</span>
+                        className={'w-full font-medium text-[10px] text-center'}>{videoControl.permission ? (videoControl.status ? "Video Off" : "Video On") : "Restricted"}</span>
                 </div>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
                         className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (recording ? ' !bg-accent-color-one' : '')}
                         onClick={() => recordVideo()}
                     >
-                        {recording ? <VscRecord className={'w-12 h-full'} fill={'red'}/> :
-                            <VscRecord className={'w-12 h-full'}/>}
+                        {recording ? <IoStopCircleOutline className={'w-12 h-full'} color={'#df073d'}/> :
+                            <IoMdRadioButtonOn className={'w-12 h-full'}/>}
                     </button>
                     <span
                         className={'w-full font-medium text-[10px] text-center'}>{recording ? "Stop" : "Record"}</span>
@@ -215,35 +232,36 @@ export const RightBarToolbar = () => {
             <div>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (screenShareControl.permission ? (screenShareControl.status ? ' !bg-accent-color-one' : '') : ' !bg-gray-600')}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (screenShareControl.permission ? (screenShareControl.status ? ' !bg-accent-color-one' : '') : ' !bg-red-300')}
                         onClick={() => controlScreenShare(screenShareControl.status)}
                     >
-                        {shareScreenIcon}
+                        <BsCast className={'w-12 h-full'}/>
                     </button>
                     <span
-                        className={'w-full font-medium text-[10px] text-center'}>{screenShareControl.permission ? (screenShareControl.status ? "Stop Sharing" : "Screen Share") : "Disabled"}</span>
+                        className={'w-full font-medium text-[10px] text-center'}>{screenShareControl.permission ? (screenShareControl.status ? "Stop Sharing" : "Screen Share") : "Restricted"}</span>
                 </div>
             </div>
             <div className={'justify-between flex flex-row gap-2.5'}>
-                <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
+                {!isLecturer && <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' +  ' active:bg-accent-color-one'}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + ' active:bg-accent-color-one'}
                         onClick={() => raiseHand()}
                     >
                         <HiOutlineHandRaised className={'w-12 h-full'}/>
                     </button>
                     <span
                         className={'w-full font-medium text-[10px] text-center'}>Raise Hand</span>
-                </div>
+                </div>}
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-dangerColor rounded active:bg-red-500'}
+                        className={'w-min h-10 box-border p-2 xl:bg-dangerColor rounded active:bg-red-400'}
                         onClick={() => leaveClass()}
                     >
-                        <MdLogout className={'w-12 h-full'}/>
+                        <MdLogout className={'w-12 h-full'} color={'white'}/>
                     </button>
                     <span
-                        className={'w-full font-medium text-[10px] text-center'}>Raise Hand</span>
+                        className={'w-full font-medium text-[10px] text-center'}>{isLecturer ? 'End Class' : 'Leave Class'}
+                    </span>
                 </div>
             </div>
         </div>

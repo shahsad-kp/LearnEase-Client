@@ -1,13 +1,13 @@
-import {ClassRoomMain, ClassRoomSideBar} from "../../";
+import {RightSide, ClassRoomSideBar} from "../../";
 
 // eslint-disable-next-line react/prop-types
 export const ClassRoomBody = ({children}) => {
     return (
-        <div className={'flex flex-1 gap-2.5 flex-row w-100 p-0 md:p-4'}>
+        <div className={'flex gap-2.5 flex-row h-full w-100 p-0 md:p-4'}>
             <ClassRoomSideBar/>
-            <ClassRoomMain>
+            <RightSide>
                 {children}
-            </ClassRoomMain>
+            </RightSide>
         </div>
     )
 }
