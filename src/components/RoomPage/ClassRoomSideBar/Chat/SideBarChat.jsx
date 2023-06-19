@@ -227,7 +227,7 @@ export const SideBarChat = () => {
                     {
                         messages.map((message, index) => {
                             return (<div key={index} className={'flex flex-col gap-1 w-full' + (message.sender.isSelf ? ' items-end' : ' justify-start')}>
-                                <span className={'text-[12px] text-sm'}>{message.sender.name}</span>
+                                <span className={'text-[10px]'}>{message.sender.name}</span>
                                 <div className={'flex items-center gap-2 ' + (message.sender.isSelf ? 'flex-row-reverse' : 'flex-row')}>
                                     <img
                                         src={'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}

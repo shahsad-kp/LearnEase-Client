@@ -132,6 +132,16 @@ const classRoomSlice = createSlice({
                 state.classRoom.documents.push(action.payload);
             }
         },
+        setTopics: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.topics = action.payload;
+            }
+        },
+        selectTopic: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.selectedTopic = action.payload;
+            }
+        },
     }
 })
 
@@ -149,4 +159,6 @@ export const {
     changeScreenSharePermission,
     setDocuments,
     addDocument,
+    setTopics,
+    selectTopic,
 } = classRoomSlice.actions;

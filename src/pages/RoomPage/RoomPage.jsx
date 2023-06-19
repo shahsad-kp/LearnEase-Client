@@ -620,8 +620,7 @@ export const RoomPage = () => {
                         }
                     }
                 }
-            ]
-            ,
+            ],
             lecturer: {
                 id: 1,
                 name: 'Lecturer 1',
@@ -635,13 +634,13 @@ export const RoomPage = () => {
                 }
             },
             isLecturer: false,
+            selectedTopic: null,
         };
 
         if (!(classRoom && (classRoom.id === room.id))) {
             dispatcher(joinClassRoom(room));
         }
         document.title = room.name;
-        console.log(document.title)
         return () => {
             dispatcher(leaveClassRoom())
         }
