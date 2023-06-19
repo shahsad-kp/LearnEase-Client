@@ -46,7 +46,7 @@ export const NavBarDropDown = () => {
 
     return (
         <div
-            className={'flex flex-row items-center gap-5 h-full relative'}
+            className={'flex m-3 flex-row items-center gap-5 h-7 w-7 relative'}
             id={'drop-down'}
         >
             <div
@@ -58,7 +58,7 @@ export const NavBarDropDown = () => {
             </div>
             {drop &&
                 <div
-                    className={'navbar-dropdown fixed md:absolute top-14 right-0 bg-white shadow rounded flex flex-col w-screen md:w-fit min-w-[350px]'}
+                    className={'navbar-dropdown z-50 fixed md:absolute top-14 right-0 bg-white shadow rounded flex flex-col w-screen md:w-fit min-w-[350px]'}
                     id={'second-component'}
                 >
                     <div className={'flex flex-row w-min justify-center gap-2.5 border p-2.5 rounded m-2.5'}>

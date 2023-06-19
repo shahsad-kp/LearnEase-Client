@@ -42,3 +42,8 @@ body{
     height: 100vh;
     width: 100vw;
 }
+
+a.active{
+    border-bottom-color: #FCBD02;
+    color: black;
+}
