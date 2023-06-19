@@ -24,7 +24,7 @@ export const RoomPage = () => {
                     "id": 1,
                     "name": "Emma Smith",
                     "profilePicture": "https://example.com/profiles/1.jpg",
-                    "isSelf": true,
+                    "isSelf": false,
                     "settings": {
                         "audio": {
                             "permission": true,
@@ -40,7 +40,7 @@ export const RoomPage = () => {
                         },
                         "screenShare": {
                             "permission": true,
-                            "enabled": false
+                            "enabled": true
                         }
                     }
                 },
@@ -531,12 +531,12 @@ export const RoomPage = () => {
                     "isSelf": false,
                     "settings": {
                         "audio": {
-                            "permission": false,
-                            "enabled": false
+                            "permission": true,
+                            "enabled": true
                         },
                         "video": {
                             "permission": false,
-                            "enabled": false
+                            "enabled": true
                         },
                         "whiteBoard": {
                             "permission": false,
@@ -626,7 +626,7 @@ export const RoomPage = () => {
                 id: 1,
                 name: 'Lecturer 1',
                 profilePicture: 'https://picsum.photos/200/300',
-                isSelf: false,
+                isSelf: true,
                 settings: {
                     audio: true,
                     video: true,
@@ -634,7 +634,7 @@ export const RoomPage = () => {
                     screenShare: false,
                 }
             },
-            isLecturer: false,
+            isLecturer: true,
         };
 
         if (!(classRoom && (classRoom.id === room.id))) {

@@ -16,6 +16,16 @@ const classRoomSlice = createSlice({
             if (!state.classRoom.students) return;
             state.classRoom.students.push(action.payload)
         },
+        setMessages: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.messages = action.payload;
+            }
+        },
+        addMessage: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.messages.push(action.payload);
+            }
+        },
         changeAudioSetting: (state, action) => {
             if (state.classRoom) {
                 const userId = action.payload.userId;
@@ -66,7 +76,52 @@ const classRoomSlice = createSlice({
                     })
                 }
             }
-        }
+        },
+        changeAudioPermission: (state, action) => {
+            if (state.classRoom) {
+                const userId = action.payload.userId;
+                const value = action.payload.value;
+                if (state.classRoom.isLecturer) {
+                    state.classRoom.students.map(student => {
+                        if (student.id === userId) {
+                            student.settings.audio.enabled = (value ? student.settings.audio.permission : false);
+                            student.settings.audio.permission = value;
+                        }
+                        return student;
+                    })
+                }
+            }
+        },
+        changeVideoPermission: (state, action) => {
+            if (state.classRoom) {
+                const userId = action.payload.userId;
+                const value = action.payload.value;
+                if (state.classRoom.isLecturer) {
+                    state.classRoom.students.map(student => {
+                        if (student.id === userId) {
+                            student.settings.video.enabled = (value ? student.settings.video.permission : false);
+                            student.settings.video.permission = value;
+                        }
+                        return student;
+                    })
+                }
+            }
+        },
+        changeScreenSharePermission: (state, action) => {
+            if (state.classRoom) {
+                const userId = action.payload.userId;
+                const value = action.payload.value;
+                if (state.classRoom.isLecturer) {
+                    state.classRoom.students.map(student => {
+                        if (student.id === userId) {
+                            student.settings.screenShare.enabled = (value ? student.settings.screenShare.permission : false);
+                            student.settings.screenShare.permission = value;
+                        }
+                        return student;
+                    })
+                }
+            }
+        },
     }
 })
 
@@ -76,5 +131,10 @@ export const {
     leaveClassRoom, addParticipant,
     changeAudioSetting,
     changeVideoSetting,
-    changeScreenShareSetting
+    changeScreenShareSetting,
+    setMessages,
+    addMessage,
+    changeAudioPermission,
+    changeVideoPermission,
+    changeScreenSharePermission
 } = classRoomSlice.actions;
