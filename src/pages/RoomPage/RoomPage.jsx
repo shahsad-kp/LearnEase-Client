@@ -96,7 +96,7 @@ export const RoomPage = () => {
                     "id": 4,
                     "name": "Noah Davis",
                     "profilePicture": "https://example.com/profiles/4.jpg",
-                    "isSelf": false,
+                    "isSelf": true,
                     "settings": {
                         "audio": {
                             "permission": true,
@@ -626,7 +626,7 @@ export const RoomPage = () => {
                 id: 1,
                 name: 'Lecturer 1',
                 profilePicture: 'https://picsum.photos/200/300',
-                isSelf: true,
+                isSelf: false,
                 settings: {
                     audio: true,
                     video: true,
@@ -634,7 +634,7 @@ export const RoomPage = () => {
                     screenShare: false,
                 }
             },
-            isLecturer: true,
+            isLecturer: false,
         };
 
         if (!(classRoom && (classRoom.id === room.id))) {

@@ -88,7 +88,7 @@ export const CreateRoomModal = ({closeFunction}) => {
         }
 
         // TODO: Add room to database
-        navigator('/123456789/whiteboard/');
+        navigator('/123456789/room/');
     }
 
     useEffect(() => {

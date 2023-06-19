@@ -14,7 +14,7 @@ function App() {
                 <Route path={'/'} exact element={<HomePage/>}/>
                 <Route path={'/login/'} element={<LoginPage/>}/>
                 <Route path={'/register/'} element={<SignupPage/>}/>
-                <Route path={':roomId'} element={user? <RoomPage/> : <Navigate to={'/login/'}/>}>
+                <Route path={'/:roomId'} element={user? <RoomPage/> : <Navigate to={'/login/'}/>}>
                     <Route index path={'room/'} element={<RightSideParticipants/>}/>
                     <Route path={'whiteboard/'} element={<RightSideWhiteboard/>}/>
                     <Route path={'topics/'} element={<RightSideTopics/>}/>

@@ -2,10 +2,12 @@ import LogoBanner from '../../../assets/logo/logo-banner.png'
 import {CreateRoomModal, InputField} from "../../";
 import {homePageButton} from "../../styles.js";
 import {useEffect, useState} from "react";
+import {useNavigate} from "react-router-dom";
 
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);
     const [createRoomModal, setCreateRoomModal] = useState(false);
+    const navigator = useNavigate();
 
     useEffect(() => {
         // TODO: fetch history from server
@@ -15,7 +17,7 @@ export const HomeBody = () => {
             name: 'Mathematics',
             date: new Date(),
         }
-        const totalHistory = [...Array(0)].map(() => room);
+        const totalHistory = [...Array(6)].map(() => room);
         setHistory(totalHistory);
 
     }, []);
@@ -33,7 +35,12 @@ export const HomeBody = () => {
                             <div className={'w-full flex flex-row gap-2.5'}>
                                 <InputField type={'text'} placeholder={'Enter room id'}
                                             classNames={'md:max-w-xs !max-w-full font-mono'}/>
-                                <button className={homePageButton}>Join</button>
+                                <button
+                                    className={homePageButton}
+                                    onClick={() => {
+                                        navigator('/123456789/room/')
+                                    }}
+                                >Join</button>
                             </div>
                             <div>
                                 <button
