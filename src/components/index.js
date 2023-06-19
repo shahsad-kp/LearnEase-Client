@@ -21,6 +21,7 @@ import {VideoCall} from "./UtilityComponents/VideoCall/VideoCall.jsx";
 import {RightSideWhiteboard} from "./RoomPage/RightSide/RightSideMain/RightSideWhiteboard/RightSideWhiteboard.jsx";
 import {RightSmallVideos} from "./RoomPage/RightSide/RightSideMain/RightSmallVideos/RightSmallVideos.jsx";
 import {SideBarChat} from "./RoomPage/ClassRoomSideBar/Chat/SideBarChat.jsx";
+import {SideBarDocuments} from "./RoomPage/ClassRoomSideBar/Documents/SideBarDocuments.jsx";
 
 export {
     LoginForm,
@@ -46,4 +47,5 @@ export {
     RightSideWhiteboard,
     RightSmallVideos,
     SideBarChat,
+    SideBarDocuments,
 }

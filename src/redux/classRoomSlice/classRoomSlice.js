@@ -122,6 +122,16 @@ const classRoomSlice = createSlice({
                 }
             }
         },
+        setDocuments: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.documents = action.payload;
+            }
+        },
+        addDocument: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.documents.push(action.payload);
+            }
+        },
     }
 })
 
@@ -136,5 +146,7 @@ export const {
     addMessage,
     changeAudioPermission,
     changeVideoPermission,
-    changeScreenSharePermission
+    changeScreenSharePermission,
+    setDocuments,
+    addDocument,
 } = classRoomSlice.actions;
