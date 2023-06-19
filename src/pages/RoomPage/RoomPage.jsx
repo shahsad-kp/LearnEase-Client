@@ -641,6 +641,7 @@ export const RoomPage = () => {
             dispatcher(joinClassRoom(room));
         }
         document.title = room.name;
+        console.log(document.title)
         return () => {
             dispatcher(leaveClassRoom())
         }
@@ -649,7 +650,7 @@ export const RoomPage = () => {
 
     return (
         <section className={'h-screen w-screen flex flex-col bg-primary'}>
-            <NavBar/>
+            <NavBar navLinks={true}/>
             <ClassRoomBody>
                 <Outlet/>
             </ClassRoomBody>

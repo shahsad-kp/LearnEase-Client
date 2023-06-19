@@ -22,6 +22,8 @@ import {RightSideWhiteboard} from "./RoomPage/RightSide/RightSideMain/RightSideW
 import {RightSmallVideos} from "./RoomPage/RightSide/RightSideMain/RightSmallVideos/RightSmallVideos.jsx";
 import {SideBarChat} from "./RoomPage/ClassRoomSideBar/Chat/SideBarChat.jsx";
 import {SideBarDocuments} from "./RoomPage/ClassRoomSideBar/Documents/SideBarDocuments.jsx";
+import {RightSideTopics} from "./RoomPage/RightSide/RightSideMain/RightSideTopics/RightSideTopics.jsx";
+import {RightSideGrades} from "./RoomPage/RightSide/RightSideMain/RightSideGrades/RightSideGrades.jsx";
 
 export {
     LoginForm,
@@ -48,4 +50,6 @@ export {
     RightSmallVideos,
     SideBarChat,
     SideBarDocuments,
+    RightSideTopics,
+    RightSideGrades,
 }
