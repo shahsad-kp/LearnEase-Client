@@ -1,4 +1,5 @@
-import {IoDocumentsOutline, IoPeopleOutline, IoSchoolOutline, IoChatboxOutline} from "react-icons/io5";
+import {IoDocumentsOutline, IoPeopleOutline, IoChatboxOutline} from "react-icons/io5";
+import {RxActivityLog} from "react-icons/rx";
 
 // eslint-disable-next-line react/prop-types
 export const SideBarBottom = ({selected, setSelected}) => {
@@ -22,11 +23,11 @@ export const SideBarBottom = ({selected, setSelected}) => {
 				</div>
 				<span className={'w-full font-medium text-[10px] text-center'}>Documents</span>
 			</div>
-			<div className={'w-min flex gap-1  flex-col justify-center cursor-pointer'} onClick={() => setSelected('teachtools')}>
-				<div className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (selected==='teachtools' ? ' !bg-accent-color-one': '')}>
-					<IoSchoolOutline className={'w-12 h-full'}/>
+			<div className={'w-min flex gap-1  flex-col justify-center cursor-pointer'} onClick={() => setSelected('activities')}>
+				<div className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (selected==='activities' ? ' !bg-accent-color-one': '')}>
+					<RxActivityLog className={'w-12 h-full'}/>
 				</div>
-				<span className={'w-full font-medium text-[10px] text-center'}>Teach Tools</span>
+				<span className={'w-full font-medium text-[10px] text-center'}>Activities</span>
 			</div>
 		</div>
 	)

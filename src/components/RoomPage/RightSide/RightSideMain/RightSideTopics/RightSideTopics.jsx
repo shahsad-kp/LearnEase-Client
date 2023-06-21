@@ -8,6 +8,11 @@ export const RightSideTopics = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const dispatcher = useDispatch();
 
+    const [topics, selectedTopic] = useMemo(() => {
+        if (!classRoom) return [[], null];
+        return [classRoom.topics, classRoom.selectedTopic];
+    }, [classRoom]);
+    
     useEffect(() => {
         if (classRoom) {
             if (classRoom.topics === null) {
@@ -93,12 +98,11 @@ export const RightSideTopics = () => {
                 dispatcher(setTopics(topics));
             }
         }
-    }, []);
+        if (!selectedTopic && topics && topics.length > 0) {
+            dispatcher(selectTopic(topics[0]));
+        }
+    }, [classRoom, dispatcher, selectedTopic, topics]);
 
-    const [topics, selectedTopic] = useMemo(() => {
-        if (!classRoom) return [[], null];
-        return [classRoom.topics, classRoom.selectedTopic];
-    }, [classRoom]);
 
     if (!topics) return <div></div>;
 

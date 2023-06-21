@@ -24,6 +24,7 @@ import {SideBarChat} from "./RoomPage/ClassRoomSideBar/Chat/SideBarChat.jsx";
 import {SideBarDocuments} from "./RoomPage/ClassRoomSideBar/Documents/SideBarDocuments.jsx";
 import {RightSideTopics} from "./RoomPage/RightSide/RightSideMain/RightSideTopics/RightSideTopics.jsx";
 import {RightSideGrades} from "./RoomPage/RightSide/RightSideMain/RightSideGrades/RightSideGrades.jsx";
+import {SideBarActivity} from "./RoomPage/ClassRoomSideBar/Activity/SideBarActivity.jsx";
 
 export {
     LoginForm,
@@ -52,4 +53,5 @@ export {
     SideBarDocuments,
     RightSideTopics,
     RightSideGrades,
+    SideBarActivity,
 }

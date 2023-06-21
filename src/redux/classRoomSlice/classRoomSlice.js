@@ -142,6 +142,35 @@ const classRoomSlice = createSlice({
                 state.classRoom.selectedTopic = action.payload;
             }
         },
+        setActivities: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.activities = action.payload;
+            }
+        },
+        addActivity: (state, action) => {
+            if (state.classRoom) {
+                state.classRoom.activities.push(action.payload);
+            }
+        },
+        addResponse: (state, action) => {
+            const {id, userData, activityId, response, isSelf} = action.payload;
+            if (state.classRoom) {
+                state.classRoom.activities.map(activity => {
+                    if (activity.id === activityId) {
+                        activity.responses.push({
+                            id: id,
+                            name: userData.name,
+                            response,
+                            isCorrect: activity.correctAnswer === response
+                        });
+                    }
+                    if (isSelf) {
+                        activity.response = response;
+                    }
+                    return activity;
+                })
+            }
+        }
     }
 })
 
@@ -161,4 +190,7 @@ export const {
     addDocument,
     setTopics,
     selectTopic,
+    setActivities,
+    addActivity,
+    addResponse
 } = classRoomSlice.actions;

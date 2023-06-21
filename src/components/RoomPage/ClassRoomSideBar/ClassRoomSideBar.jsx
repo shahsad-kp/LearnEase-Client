@@ -1,4 +1,4 @@
-import {SideBarBottom, SideBarChat, SideBarDocuments, SideBarParticipants, VideoCall} from "../../";
+import {SideBarActivity, SideBarBottom, SideBarChat, SideBarDocuments, SideBarParticipants, VideoCall} from "../../";
 import {useState} from "react";
 import {useSelector} from "react-redux";
 
@@ -17,11 +17,8 @@ export const ClassRoomSideBar = () => {
 	else if (selected === 'documents'){
 		content = <SideBarDocuments/>
 	}
-	else if (selected === 'teachtools'){
-		content = <div>Files</div>
-	}
 	else{
-		content = <div>Settings</div>
+		content = <SideBarActivity/>
 	}
 	if (!classRoom){
 		return <div/>

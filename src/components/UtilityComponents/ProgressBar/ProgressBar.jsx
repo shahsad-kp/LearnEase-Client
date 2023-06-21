@@ -1,7 +1,7 @@
 import './ProgressBar.css'
 
 // eslint-disable-next-line react/prop-types
-export const ProgressBar = ({current, max}) => {
+export const ProgressBar = ({current, max, color}) => {
     const progress = (current >= max ? 100 : (current / max) * 100);
 
     const colors = [
@@ -16,7 +16,9 @@ export const ProgressBar = ({current, max}) => {
         "#66FF00",
         "#00FF00",
     ];
-    const color = colors[current >= max ? colors.length - 1 : Math.floor((current / max) * colors.length)]
+    if (!color) {
+        color = colors[current >= max ? colors.length - 1 : Math.floor((current / max) * colors.length)]
+    }
     return (
         <div className={'w-full h-2 bg-gray-200 rounded-full max-w-xs'}>
             <div className={`h-full rounded-full progress-bar max-w-full`}

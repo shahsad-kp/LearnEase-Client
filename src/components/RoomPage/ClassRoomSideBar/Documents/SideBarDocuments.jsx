@@ -1,6 +1,6 @@
 import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
-import {IoCloseOutline, IoDocumentOutline, IoDownloadOutline, IoSendOutline} from "react-icons/io5";
+import {IoCloseOutline, IoDocumentOutline, IoDownloadOutline} from "react-icons/io5";
 import {addDocument, setDocuments} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {AiOutlineUpload} from "react-icons/ai";
 
@@ -71,11 +71,11 @@ export const SideBarDocuments = () => {
                 dispatcher(setDocuments(documents));
             }
         }
-    }, []);
+    }, [classRoom, dispatcher]);
 
     const takeUserData = useCallback(() => {
         if (!classRoom) {
-            return {documents: [], userData: {}};
+            return {documents: [], userData: {}, isLecturer: false};
         }
         let userData, documents = classRoom.documents;
         if (classRoom.isLecturer) {
@@ -98,10 +98,10 @@ export const SideBarDocuments = () => {
             }
         }
 
-        return {documents, userData};
+        return {documents, userData, isLecturer: classRoom.isLecturer};
     }, [classRoom])
 
-    const {documents, userData} = takeUserData();
+    const {documents, isLecturer} = takeUserData();
 
     useEffect(() => {
         if (documentsRef.current) documentsRef.current.scrollTop = documentsRef.current.scrollHeight;
@@ -140,7 +140,7 @@ export const SideBarDocuments = () => {
                         })
                     }
                 </div>
-                <form className={'bg-secondary w-full h-fit flex flex-row justify-between rounded gap-2'}>
+                {isLecturer && <form className={'bg-secondary w-full h-fit flex flex-row justify-between rounded gap-2'}>
                     <input
                         className={'hidden'}
                         placeholder={'Enter message..'}
@@ -155,8 +155,7 @@ export const SideBarDocuments = () => {
                             event.preventDefault();
                             if (!document) {
                                 documentSelectRef.current.click();
-                            }
-                            else {
+                            } else {
                                 uploadDocument(event)
                             }
                         }}
@@ -175,7 +174,7 @@ export const SideBarDocuments = () => {
                         >
                             <IoCloseOutline/>
                         </button>}
-                </form>
+                </form>}
             </div>
         </div>
     )
