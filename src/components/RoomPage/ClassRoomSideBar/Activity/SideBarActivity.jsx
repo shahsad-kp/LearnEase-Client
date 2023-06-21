@@ -1,13 +1,14 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useCallback, useEffect, useRef} from "react";
+import {useCallback, useEffect, useRef, useState} from "react";
 import {addResponse, setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {IoSendOutline} from "react-icons/io5";
-import {ProgressBar} from "../../../UtilityComponents/ProgressBar/ProgressBar.jsx";
+import {IoListOutline} from "react-icons/io5";
+import {Modal, ProgressBar} from "../../..";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const dispatcher = useDispatch();
     const activitiesRef = useRef(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
         if (classRoom) {
@@ -419,74 +420,89 @@ export const SideBarActivity = () => {
     if (!activities) return <div/>;
 
     return (
-        <div className={'gap-4 p-2 flex flex-col h-full bg-secondary rounded'}>
-            <div className={'p-3 gap-2 bg-primary h-full flex flex-col rounded-sm w-full'}>
-                <div className={'overflow-y-scroll w-full gap-2 flex flex-col h-full'}>
-                    {
-                        activities.map((activity) => {
-                            return (
-                                <div
-                                    key={activity.id}
-                                    className={'p-2 bg-secondary rounded flex flex-col gap-2'}
-                                >
-                                    <h5 className={'font-bold text-[11px]'}>{activity.title}</h5>
-                                    {isLecturer
-                                        ? <ul style={{listStyle: "disc"}} className={'px-3'}>
-                                            <li className={'text-[11px]'}>Total
-                                                Response: {activity.totalResponses}</li>
-                                            <li className={'text-[11px]'}>Total Right
-                                                Answers: {activity.totalCorrectResponses}</li>
-                                        </ul>
-                                        : <form className={'flex flex-col gap-1'}>
-                                            {
-                                                activity.options.map((option, index) => {
-                                                        let className;
-                                                        if (activity.response && activity.response === option) {
-                                                            if (option === activity.correctAnswer) {
+        <>
+            <div className={'gap-4 p-2 flex flex-col h-full bg-secondary rounded'}>
+                <div className={'p-3 gap-2 bg-primary h-full flex flex-col rounded-sm w-full'}>
+                    <div className={'overflow-y-scroll w-full gap-2 flex flex-col h-full'}>
+                        {
+                            activities.map((activity) => {
+                                return (
+                                    <div
+                                        key={activity.id}
+                                        className={'p-2 bg-secondary rounded flex flex-col gap-2'}
+                                    >
+                                        <h5 className={'font-bold text-[11px]'}>{activity.title}</h5>
+                                        {isLecturer
+                                            ? <ul style={{listStyle: "disc"}} className={'px-3'}>
+                                                <li className={'text-[11px]'}>Total
+                                                    Response: {activity.totalResponses}</li>
+                                                <li className={'text-[11px]'}>Total Right
+                                                    Answers: {activity.totalCorrectResponses}</li>
+                                            </ul>
+                                            : <form className={'flex flex-col gap-1'}>
+                                                {
+                                                    activity.options.map((option, index) => {
+                                                            let className;
+                                                            if (activity.response && activity.response === option) {
+                                                                if (option === activity.correctAnswer) {
+                                                                    className = 'text-green-500'
+                                                                } else {
+                                                                    className = 'text-red-500'
+                                                                }
+                                                            } else if (activity.response && option === activity.correctAnswer) {
                                                                 className = 'text-green-500'
-                                                            } else {
-                                                                className = 'text-red-500'
                                                             }
-                                                        } else if (activity.response && option === activity.correctAnswer) {
-                                                            className = 'text-green-500'
+                                                            return (
+                                                                <li key={index}
+                                                                    className={'text-[11px] flex flex-row'}>
+                                                                    <input
+                                                                        value={option}
+                                                                        type={'radio'}
+                                                                        name={`activity-${activity.id}`}
+                                                                        className={'mr-2'}
+                                                                        onChange={(e) => changeResponse(e.target.value, activity.id)}
+                                                                        checked={activity.response === option}
+                                                                        disabled={activity.response}
+                                                                    />
+                                                                    <p className={className}>{option}</p>
+                                                                </li>
+                                                            )
                                                         }
-                                                        return (
-                                                            <li key={index}
-                                                                className={'text-[11px] flex flex-row'}>
-                                                                <input
-                                                                    value={option}
-                                                                    type={'radio'}
-                                                                    name={`activity-${activity.id}`}
-                                                                    className={'mr-2'}
-                                                                    onChange={(e) => changeResponse(e.target.value, activity.id)}
-                                                                    checked={activity.response === option}
-                                                                    disabled={activity.response}
-                                                                />
-                                                                <p className={className}>{option}</p>
-                                                            </li>
-                                                        )
-                                                    }
-                                                )
-                                            }
-                                        </form>
-                                    }
-                                    {
-                                        isLecturer && <ProgressBar color={'#FCBD02'} current={activity.totalResponses}
-                                                                   max={noOfStudents}/>
-                                    }
-                                </div>
-                            )
-                        })
-                    }
+                                                    )
+                                                }
+                                            </form>
+                                        }
+                                        {
+                                            isLecturer && <ProgressBar
+                                                color={'#FCBD02'}
+                                                current={activity.totalResponses}
+                                                max={noOfStudents}
+                                            />
+                                        }
+                                    </div>
+                                )
+                            })
+                        }
+                    </div>
+                    {!isLecturer && <button
+                        className={'w-full p-2 h-10 bg-accent-color-one rounded justify-center items-center flex gap-2'}
+                        type={'submit'}
+                        onClick={() => {
+                            console.log('clicked')
+                            setShowModal(true);
+                        }}
+                    >
+                        <IoListOutline/>
+                        <span>New Quiz</span>
+                    </button>}
                 </div>
-                {isLecturer && <button
-                    className={'w-full p-3 h-min bg-accent-color-one rounded justify-center items-center flex'}
-                    type={'submit'}
-                    onClick={console.log}
-                >
-                    <IoSendOutline/>
-                </button>}
             </div>
-        </div>
+            {
+                showModal &&
+                <Modal closeFunction={() => setShowModal(false)}>
+
+                </Modal>
+            }
+        </>
     )
 }
