@@ -171,6 +171,18 @@ const classRoomSlice = createSlice({
                 })
             }
         },
+        updateGrade: (state, action) => {
+            const {grade, userId} = action.payload;
+            if (state.classRoom) {
+                state.classRoom.students.map(student => {
+                    if (student.id === userId) {
+                        student.grade = grade;
+                    }
+                    return student;
+                })
+            }
+        }
+
     }
 })
 

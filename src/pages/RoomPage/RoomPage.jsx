@@ -19,6 +19,7 @@ export const RoomPage = () => {
             documents: null,
             messages: null,
             activities: null,
+            grades: null,
             students: [
                 {
                     "id": 1,
@@ -42,6 +43,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": true
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -66,6 +72,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -90,13 +101,18 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 20,
+                        passedActivities: 5,
+                        totalPoints: 14,
                     }
                 },
                 {
                     "id": 4,
                     "name": "Noah Davis",
                     "profilePicture": "https://example.com/profiles/4.jpg",
-                    "isSelf": true,
+                    "isSelf": false,
                     "settings": {
                         "audio": {
                             "permission": true,
@@ -114,6 +130,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -138,6 +159,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -162,6 +188,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -186,6 +217,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -210,6 +246,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -234,6 +275,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -258,6 +304,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -282,6 +333,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -306,6 +362,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -330,6 +391,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -354,6 +420,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -378,6 +449,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -402,6 +478,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -426,6 +507,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -450,6 +536,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -474,6 +565,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -498,6 +594,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -522,6 +623,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -546,6 +652,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -570,6 +681,11 @@ export const RoomPage = () => {
                             "permission": false,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -594,6 +710,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 },
                 {
@@ -618,6 +739,11 @@ export const RoomPage = () => {
                             "permission": true,
                             "enabled": false
                         }
+                    },
+                    "grades": {
+                        totalActivities: 11,
+                        passedActivities: 11,
+                        totalPoints: 50
                     }
                 }
             ],
@@ -625,7 +751,7 @@ export const RoomPage = () => {
                 id: 1,
                 name: 'Lecturer 1',
                 profilePicture: 'https://picsum.photos/200/300',
-                isSelf: false,
+                isSelf: true,
                 settings: {
                     audio: true,
                     video: true,
@@ -633,7 +759,7 @@ export const RoomPage = () => {
                     screenShare: false,
                 }
             },
-            isLecturer: false,
+            isLecturer: true,
             selectedTopic: null,
         };
 
@@ -645,7 +771,7 @@ export const RoomPage = () => {
             dispatcher(leaveClassRoom())
         }
 
-    }, [roomId]);
+    }, [classRoom, dispatcher, roomId]);
 
     return (
         <section className={'h-screen w-screen flex flex-col bg-primary'}>
