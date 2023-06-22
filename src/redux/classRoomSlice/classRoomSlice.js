@@ -170,7 +170,7 @@ const classRoomSlice = createSlice({
                     return activity;
                 })
             }
-        }
+        },
     }
 })
 

@@ -2,7 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {addResponse, setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {IoListOutline} from "react-icons/io5";
-import {Modal, ProgressBar} from "../../..";
+import {CreateActivityModal, Modal, ProgressBar} from "../../..";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -484,12 +484,11 @@ export const SideBarActivity = () => {
                             })
                         }
                     </div>
-                    {!isLecturer && <button
+                    {isLecturer && <button
                         className={'w-full p-2 h-10 bg-accent-color-one rounded justify-center items-center flex gap-2'}
                         type={'submit'}
                         onClick={() => {
-                            console.log('clicked')
-                            setShowModal(true);
+                            setShowModal(isLecturer);
                         }}
                     >
                         <IoListOutline/>
@@ -499,9 +498,7 @@ export const SideBarActivity = () => {
             </div>
             {
                 showModal &&
-                <Modal closeFunction={() => setShowModal(false)}>
-
-                </Modal>
+                <CreateActivityModal closeFunction={() => setShowModal(false)}/>
             }
         </>
     )
