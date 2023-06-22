@@ -26,6 +26,7 @@ import {RightSideTopics} from "./RoomPage/RightSide/RightSideMain/RightSideTopic
 import {RightSideGrades} from "./RoomPage/RightSide/RightSideMain/RightSideGrades/RightSideGrades.jsx";
 import {SideBarActivity} from "./RoomPage/ClassRoomSideBar/Activity/SideBarActivity.jsx";
 import {CreateActivityModal} from "./RoomPage/ClassRoomSideBar/Activity/CreateActivityModal.jsx";
+import {ActivityModal} from "./RoomPage/ClassRoomSideBar/Activity/ActivityModal.jsx";
 
 export {
     LoginForm,
@@ -56,4 +57,5 @@ export {
     RightSideGrades,
     SideBarActivity,
     CreateActivityModal,
+    ActivityModal
 }

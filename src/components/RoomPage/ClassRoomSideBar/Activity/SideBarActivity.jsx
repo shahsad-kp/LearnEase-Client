@@ -2,13 +2,15 @@ import {useDispatch, useSelector} from "react-redux";
 import {useCallback, useEffect, useRef, useState} from "react";
 import {addResponse, setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {IoListOutline} from "react-icons/io5";
-import {CreateActivityModal, Modal, ProgressBar} from "../../..";
+import {ActivityModal, CreateActivityModal, ProgressBar} from "../../..";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const dispatcher = useDispatch();
     const activitiesRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
+    const [activity, setActivity] = useState(null);
+    const [activityModalOpen, setActivityModalOpen] = useState(false);
 
     useEffect(() => {
         if (classRoom) {
@@ -430,6 +432,11 @@ export const SideBarActivity = () => {
                                     <div
                                         key={activity.id}
                                         className={'p-2 bg-secondary rounded flex flex-col gap-2'}
+                                        onClick={() => {
+                                            if (!isLecturer) return;
+                                            setActivity(activity);
+                                            setActivityModalOpen(true);
+                                        }}
                                     >
                                         <h5 className={'font-bold text-[11px]'}>{activity.title}</h5>
                                         {isLecturer
@@ -499,6 +506,13 @@ export const SideBarActivity = () => {
             {
                 showModal &&
                 <CreateActivityModal closeFunction={() => setShowModal(false)}/>
+            }
+            {
+                activityModalOpen &&
+                <ActivityModal
+                    activity={activity}
+                    closeFunction={() => setActivityModalOpen(false)}
+                />
             }
         </>
     )
