@@ -29,7 +29,16 @@ export const RightSideWhiteboard = () => {
         const canvas = canvasRef.current;
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
-        context.current = canvas.getContext('2d');
+        const newCtx = canvas.getContext('2d');
+        if(context.current){
+            newCtx.putImageData(context.current, 0, 0);
+        }
+        context.current = newCtx;
+
+        return () => {
+            context.current = context.current.getImageData(0, 0, canvas.width, canvas.height);
+            console.log(context.current)
+        }
     }, [context]);
 
     useEffect(

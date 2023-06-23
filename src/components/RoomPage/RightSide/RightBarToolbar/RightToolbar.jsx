@@ -2,7 +2,7 @@ import {IoMicOffOutline, IoMicOutline, IoStopCircleOutline} from "react-icons/io
 import {useDispatch, useSelector} from "react-redux";
 import {HiOutlineHandRaised} from "react-icons/hi2";
 import {LuScreenShare, LuScreenShareOff} from "react-icons/lu";
-import {useCallback, useState} from "react";
+import {useCallback} from "react";
 import {MdLogout} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
@@ -12,12 +12,18 @@ import {
     changeScreenShareSetting,
     changeVideoSetting
 } from "../../../../redux/classRoomSlice/classRoomSlice.js";
+import {useReactMediaRecorder} from "react-media-recorder";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
-    const [recording, setRecording] = useState(false);
     const navigator = useNavigate();
     const dispatcher = useDispatch();
+    const {
+        status: recordingStatus,
+        startRecording,
+        stopRecording,
+        mediaBlobUrl
+    } = useReactMediaRecorder({screen: true});
 
     const takeUserData = useCallback(() => {
         if (!classRoom) {
@@ -141,7 +147,7 @@ export const RightToolbar = () => {
 
     const controlMic = (status) => {
         // TODO: control mic
-        if (!userSettings.audio.permission){
+        if (!userSettings.audio.permission) {
             return;
         }
         dispatcher(changeAudioSetting({
@@ -153,7 +159,7 @@ export const RightToolbar = () => {
 
     const controlVideo = (status) => {
         // TODO: control video
-        if (!userSettings.video.permission){
+        if (!userSettings.video.permission) {
             return;
         }
         dispatcher(changeVideoSetting({
@@ -165,7 +171,7 @@ export const RightToolbar = () => {
 
     const controlScreenShare = (status) => {
         // TODO: control screen share
-        if (!userSettings.screenShare.permission){
+        if (!userSettings.screenShare.permission) {
             return;
         }
         dispatcher(changeScreenShareSetting({
@@ -176,8 +182,12 @@ export const RightToolbar = () => {
     }
 
     const recordVideo = () => {
-        // TODO: record video
-        setRecording(!recording)
+        if (recordingStatus === 'recording') {
+            stopRecording();
+            downloadRecording();
+        } else {
+            startRecording();
+        }
     }
 
     const raiseHand = () => {
@@ -192,6 +202,27 @@ export const RightToolbar = () => {
     if (!userSettings) {
         return <div></div>
     }
+
+    const downloadRecording = () => {
+        const pathName = `LearnEase_${document.title}.mp4`;
+        try {
+            if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+                // for IE
+                window.navigator.msSaveOrOpenBlob(mediaBlobUrl, pathName);
+            } else {
+                // for Chrome
+                console.log(mediaBlobUrl);
+                const link = document.createElement("a");
+                link.href = mediaBlobUrl;
+                link.download = pathName;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        } catch (err) {
+            console.error(err);
+        }
+    };
 
     return (
         <div className={'bg-secondary p-2 h-min shadow rounded-md flex flex-row justify-between'}>
@@ -219,14 +250,15 @@ export const RightToolbar = () => {
                 </div>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (recording ? ' !bg-accent-color-one' : '')}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (recordingStatus === 'recording' ? ' !bg-accent-color-one' : '')}
                         onClick={() => recordVideo()}
                     >
-                        {recording ? <IoStopCircleOutline className={'w-12 h-full'} color={'#df073d'}/> :
+                        {recordingStatus === 'recording' ?
+                            <IoStopCircleOutline className={'w-12 h-full'} color={'#df073d'}/> :
                             <IoMdRadioButtonOn className={'w-12 h-full'}/>}
                     </button>
                     <span
-                        className={'w-full font-medium text-[10px] text-center'}>{recording ? "Stop" : "Record"}</span>
+                        className={'w-full font-medium text-[10px] text-center'}>{recordingStatus === 'recording' ? "Stop" : "Record"}</span>
                 </div>
             </div>
             <div>

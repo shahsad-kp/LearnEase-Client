@@ -771,7 +771,7 @@ export const RoomPage = () => {
             dispatcher(leaveClassRoom())
         }
 
-    }, [classRoom, dispatcher, roomId]);
+    }, []);
 
     return (
         <section className={'h-screen w-screen flex flex-col bg-primary'}>
