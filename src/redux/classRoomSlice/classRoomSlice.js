@@ -9,7 +9,7 @@ const classRoomSlice = createSlice({
         joinClassRoom: (state, action) => {
             state.classRoom = action.payload
         },
-        leaveClassRoom: (state) => {
+        leaveClassRoom: state => {
             state.classRoom = null
         },
         addParticipant: (state, action) => {
@@ -182,7 +182,6 @@ const classRoomSlice = createSlice({
                 })
             }
         }
-
     }
 })
 

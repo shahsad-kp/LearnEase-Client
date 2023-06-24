@@ -3,8 +3,7 @@ import {bannerPageButtonClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {useState} from "react";
 import {InputField, PasswordField} from "../";
-import {useDispatch} from "react-redux";
-import {login} from "../../redux/authSlice/authSlice.js";
+import {loginUser} from "../../api/user.js";
 
 export const LoginForm = () => {
     const [values, setValues] = useState({
@@ -13,66 +12,55 @@ export const LoginForm = () => {
     });
     const [errors, setErrors] = useState({});
 
-    const dispatcher = useDispatch()
     const navigator = useNavigate()
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        if (values.email === 'pass'){
-            const user = {
-                email: values.email,
-                name: 'John Doe',
-                id: 1,
-                profilePicture: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
-            }
-            dispatcher(login(user))
-            navigator('/')
-        }
-
-        if (!(validateEmail(values.email) && validatePassword(values.password))){
+        if (!(validateEmail(values.email) && validatePassword(values.password))) {
             return
         }
 
-        //TODO: Add login logic here
-        if (values.email === values.password){
-            const user = {
-                email: values.email,
-                name: 'John Doe',
-                id: 1,
-                profilePicture: 'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'
+        loginUser({email: values.email, password: values.password}).then(() => {
+            navigator('/', {replace: true})
+        }).catch(e => {
+            if (e.response.status === 401) {
+                setErrors(prev => ({...prev, password: e.response.data.detail}));
             }
-            dispatcher(login(user))
-            navigator('/')
-        }
-        else{
-            setErrors(prev => ({...prev, password: 'Password is incorrect..'}));
-        }
-
+            else if (e.response.status === 400){
+                if (e.response.data.password){
+                    setErrors(prev => ({...prev, password: e.response.data.password}))
+                }
+                if (e.response.data.email){
+                    setErrors(prev => ({...prev, email: e.response.data.email}))
+                }
+            }
+            else{
+                console.log(e)
+                setErrors(prevState => ({...prevState, password: 'Unknown error occurred...'}))
+            }
+        })
     }
 
     const validateEmail = (value) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 
-        if (regex.test(value)){
+        if (regex.test(value)) {
             setErrors(prev => ({...prev, email: ''}));
             return true;
-        }
-        else if (value.trim() === ''){
+        } else if (value.trim() === '') {
             setErrors(prev => ({...prev, email: 'Email can\'t be empty..'}));
             return false;
-        }
-        else{
+        } else {
             setErrors(prev => ({...prev, email: 'Email is not valid..'}));
             return false;
         }
     }
 
     const validatePassword = (value) => {
-        if (value.trim() === ''){
+        if (value.trim() === '') {
             setErrors(prev => ({...prev, password: 'Password can\'t be empty..'}));
             return false;
-        }
-        else{
+        } else {
             setErrors(prev => ({...prev, password: ''}));
             return true;
         }

@@ -1,9 +1,10 @@
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {Fragment, useState} from "react";
 import {InputField, PasswordField} from "../";
 import {ProgressBar} from "../";
+import {registerUser} from "../../api/user.js";
 
 
 export const SignupForm = () => {
@@ -21,6 +22,7 @@ export const SignupForm = () => {
         repeatPassword: ''
     });
     const [error, setError] = useState({});
+    const navigator = useNavigate();
 
     const [passwordFocus, setPasswordFocus] = useState(false);
 
@@ -104,15 +106,39 @@ export const SignupForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        // TODO: Complete all this
-        if (validateName(values.name) && validateEmail(values.email) && validatePassword(values.password) && validateRepeatPassword(values.repeatPassword)) {
-            console.log('Form submitted');
-        } else{
-            console.log('Form not submitted');
+
+        if (!(validateName(values.name) &&
+            validateEmail(values.email) &&
+            validatePassword(values.password) &&
+            validateRepeatPassword(values.repeatPassword))){
+            return;
         }
+
+        registerUser({name: values.name, email: values.email, password: values.password}).then(() => {
+            navigator('/', {replace: true})
+        }).catch(e => {
+            if (e.response.status === 401) {
+                setError(prev => ({...prev, password: e.response.data.detail}));
+            }
+            else if (e.response.status === 400){
+                if (e.response.data.password){
+                    setError(prev => ({...prev, password: e.response.data.password}))
+                }
+                if (e.response.data.email){
+                    setError(prev => ({...prev, email: e.response.data.email}))
+                }
+                if (e.response.data.name){
+                    setError(prevState => ({...prevState, name: e.response.data.name}))
+                }
+            }
+            else{
+                console.log(e)
+                setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
+            }
+        })
     }
 
-
+    
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
             <div className={'w-3/4'}>
