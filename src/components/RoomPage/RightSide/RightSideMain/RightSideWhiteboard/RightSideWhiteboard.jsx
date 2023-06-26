@@ -3,7 +3,6 @@ import {BiPencil} from "react-icons/bi"
 import {TfiMarkerAlt} from "react-icons/tfi";
 import {useContext, useEffect, useMemo, useRef} from "react";
 import {BsEraser} from "react-icons/bs";
-import {IoArrowRedoOutline, IoArrowUndoOutline} from "react-icons/io5";
 import {AiOutlineClear} from "react-icons/ai";
 import {WhiteboardContext} from "../../../../../store/whiteboardContext.jsx";
 import {useSelector} from "react-redux";
@@ -148,26 +147,10 @@ export const RightSideWhiteboard = () => {
         }
     }
 
-    const undoLine = () => {
-        // TODO: undo line
-
-        return () => {
-            console.log('undo line')
-        }
-    }
-
-    const redoLine = () => {
-
-        // TODO: redo line
-        return () => {
-            console.log('redo line')
-        }
-    }
 
     const clearCanvas = () => {
         // TODO: clear canvas
         context.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
-
     }
 
     return (
@@ -216,19 +199,6 @@ export const RightSideWhiteboard = () => {
                             onClick={clearCanvas}
                         >
                             <AiOutlineClear/>
-                        </button>
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one'}
-                            onClick={undoLine}
-                        >
-                            <IoArrowUndoOutline/>
-                        </button>
-
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one'}
-                            onClick={redoLine}
-                        >
-                            <IoArrowRedoOutline/>
                         </button>
                     </div>
                         )
