@@ -1,4 +1,8 @@
-import {addParticipant, removeParticipant} from "../redux/classRoomSlice/classRoomSlice.js";
+import {
+    addParticipant,
+    changeParticipantSettings,
+    removeParticipant
+} from "../redux/classRoomSlice/classRoomSlice.js";
 import store from "../redux/store.js";
 
 const wsBaseUrl = 'ws://localhost:8000/ws/'
@@ -15,10 +19,11 @@ const connectToRoom = (roomId) => {
             store.dispatch(addParticipant(student));
         } else if (data.type === 'leave_student') {
             const student_id = data.student_id;
-            console.log('leave_student', student_id)
             store.dispatch(removeParticipant(student_id));
-        } else {
-            console.log(data);
+        } else if (data.type === 'change_settings'){
+            const userId = data.user_id;
+            const settings = data.settings
+            store.dispatch(changeParticipantSettings({userId, settings}));
         }
     };
     const onError = (e) => {
@@ -38,12 +43,20 @@ const disconnectRoom = () => {
     }
 }
 
-const changeSettings = ({audio, video, whiteboard}) => {
+const changeSettings = ({audio, video}) => {
     const data = {
         type: 'change_settings',
         audio,
-        video,
-        whiteboard
+        video
+    }
+    roomSocket.send(JSON.stringify(data));
+}
+
+const changePermission = ({userId, permission}) => {
+    const data = {
+        type: 'change_permission',
+        user_id: userId,
+        permission
     }
     roomSocket.send(JSON.stringify(data));
 }
@@ -70,4 +83,4 @@ const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
     return socket;
 };
 
-export {connectToRoom, disconnectRoom};
+export {connectToRoom, disconnectRoom, changeSettings, changePermission};

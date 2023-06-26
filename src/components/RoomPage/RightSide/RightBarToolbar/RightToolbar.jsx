@@ -1,23 +1,18 @@
 import {IoMicOffOutline, IoMicOutline, IoStopCircleOutline} from "react-icons/io5";
-import {useDispatch, useSelector} from "react-redux";
+import {useSelector} from "react-redux";
 import {HiOutlineHandRaised} from "react-icons/hi2";
-import {useMemo, useRef, useState} from "react";
+import {useMemo, useState} from "react";
 import {MdLogout} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
 import {IoMdRadioButtonOn} from "react-icons/io";
-import {
-    changeAudioSetting,
-    changeScreenShareSetting,
-    changeVideoSetting
-} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {useReactMediaRecorder} from "react-media-recorder";
+import {changeSettings} from "../../../../api/socket.js";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user)
     const navigator = useNavigate();
-    const dispatcher = useDispatch();
     const [screenShareControl, setScreenShareControl] = useState();
     const {
         status: recordingStatus,
@@ -26,7 +21,7 @@ export const RightToolbar = () => {
         mediaBlobUrl
     } = useReactMediaRecorder({screen: true});
 
-    const {userSettings, userData, isLecturer} = useMemo(
+    const {userSettings, isLecturer} = useMemo(
         () => {
             if (!classRoom) {
                 return {userSettings: null, userData: null, isLecturer: null};
@@ -108,31 +103,26 @@ export const RightToolbar = () => {
     }
 
     const controlMic = (status) => {
-        // TODO: control mic
         if (!userSettings.audio.permission) {
             return;
         }
-        dispatcher(changeAudioSetting({
-            userId: userData.id,
-            value: !status,
-            isLecturer: isLecturer
-        }))
+        changeSettings({
+            audio: !status,
+            video: userSettings.video.enabled
+        })
     }
 
     const controlVideo = (status) => {
-        // TODO: control video
         if (!userSettings.video.permission) {
             return;
         }
-        dispatcher(changeVideoSetting({
-            userId: userData.id,
-            value: !status,
-            isLecturer: isLecturer
-        }))
+        changeSettings({
+            audio: userSettings.audio.enabled,
+            video: !status
+        })
     }
 
     const controlScreenShare = (status) => {
-        // TODO: control screen share
         if (!userSettings.video.permission) {
             return;
         }
@@ -153,7 +143,6 @@ export const RightToolbar = () => {
     }
 
     const leaveClass = () => {
-        // TODO: leave class
         navigator('/');
     }
 
@@ -166,8 +155,6 @@ export const RightToolbar = () => {
                 // for IE
                 window.navigator.msSaveOrOpenBlob(mediaBlobUrl, pathName);
             } else {
-                // for Chrome
-                console.log(mediaBlobUrl);
                 const link = document.createElement("a");
                 link.href = mediaBlobUrl;
                 link.download = pathName;

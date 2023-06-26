@@ -32,51 +32,15 @@ const classRoomSlice = createSlice({
                 state.classRoom.messages.push(action.payload);
             }
         },
-        changeAudioSetting: (state, action) => {
-            if (state.classRoom) {
-                const userId = action.payload.userId;
-                const value = action.payload.value;
-                const isLecturer = action.payload.isLecturer;
-                if (isLecturer) {
-                    state.classRoom.lecturer.settings.audio = value;
+        changeParticipantSettings: (state, action) => {
+            if (state.classRoom){
+                const {userId, settings} = action.payload;
+                if (state.classRoom.lecturer.id === userId){
+                    state.classRoom.lecturer.settings = {...state.classRoom.lecturer.settings, ...settings};
                 } else {
-                    state.classRoom.students.map(student => {
-                        if (student.id === userId) {
-                            student.settings.audio.enabled = value;
-                        }
-                        return student;
-                    })
-                }
-            }
-        },
-        changeVideoSetting: (state, action) => {
-            if (state.classRoom) {
-                const userId = action.payload.userId;
-                const value = action.payload.value;
-                const isLecturer = action.payload.isLecturer;
-                if (isLecturer) {
-                    state.classRoom.lecturer.settings.video = value;
-                } else {
-                    state.classRoom.students.map(student => {
-                        if (student.id === userId) {
-                            student.settings.video.enabled = value;
-                        }
-                        return student;
-                    })
-                }
-            }
-        },
-        changeScreenShareSetting: (state, action) => {
-            if (state.classRoom) {
-                const userId = action.payload.userId;
-                const value = action.payload.value;
-                const isLecturer = action.payload.isLecturer;
-                if (isLecturer) {
-                    state.classRoom.lecturer.settings.screenShare = value;
-                } else {
-                    state.classRoom.students.map(student => {
-                        if (student.id === userId) {
-                            student.settings.screenShare.enabled = value;
+                    state.classRoom.students = state.classRoom.students.map(student => {
+                        if (student.id === userId){
+                            student.settings = {...student.settings, ...settings};
                         }
                         return student;
                     })
@@ -197,9 +161,7 @@ export const {
     leaveClassRoom,
     addParticipant,
     removeParticipant,
-    changeAudioSetting,
-    changeVideoSetting,
-    changeScreenShareSetting,
+    changeParticipantSettings,
     setMessages,
     addMessage,
     changeAudioPermission,

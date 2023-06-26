@@ -4,6 +4,7 @@ import {BsCameraVideo, BsCameraVideoOff} from "react-icons/bs";
 import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
 import {changeAudioPermission, changeVideoPermission} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {imageBaseURL} from "../../../../api/apiConfiguration.js";
+import {changePermission} from "../../../../api/socket.js";
 
 export const SideBarParticipants = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -20,13 +21,24 @@ export const SideBarParticipants = () => {
 
     const handleAudioButton = (userId, value) => {
         if (!isLecturer) return;
-        // TODO : send to
+        changePermission({
+            userId,
+            permission: {
+                audio: value
+            }
+        })
         dispatcher(changeAudioPermission({userId, value}))
     }
 
     const handleVideoButton = (userId, value) => {
         if (!isLecturer) return;
         // TODO : send to server
+        changePermission({
+            userId,
+            permission: {
+                video: value
+            }
+        })
         dispatcher(changeVideoPermission({userId, value}))
     }
 
