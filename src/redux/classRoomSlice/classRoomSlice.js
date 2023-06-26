@@ -20,7 +20,7 @@ const classRoomSlice = createSlice({
         },
         removeParticipant: (state, action) => {
             if (!state.classRoom.students) return;
-            state.classRoom.students = state.classRoom.students.filter(student => student.id !== action.payload)
+            state.classRoom.students = state.classRoom.students.filter(student => student.id !== parseInt(action.payload))
         },
         setMessages: (state, action) => {
             if (state.classRoom) {

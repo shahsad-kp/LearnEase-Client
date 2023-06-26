@@ -1,8 +1,7 @@
 import {IoMicOffOutline, IoMicOutline, IoStopCircleOutline} from "react-icons/io5";
 import {useDispatch, useSelector} from "react-redux";
 import {HiOutlineHandRaised} from "react-icons/hi2";
-import {LuScreenShare, LuScreenShareOff} from "react-icons/lu";
-import {useCallback} from "react";
+import {useMemo, useRef, useState} from "react";
 import {MdLogout} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
@@ -16,8 +15,10 @@ import {useReactMediaRecorder} from "react-media-recorder";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const user = useSelector(state => state.auth.user)
     const navigator = useNavigate();
     const dispatcher = useDispatch();
+    const [screenShareControl, setScreenShareControl] = useState();
     const {
         status: recordingStatus,
         startRecording,
@@ -25,57 +26,40 @@ export const RightToolbar = () => {
         mediaBlobUrl
     } = useReactMediaRecorder({screen: true});
 
-    const takeUserData = useCallback(() => {
-        if (!classRoom) {
-            return {userSettings: null, userData: null, isLecturer: null};
-        }
-        let userSettings = null;
-        let userData;
-        if (classRoom.isLecturer) {
-            userSettings = {
-                audio: {
-                    permission: true,
-                    enabled: classRoom.lecturer.settings.audio,
-                },
-                video: {
-                    permission: true,
-                    enabled: classRoom.lecturer.settings.video,
-                },
-                whiteBoard: {
-                    permission: true,
-                    enabled: classRoom.lecturer.settings.whiteBoard,
-                },
-                screenShare: {
-                    permission: true,
-                    enabled: classRoom.lecturer.settings.screenShare,
+    const {userSettings, userData, isLecturer} = useMemo(
+        () => {
+            if (!classRoom) {
+                return {userSettings: null, userData: null, isLecturer: null};
+            }
+            let userSettings = null;
+            let userData;
+            if (classRoom.lecturer.id === user.id) {
+                userSettings = classRoom.lecturer.settings
+                userData = {
+                    id: classRoom.lecturer.id,
+                    name: classRoom.lecturer.name,
+                    profilePicture: classRoom.lecturer.profilePicture,
                 }
-            }
-            userData = {
-                id: classRoom.lecturer.id,
-                name: classRoom.lecturer.name,
-                profilePicture: classRoom.lecturer.profilePicture,
-            }
-        } else {
-            for (let student of classRoom.students) {
-                if (student.isSelf) {
-                    userSettings = student.settings
-                    userData = {
-                        id: student.id,
-                        name: student.name,
-                        profilePicture: student.profilePicture,
+            } else {
+                for (let student of classRoom.students) {
+                    if (student.isSelf) {
+                        userSettings = student.settings
+                        userData = {
+                            id: student.id,
+                            name: student.name,
+                            profilePicture: student.profilePicture,
+                        }
+                        break;
                     }
-                    break;
                 }
             }
-        }
-        return {userSettings, userData, isLecturer: classRoom.isLecturer};
-    }, [classRoom])
-
-    const {userSettings, userData, isLecturer} = takeUserData();
+            return {userSettings, userData, isLecturer: classRoom.isLecturer};
+        },
+        [classRoom]
+    );
 
     let audioControl;
     let videoControl;
-    let screenShareControl;
 
     if (userSettings !== null) {
         if (userSettings.audio.permission && userSettings.audio.enabled) {
@@ -121,28 +105,6 @@ export const RightToolbar = () => {
                 }
             }
         }
-
-        if (userSettings.screenShare.permission && userSettings.screenShare.enabled) {
-            screenShareControl = {
-                icon: <LuScreenShareOff className={'w-12 h-full'}/>,
-                status: true,
-                permission: true,
-            }
-        } else {
-            if (userSettings.screenShare.permission) {
-                screenShareControl = {
-                    icon: <LuScreenShare className={'w-12 h-full'}/>,
-                    status: false,
-                    permission: true,
-                }
-            } else {
-                screenShareControl = {
-                    icon: <LuScreenShareOff className={'w-12 h-full'} color={'white'}/>,
-                    status: false,
-                    permission: false,
-                }
-            }
-        }
     }
 
     const controlMic = (status) => {
@@ -171,14 +133,10 @@ export const RightToolbar = () => {
 
     const controlScreenShare = (status) => {
         // TODO: control screen share
-        if (!userSettings.screenShare.permission) {
+        if (!userSettings.video.permission) {
             return;
         }
-        dispatcher(changeScreenShareSetting({
-            userId: userData.id,
-            value: !status,
-            isLecturer: isLecturer
-        }))
+        setScreenShareControl(!status);
     }
 
     const recordVideo = () => {
@@ -199,9 +157,7 @@ export const RightToolbar = () => {
         navigator('/');
     }
 
-    if (!userSettings) {
-        return <div></div>
-    }
+    if (!userSettings) return <div></div>;
 
     const downloadRecording = () => {
         const pathName = `LearnEase_${document.title}.mp4`;
@@ -264,13 +220,14 @@ export const RightToolbar = () => {
             <div>
                 <div className={'w-min flex gap-1 flex-col justify-center cursor-pointer'}>
                     <button
-                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (screenShareControl.permission ? (screenShareControl.status ? ' !bg-accent-color-one' : '') : ' !bg-red-300')}
-                        onClick={() => controlScreenShare(screenShareControl.status)}
+                        className={'w-min h-10 box-border p-2 xl:bg-primary rounded' + (videoControl.permission ? (screenShareControl ? ' !bg-accent-color-one' : '') : ' !bg-red-300')}
+                        onClick={() => controlScreenShare(screenShareControl)}
                     >
                         <BsCast className={'w-12 h-full'}/>
                     </button>
                     <span
-                        className={'w-full font-medium text-[10px] text-center'}>{screenShareControl.permission ? (screenShareControl.status ? "Stop Sharing" : "Screen Share") : "Restricted"}</span>
+                        className={'w-full font-medium text-[10px] text-center'}>{videoControl.permission ? (screenShareControl ? "Stop Sharing" : "Screen Share") : "Restricted"}
+                    </span>
                 </div>
             </div>
             <div className={'justify-between flex flex-row gap-2.5'}>

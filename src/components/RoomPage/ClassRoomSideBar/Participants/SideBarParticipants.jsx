@@ -3,18 +3,20 @@ import {useMemo} from "react";
 import {BsCameraVideo, BsCameraVideoOff} from "react-icons/bs";
 import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
 import {changeAudioPermission, changeVideoPermission} from "../../../../redux/classRoomSlice/classRoomSlice.js";
+import {imageBaseURL} from "../../../../api/apiConfiguration.js";
 
 export const SideBarParticipants = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch()
 
     const [lecturer, students, isLecturer] = useMemo(() => {
         if (!classRoom) {
             return [{}, [], false]
         } else {
-            return [classRoom.lecturer, classRoom.students, classRoom.isLecturer];
+            return [classRoom.lecturer, classRoom.students, classRoom.lecturer.id === user.id]
         }
-    }, [classRoom]);
+    }, [classRoom, user]);
 
     const handleAudioButton = (userId, value) => {
         if (!isLecturer) return;
@@ -38,13 +40,13 @@ export const SideBarParticipants = () => {
                             <button
                                 className={'rounded p-1 bg-primary'}>
                                 {
-                                    lecturer.settings.video ? <BsCameraVideo/> : <BsCameraVideoOff/>
+                                    lecturer.settings.video.enabled ? <BsCameraVideo/> : <BsCameraVideoOff/>
                                 }
                             </button>
                             <button
                                 className={'rounded p-1 bg-primary'}>
                                 {
-                                    lecturer.settings.audio ? <IoMicOutline/> : <IoMicOffOutline/>
+                                    lecturer.settings.audio.enabled ? <IoMicOutline/> : <IoMicOffOutline/>
                                 }
                             </button>
                             {/*<button*/}
@@ -57,7 +59,7 @@ export const SideBarParticipants = () => {
                     }
 
                     <img
-                        src={'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+                        src={`${imageBaseURL}${lecturer.profilePicture}`}
                         alt={''}
                         className={'object-cover w-8 h-8 rounded-full'}/>
                     <span className={'font-normal'}>{lecturer.name}</span>
@@ -107,7 +109,7 @@ export const SideBarParticipants = () => {
                                     </>
                                 }
                                 <img
-                                    src={'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+                                    src={`${imageBaseURL}${student.profilePicture}`}
                                     alt={''}
                                     className={'object-cover w-8 h-8 rounded-full'}
                                 />

@@ -4,6 +4,7 @@ import {logout} from "../redux/authSlice/authSlice.js";
 
 
 const baseURL = 'http://localhost:8000/api/';
+const imageBaseURL = 'http://localhost:8000';
 
 const axiosAuthorized = axios.create({
     baseURL: baseURL,
@@ -52,4 +53,4 @@ axiosAuthorized.interceptors.response.use(
     }
 );
 
-export {axiosAuthorized, axiosInstance};
+export {axiosAuthorized, axiosInstance, imageBaseURL};

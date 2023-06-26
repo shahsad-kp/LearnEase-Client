@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import classNames from "classnames";
 import {logout} from "../../../redux/authSlice/authSlice.js";
 import {useNavigate} from "react-router-dom";
+import {imageBaseURL} from "../../../api/apiConfiguration.js";
 
 export const NavBarDropDown = () => {
     const user = useSelector(state => state.auth.user)
@@ -43,7 +44,6 @@ export const NavBarDropDown = () => {
         };
     }, []);
 
-
     return (
         <div
             className={'flex m-3 flex-row items-center gap-5 h-7 w-7 relative'}
@@ -53,7 +53,7 @@ export const NavBarDropDown = () => {
                 className={'h-full border-accent-color-one profile-picture cursor-pointer'}
                 onClick={() => setDrop(state => !state)}
             >
-                <img src={user ? user.profilePicture : ''} alt={'Profile'}
+                <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
                      className={'object-cover h-full rounded border-accent-color-one'}/>
             </div>
             {drop &&
@@ -63,7 +63,7 @@ export const NavBarDropDown = () => {
                 >
                     <div className={'flex flex-row w-min justify-center gap-2.5 border p-2.5 rounded m-2.5'}>
                         <div style={{width: '40px', height: '40px'}}>
-                            <img src={user ? user.profilePicture : ''} alt={'Profile'}
+                            <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
                                  className={'object-cover rounded h-full w-full border-accent-color-one'}/>
                         </div>
                         <div className={'w-max'}>
