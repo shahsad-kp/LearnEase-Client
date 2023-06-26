@@ -2,9 +2,8 @@ import {GrAdd, GrFormClose} from "react-icons/gr";
 import {homePageButton, homePageTextAreaClass} from "../../styles.js";
 import {Modal, InputField} from "../../";
 import {useEffect, useRef, useState} from "react";
-import {useDispatch} from "react-redux";
-import {joinClassRoom} from "../../../redux/classRoomSlice/classRoomSlice.js";
 import {useNavigate} from "react-router-dom";
+import {createClassRoom} from "../../../api/classRoom.js";
 
 
 // eslint-disable-next-line react/prop-types
@@ -87,8 +86,12 @@ export const CreateRoomModal = ({closeFunction}) => {
             setTopicError('At least one topic is required');
         }
 
-        // TODO: Add room to database
-        navigator('/123456789/room/');
+        createClassRoom({
+            title: roomName,
+            topics: filteredTopics
+        }).then(classRoomData =>
+            navigator(`/${classRoomData.id}/room/`)
+        ).catch()
     }
 
     useEffect(() => {

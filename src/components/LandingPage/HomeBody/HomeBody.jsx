@@ -7,6 +7,7 @@ import {useNavigate} from "react-router-dom";
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);
     const [createRoomModal, setCreateRoomModal] = useState(false);
+    const [roomId, setRoomId] = useState('');
     const navigator = useNavigate();
 
     useEffect(() => {
@@ -22,6 +23,11 @@ export const HomeBody = () => {
 
     }, []);
 
+    const joinClassroom = (event) => {
+        event.preventDefault();
+        if (!roomId) return;
+        navigator(`/${roomId}/room/`);
+    }
 
     return (
         <>
@@ -33,13 +39,15 @@ export const HomeBody = () => {
                         </div>
                         <div className={'w-full flex flex-col gap-2.5'}>
                             <div className={'w-full flex flex-row gap-2.5'}>
-                                <InputField type={'text'} placeholder={'Enter room id'}
-                                            classNames={'md:max-w-xs !max-w-full font-mono'}/>
+                                <InputField type={'text'}
+                                            placeholder={'Enter room id'}
+                                            classNames={'md:max-w-xs !max-w-full font-mono'}
+                                            value={roomId}
+                                            onChange={(e) => setRoomId(e.target.value)}
+                                />
                                 <button
                                     className={homePageButton}
-                                    onClick={() => {
-                                        navigator('/123456789/room/')
-                                    }}
+                                    onClick={joinClassroom}
                                 >Join</button>
                             </div>
                             <div>

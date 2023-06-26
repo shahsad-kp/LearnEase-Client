@@ -6,8 +6,8 @@ const loginUser = async ({email, password}) => {
     try{
         const response = await axiosInstance.post('/auth/login/', {email, password});
         const {access, refresh, user} = response.data;
-        localStorage.setItem('access', access);
-        localStorage.setItem('refresh', refresh);
+        localStorage.setItem('accessToken', access);
+        localStorage.setItem('refreshToken', refresh);
         store.dispatch(login(user))
         return await Promise.resolve(response);
     }

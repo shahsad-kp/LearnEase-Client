@@ -14,7 +14,13 @@ const classRoomSlice = createSlice({
         },
         addParticipant: (state, action) => {
             if (!state.classRoom.students) return;
-            state.classRoom.students.push(action.payload)
+            const student = state.classRoom.students.find(student => student.id === action.payload.id);
+            if (student) return;
+            state.classRoom.students.unshift(action.payload)
+        },
+        removeParticipant: (state, action) => {
+            if (!state.classRoom.students) return;
+            state.classRoom.students = state.classRoom.students.filter(student => student.id !== action.payload)
         },
         setMessages: (state, action) => {
             if (state.classRoom) {
@@ -188,7 +194,9 @@ const classRoomSlice = createSlice({
 export default classRoomSlice.reducer;
 export const {
     joinClassRoom,
-    leaveClassRoom, addParticipant,
+    leaveClassRoom,
+    addParticipant,
+    removeParticipant,
     changeAudioSetting,
     changeVideoSetting,
     changeScreenShareSetting,

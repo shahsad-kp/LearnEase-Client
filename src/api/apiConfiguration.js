@@ -1,4 +1,7 @@
 import axios from "axios";
+import store from "../redux/store.js";
+import {logout} from "../redux/authSlice/authSlice.js";
+
 
 const baseURL = 'http://localhost:8000/api/';
 
@@ -40,6 +43,7 @@ axiosAuthorized.interceptors.response.use(
                 .catch((error) => {
                     localStorage.removeItem('accessToken')
                     localStorage.removeItem('refreshToken')
+                    store.dispatch(logout())
                     return Promise.reject(error);
                 });
         }
@@ -47,6 +51,5 @@ axiosAuthorized.interceptors.response.use(
         return Promise.reject(error);
     }
 );
-
 
 export {axiosAuthorized, axiosInstance};
