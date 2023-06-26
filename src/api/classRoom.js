@@ -37,7 +37,18 @@ const getTopics = async ({classRoomId}) => {
     catch (e) {
         return await Promise.reject(e)
     }
-
 }
 
-export {createClassRoom, getTopics, getClassRoomData}
+const getHistory = async () => {
+    try {
+        const response = await axiosAuthorized.get(
+            `/classroom/history/`
+        )
+        return response.data
+    }
+    catch (e) {
+        return await Promise.reject(e)
+    }
+}
+
+export {createClassRoom, getTopics, getClassRoomData, getHistory}

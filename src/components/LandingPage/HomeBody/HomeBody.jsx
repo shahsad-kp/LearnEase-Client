@@ -3,6 +3,7 @@ import {CreateRoomModal, InputField} from "../../";
 import {homePageButton} from "../../styles.js";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
+import {getHistory} from "../../../api/classRoom.js";
 
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);
@@ -11,15 +12,13 @@ export const HomeBody = () => {
     const navigator = useNavigate();
 
     useEffect(() => {
-        // TODO: fetch history from server
-
-        const room = {
-            id: 123441234,
-            name: 'Mathematics',
-            date: new Date(),
-        }
-        const totalHistory = [...Array(6)].map(() => room);
-        setHistory(totalHistory);
+        getHistory().then(totalHistory => {
+            totalHistory = totalHistory.map(room => {
+                room.created_at = new Date(room.created_at);
+                return room;
+            })
+            setHistory(totalHistory);
+        })
 
     }, []);
 
@@ -70,9 +69,9 @@ export const HomeBody = () => {
                             {
                                 history.length ? history.map((room, index) => (
                                     <div key={index} className={'flex justify-between'}>
-                                        <div>{room.name}</div>
+                                        <div>{room.title}</div>
                                         <div className={'flex flex-row gap-1.5'}>
-                                            <span>{room.date.toLocaleDateString()}</span>
+                                            <span>{room.created_at.toLocaleDateString()}</span>
                                             <span className={'text-logo-green cursor-pointer'}>View</span>
                                         </div>
                                     </div>
