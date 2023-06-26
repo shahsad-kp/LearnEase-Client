@@ -1,4 +1,5 @@
 import {
+    addMessage,
     addParticipant,
     changeParticipantSettings,
     removeParticipant
@@ -7,6 +8,7 @@ import store from "../redux/store.js";
 
 const wsBaseUrl = 'ws://localhost:8000/ws/'
 let roomSocket = null;
+let messageSocket = null
 
 const connectToRoom = (roomId) => {
     const onOpen = () => {
@@ -43,6 +45,34 @@ const disconnectRoom = () => {
     }
 }
 
+const connectMessage = (roomId) => {
+    const onOpen = () => {
+        console.log('connected to message');
+    };
+    const onMessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.message){
+            const message = data.message;
+            store.dispatch(addMessage(message));
+        }
+    };
+    const onError = (e) => {
+        console.log('error', e);
+    }
+    const onClose = () => {
+        console.log('disconnected from room');
+    }
+    const endPoint = `messages/${roomId}/`;
+
+    messageSocket = connectWebSocket(endPoint, {onOpen, onMessage, onError, onClose});
+}
+
+const disconnectMessage = () => {
+    if (messageSocket) {
+        messageSocket.close();
+    }
+}
+
 const changeSettings = ({audio, video}) => {
     const data = {
         type: 'change_settings',
@@ -59,6 +89,24 @@ const changePermission = ({userId, permission}) => {
         permission
     }
     roomSocket.send(JSON.stringify(data));
+}
+
+const sendMessageToServer = ({message}) => {
+    const data = {
+        type: 'send_message',
+        message
+    }
+    messageSocket.send(JSON.stringify(data));
+}
+
+const connectAllSockets = ({roomId}) => {
+    connectToRoom(roomId);
+    connectMessage(roomId);
+}
+
+const disconnectAllSockets = () => {
+    disconnectRoom();
+    disconnectMessage();
 }
 
 const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
@@ -83,4 +131,13 @@ const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
     return socket;
 };
 
-export {connectToRoom, disconnectRoom, changeSettings, changePermission};
+export {
+    connectToRoom,
+    disconnectRoom,
+    changeSettings,
+    changePermission,
+    connectMessage,
+    sendMessageToServer,
+    connectAllSockets,
+    disconnectAllSockets
+};

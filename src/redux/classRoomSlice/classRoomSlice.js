@@ -28,7 +28,7 @@ const classRoomSlice = createSlice({
             }
         },
         addMessage: (state, action) => {
-            if (state.classRoom) {
+            if (state.classRoom && state.classRoom.messages) {
                 state.classRoom.messages.push(action.payload);
             }
         },

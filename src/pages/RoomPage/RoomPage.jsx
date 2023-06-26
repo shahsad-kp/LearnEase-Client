@@ -7,7 +7,7 @@ import {
     leaveClassRoom
 } from "../../redux/classRoomSlice/classRoomSlice.js";
 import {getClassRoomData} from "../../api/classRoom.js";
-import {connectToRoom, disconnectRoom} from "../../api/socket.js";
+import {connectAllSockets, disconnectAllSockets} from "../../api/socket.js";
 
 
 export const RoomPage = () => {
@@ -16,9 +16,9 @@ export const RoomPage = () => {
     const {roomId} = useParams();
 
     useEffect(() => {
-        connectToRoom(roomId)
+        connectAllSockets({roomId})
         return () => {
-            disconnectRoom()
+            disconnectAllSockets()
         }
     }, [roomId]);
 

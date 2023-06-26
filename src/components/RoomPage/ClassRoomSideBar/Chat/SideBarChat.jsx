@@ -1,199 +1,49 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useEffect, useMemo, useRef, useState} from "react";
 import {IoSendOutline} from "react-icons/io5";
-import {addMessage, setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
+import {setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
+import {sendMessageToServer} from "../../../../api/socket.js";
+import {getAllMessages} from "../../../../api/messages.js";
+import {imageBaseURL} from "../../../../api/apiConfiguration.js";
 
 export const SideBarChat = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch();
     const [message, setMessage] = useState('');
     const messagesRef = useRef(null);
 
     useEffect(() => {
         if (classRoom) {
-            if (classRoom.messages === null) {
-                // TODO: take messages from server
-
-                const messages = [
-                    {
-                        text: 'Hello Good Morning',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: 'Good Morning',
-                        sender: {
-                            id: 3,
-                            name: 'Olivia Brown',
-                            profilePicture: 'https://example.com/profiles/2.jpg',
-                            isSelf: false
-                        }
-                    },
-                    {
-                        text: 'How are you?',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: "Can we start the class?",
-                        sender: {
-                            id: 7,
-                            name: 'Ava Anderson',
-                            profilePicture: 'https://example.com/profiles/3.jpg',
-                            isSelf: false,
-                        }
-                    },
-                    {
-                        text: 'Hello Good Morning',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: 'Good Morning',
-                        sender: {
-                            id: 3,
-                            name: 'Olivia Brown',
-                            profilePicture: 'https://example.com/profiles/2.jpg',
-                            isSelf: false
-                        }
-                    },
-                    {
-                        text: 'How are you?',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: "Can we start the class?",
-                        sender: {
-                            id: 7,
-                            name: 'Ava Anderson',
-                            profilePicture: 'https://example.com/profiles/3.jpg',
-                            isSelf: false,
-                        }
-                    },
-                    {
-                        text: 'Hello Good Morning',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: 'Good Morning',
-                        sender: {
-                            id: 3,
-                            name: 'Olivia Brown',
-                            profilePicture: 'https://example.com/profiles/2.jpg',
-                            isSelf: false
-                        }
-                    },
-                    {
-                        text: 'How are you?',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: "Can we start the class?",
-                        sender: {
-                            id: 7,
-                            name: 'Ava Anderson',
-                            profilePicture: 'https://example.com/profiles/3.jpg',
-                            isSelf: false,
-                        }
-                    },
-                    {
-                        text: 'Hello Good Morning',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: 'Good Morning',
-                        sender: {
-                            id: 3,
-                            name: 'Olivia Brown',
-                            profilePicture: 'https://example.com/profiles/2.jpg',
-                            isSelf: false
-                        }
-                    },
-                    {
-                        text: 'How are you?',
-                        sender: {
-                            id: 1,
-                            name: 'Emma Smith',
-                            profilePicture: 'https://example.com/profiles/1.jpg',
-                            isSelf: true
-                        }
-                    },
-                    {
-                        text: "Can we start the class?",
-                        sender: {
-                            id: 7,
-                            name: 'Ava Anderson',
-                            profilePicture: 'https://example.com/profiles/3.jpg',
-                            isSelf: false,
-                        }
-                    },
-                ]
-                dispatcher(setMessages(messages));
+            console.log(classRoom)
+            if (classRoom.messages === undefined) {
+                getAllMessages({roomId:classRoom.id}).then(messages =>{
+                    console.log(messages)
+                    dispatcher(setMessages(messages))
+                })
             }
         }
     }, []);
 
-    const takeUserData = useCallback(() => {
+    const messages = useMemo(() => {
         if (!classRoom) {
-            return {messages: [], userData: {}};
+            return [];
         }
-        let userData, messages = classRoom.messages;
-        if (classRoom.isLecturer) {
-            userData = {
-                id: classRoom.lecturer.id,
-                name: classRoom.lecturer.name,
-                profilePicture: classRoom.lecturer.profilePicture,
-            }
+        if (!classRoom.messages) {
+            return [];
         }
-        else {
-            for (let student of classRoom.students) {
-                if (student.isSelf) {
-                    userData = {
-                        id: student.id,
-                        name: student.name,
-                        profilePicture: student.profilePicture,
+        return classRoom.messages.map(
+            message => {
+                return {
+                    ...message,
+                    sender: {
+                        ...message.sender,
+                        isSelf: message.sender.id === user.id
                     }
-                    break;
                 }
             }
-        }
-
-        return {messages, userData};
-    }, [classRoom])
-
-    const {messages, userData} = takeUserData();
+        );
+    }, [classRoom, user.id])
 
     useEffect(() => {
         if (messagesRef.current) messagesRef.current.scrollTop = messagesRef.current.scrollHeight;
@@ -202,19 +52,7 @@ export const SideBarChat = () => {
     const sendMessage = (event) => {
         event.preventDefault();
         if (!message.trim()) return;
-        // TODO: send message to server
-
-        const messageData = {
-            text: message,
-            sender: {
-                id: userData.id,
-                name: userData.name,
-                profilePicture: userData.profilePicture,
-                isSelf: true
-            }
-        }
-
-        dispatcher(addMessage(messageData));
+        sendMessageToServer({message});
         setMessage('');
     }
 
@@ -230,7 +68,7 @@ export const SideBarChat = () => {
                                 <span className={'text-[10px]'}>{message.sender.name}</span>
                                 <div className={'flex items-center gap-2 ' + (message.sender.isSelf ? 'flex-row-reverse' : 'flex-row')}>
                                     <img
-                                        src={'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+                                        src={`${imageBaseURL}${message.sender.profilePicture}`}
                                         alt={''}
                                         className={'object-cover w-8 h-8 rounded-full'}
                                     />
