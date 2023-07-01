@@ -1,6 +1,7 @@
 import {ProgressBar, RightSmallVideos} from "../../../../";
 import {useSelector} from "react-redux";
 import {useMemo} from "react";
+import {imageBaseURL} from "../../../../../api/apiConfiguration.js";
 
 export const RightSideGrades = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -11,9 +12,9 @@ export const RightSideGrades = () => {
                 id: student.id,
                 name: student.name,
                 profilePicture: student.profilePicture,
-                totalActivities: student.grades.totalActivities,
-                passedActivities: student.grades.passedActivities,
-                totalPoints: student.grades.totalPoints
+                totalActivities: (student.grades ? student.grades.totalActivities : 10),
+                passedActivities: (student.grades ? student.grades.passedActivities : 5),
+                totalPoints: (student.grades ? student.grades.totalPoints : 25)
             })
         );
         grades.sort((nodeA, nodeB) => nodeA.totalPoints - nodeB.totalPoints);
@@ -21,7 +22,7 @@ export const RightSideGrades = () => {
         return grades;
     }, [classRoom])
 
-    console.log(grades)
+    
 
     return (
         <div className={'flex-1 w-full h-[calc(100vh-173px)]'}>
@@ -41,7 +42,7 @@ export const RightSideGrades = () => {
                                         <div className={'flex flex-row gap-1.5 items-center'}>
                                             <div className={'w-8 h-8 rounded-full bg-primary'}>
                                                 <img
-                                                    src={'https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png'}
+                                                    src={imageBaseURL + student.profilePicture}
                                                     alt={student.name} className={'w-full h-full rounded-full'}/>
                                             </div>
                                             <div className={'flex flex-col gap-0.5'}>
@@ -67,7 +68,7 @@ export const RightSideGrades = () => {
                                     <div className={'w-full flex-col gap-2 flex items-center'}>
                                         <div className={'flex flex-row gap-2'}>
                                             <img
-                                                src={'https://images.pexels.com/photos/415829/pexels-photo-415829.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1'}
+                                                src={imageBaseURL + grade.profilePicture}
                                                 alt={''}
                                                 className={'object-cover w-8 h-8 rounded-full'}
                                             />

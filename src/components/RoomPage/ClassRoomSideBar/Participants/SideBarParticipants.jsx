@@ -32,7 +32,6 @@ export const SideBarParticipants = () => {
 
     const handleVideoButton = (userId, value) => {
         if (!isLecturer) return;
-        // TODO : send to server
         changePermission({
             userId,
             permission: {

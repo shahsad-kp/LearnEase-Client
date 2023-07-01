@@ -8,7 +8,7 @@ function Context({children}) {
     const context = useRef(null);
     const [selectedColor, setSelectedColor] = useState('black');
     const [selectedTool, setSelectedTool] = useState('pencil');
-    console.log('context', context)
+    
     return (
         <WhiteboardContext.Provider value={{context, selectedColor, setSelectedColor, selectedTool, setSelectedTool}}>
             {children}

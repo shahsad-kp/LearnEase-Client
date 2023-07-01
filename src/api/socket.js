@@ -1,4 +1,5 @@
 import {
+    addDocument,
     addMessage,
     addParticipant,
     changeParticipantSettings,
@@ -8,7 +9,8 @@ import store from "../redux/store.js";
 
 const wsBaseUrl = 'ws://localhost:8000/ws/'
 let roomSocket = null;
-let messageSocket = null
+let messageSocket = null;
+let documentSocket = null;
 
 const connectToRoom = (roomId) => {
     const onOpen = () => {
@@ -46,6 +48,7 @@ const disconnectRoom = () => {
 }
 
 const connectMessage = (roomId) => {
+    const endPoint = `messages/${roomId}/`;
     const onOpen = () => {
         console.log('connected to message');
     };
@@ -62,14 +65,43 @@ const connectMessage = (roomId) => {
     const onClose = () => {
         console.log('disconnected from room');
     }
-    const endPoint = `messages/${roomId}/`;
 
-    messageSocket = connectWebSocket(endPoint, {onOpen, onMessage, onError, onClose});
+    messageSocket = connectWebSocket(endPoint, {onOpen, onMessage, onError, onClose });
 }
 
 const disconnectMessage = () => {
     if (messageSocket) {
         messageSocket.close();
+    }
+}
+
+const connectDocument = (roomId) => {
+    const onOpen = () => {
+        console.log('connected to document');
+    };
+    const onMessage = (e) => {
+        const data = JSON.parse(e.data);
+        console.log('data', data)
+        if (data.document){
+            const document = data.document;
+            
+            store.dispatch(addDocument(document));
+        }
+    };
+    const onError = (e) => {
+        console.log('error', e);
+    }
+    const onClose = () => {
+        console.log('disconnected from room');
+    }
+    const endPoint = `documents/${roomId}/`;
+
+    documentSocket = connectWebSocket(endPoint, {onOpen, onMessage, onError, onClose});
+}
+
+const disconnectDocument = () => {
+    if (documentSocket) {
+        documentSocket.close();
     }
 }
 
@@ -99,14 +131,25 @@ const sendMessageToServer = ({message}) => {
     messageSocket.send(JSON.stringify(data));
 }
 
+const sendDocumentToServer = ({document}) => {
+    const data = {
+        type: 'send_document',
+        document
+    }
+    console.log('data', data)
+    documentSocket.send(JSON.stringify(data));
+}
+
 const connectAllSockets = ({roomId}) => {
     connectToRoom(roomId);
     connectMessage(roomId);
+    connectDocument(roomId);
 }
 
 const disconnectAllSockets = () => {
     disconnectRoom();
     disconnectMessage();
+    disconnectDocument();
 }
 
 const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
@@ -126,7 +169,7 @@ const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
 
     socket.onerror = onError;
 
-    socket.onclose = onClose;
+    socket.onclose = onClose();
 
     return socket;
 };
@@ -138,6 +181,7 @@ export {
     changePermission,
     connectMessage,
     sendMessageToServer,
+    sendDocumentToServer,
     connectAllSockets,
     disconnectAllSockets
 };

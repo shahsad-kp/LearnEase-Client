@@ -16,17 +16,15 @@ export const RightSideTopics = () => {
     
     useEffect(() => {
         if (classRoom) {
-            if (classRoom.topics === null) {
-                getTopics(classRoom.id).then(topics => dispatcher(setTopics(topics)))
-            }
+            if (classRoom.topics === undefined) getTopics({classRoomId:classRoom.id}).then(
+                topics => dispatcher(setTopics(topics))
+            );
         }
-        if (!selectedTopic && topics && topics.length > 0) {
-            dispatcher(selectTopic(topics[0]));
-        }
+        if (!selectedTopic && topics && topics.length > 0) dispatcher(selectTopic(topics[0]));
     }, [classRoom, dispatcher, selectedTopic, topics]);
 
 
-    if (!topics) return <div></div>;
+    if (!topics) return <div className={'w-full h-[calc(100vh-173px)]'}></div>;
 
     return (
         <div className={'flex-1 w-full h-[calc(100vh-173px)]'}>

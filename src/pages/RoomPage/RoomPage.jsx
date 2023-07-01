@@ -27,7 +27,7 @@ export const RoomPage = () => {
             getClassRoomData({roomId}).then((classRoom) => {
                 dispatcher(joinClassRoom(classRoom));
             }).catch((error) => {
-                console.log(error);
+                
             })
         }
         if (classRoom) document.title = classRoom.title;

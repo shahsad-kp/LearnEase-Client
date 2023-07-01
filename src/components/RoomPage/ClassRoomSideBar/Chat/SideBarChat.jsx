@@ -15,7 +15,7 @@ export const SideBarChat = () => {
 
     useEffect(() => {
         if (classRoom) {
-            console.log(classRoom)
+            
             if (classRoom.messages === undefined) {
                 getAllMessages({roomId:classRoom.id}).then(messages =>{
                     console.log(messages)

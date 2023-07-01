@@ -16,7 +16,7 @@ const createClassRoom = async ({title, topics}) => {
 }
 
 const getClassRoomData = async ({roomId}) => {
-    console.log(roomId, 'roomId')
+    
     try {
         const response = await axiosAuthorized.get(
             `/classroom/${roomId}/`

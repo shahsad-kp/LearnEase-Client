@@ -10,6 +10,7 @@ import {useSelector} from "react-redux";
 export const RightSideWhiteboard = () => {
     const canvasRef = useRef(null);
     const classRoom = useSelector(state => state.classRoom.classRoom)
+    const user = useSelector(state => state.auth.user)
     const {
         context,
         selectedColor,
@@ -21,7 +22,7 @@ export const RightSideWhiteboard = () => {
     const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple', 'orange', 'brown', 'pink', 'gray'];
 
     const isLecturer = useMemo(() => {
-        return classRoom?.lecturer?.isSelf;
+        return classRoom.lecturer.id === user.id;
     }, [classRoom]);
 
     useEffect(() => {
@@ -36,7 +37,7 @@ export const RightSideWhiteboard = () => {
 
         return () => {
             context.current = context.current.getImageData(0, 0, canvas.width, canvas.height);
-            console.log(context.current)
+            
         }
     }, [context]);
 
@@ -79,7 +80,7 @@ export const RightSideWhiteboard = () => {
                                 color: selectedColor,
                                 width: 2
                             }
-                            console.log('hadf')
+                            
                             break;
                         case 'marker':
                             line = {

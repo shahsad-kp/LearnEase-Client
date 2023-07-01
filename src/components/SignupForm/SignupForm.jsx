@@ -132,7 +132,7 @@ export const SignupForm = () => {
                 }
             }
             else{
-                console.log(e)
+                
                 setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
         })

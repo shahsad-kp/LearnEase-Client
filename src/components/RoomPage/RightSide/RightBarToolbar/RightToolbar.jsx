@@ -37,7 +37,7 @@ export const RightToolbar = () => {
                 }
             } else {
                 for (let student of classRoom.students) {
-                    if (student.isSelf) {
+                    if (student.id === user.id) {
                         userSettings = student.settings
                         userData = {
                             id: student.id,

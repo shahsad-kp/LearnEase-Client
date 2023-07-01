@@ -6,6 +6,7 @@ import {ActivityModal, CreateActivityModal, ProgressBar} from "../../..";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch();
     const activitiesRef = useRef(null);
     const [showModal, setShowModal] = useState(false);
@@ -14,7 +15,7 @@ export const SideBarActivity = () => {
 
     useEffect(() => {
         if (classRoom) {
-            if (classRoom.activities === null) {
+            if (classRoom.activities === undefined) {
                 // TODO: take messages from server
 
                 const activities = [
@@ -380,7 +381,7 @@ export const SideBarActivity = () => {
             return {activities: [], userData: {}, noOfStudents: 0};
         }
         let userData, activities = classRoom.activities;
-        if (classRoom.isLecturer) {
+        if (classRoom.lecturer.id === user.id) {
             userData = {
                 id: classRoom.lecturer.id,
                 name: classRoom.lecturer.name,
@@ -398,7 +399,7 @@ export const SideBarActivity = () => {
                 }
             }
         }
-        return {activities, userData, isLecturer: classRoom.isLecturer, noOfStudents: classRoom.students.length};
+        return {activities, userData, isLecturer: classRoom.lecturer.id === user.id, noOfStudents: classRoom.students.length};
     }, [classRoom])
 
     const {activities, userData, isLecturer, noOfStudents} = takeActivities();
