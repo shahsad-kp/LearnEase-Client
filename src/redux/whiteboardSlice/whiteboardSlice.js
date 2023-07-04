@@ -28,6 +28,13 @@ const whiteboardSlice = createSlice({
         clearLines: (state) => {
             state.whiteboard.pendingLines = [];
         }
+    },
+    extraReducers: {
+        'classRoom/leaveClassRoom': state => {
+            state.whiteboard.pendingLines = [];
+            state.whiteboard.color = 'black';
+            state.whiteboard.tool = 'pencil';
+        }
     }
 })
 

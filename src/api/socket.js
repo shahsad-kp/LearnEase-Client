@@ -118,7 +118,7 @@ const connectWhiteboard = (roomId) => {
                 addLine(line)
             );
         }
-        else if (data.type === 'clear'){
+        else if (data.type === 'clear_data'){
             const line = {clear: true}
             store.dispatch(
                 addLine(line)
