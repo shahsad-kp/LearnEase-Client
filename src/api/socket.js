@@ -6,11 +6,13 @@ import {
     removeParticipant
 } from "../redux/classRoomSlice/classRoomSlice.js";
 import store from "../redux/store.js";
+import {addLine} from "../redux/whiteboardSlice/whiteboardSlice.js";
 
 const wsBaseUrl = 'ws://localhost:8000/ws/'
 let roomSocket = null;
 let messageSocket = null;
 let documentSocket = null;
+let whiteboardSocket = null;
 
 const connectToRoom = (roomId) => {
     const onOpen = () => {
@@ -81,7 +83,6 @@ const connectDocument = (roomId) => {
     };
     const onMessage = (e) => {
         const data = JSON.parse(e.data);
-        console.log('data', data)
         if (data.document){
             const document = data.document;
             
@@ -102,6 +103,43 @@ const connectDocument = (roomId) => {
 const disconnectDocument = () => {
     if (documentSocket) {
         documentSocket.close();
+    }
+}
+
+const connectWhiteboard = (roomId) => {
+    const onOpen = () => {
+        console.log('connected to whiteboard');
+    };
+    const onMessage = (e) => {
+        const data = JSON.parse(e.data);
+        if (data.type === 'line'){
+            const {line} = data;
+            store.dispatch(
+                addLine(line)
+            );
+        }
+        else if (data.type === 'clear'){
+            const line = {clear: true}
+            store.dispatch(
+                addLine(line)
+            );
+        }
+    };
+    const onError = (e) => {
+        console.log('error', e);
+    }
+    const onClose = () => {
+        console.log('disconnected from room');
+
+    }
+    const endPoint = `whiteboard/${roomId}/`;
+
+    whiteboardSocket = connectWebSocket(endPoint, {onOpen, onMessage, onError, onClose});
+}
+
+const disconnectWhiteboard = () => {
+    if (whiteboardSocket) {
+        whiteboardSocket.close();
     }
 }
 
@@ -136,20 +174,44 @@ const sendDocumentToServer = ({document}) => {
         type: 'send_document',
         document
     }
-    console.log('data', data)
     documentSocket.send(JSON.stringify(data));
+}
+
+const sendWhiteboardToServer = (new_data) => {
+    const data = {
+        type: 'new_data',
+        data: new_data
+    }
+    whiteboardSocket.send(JSON.stringify(data));
+}
+
+const sendClearToServer = () => {
+    const data = {
+        type: 'clear_data'
+    }
+    whiteboardSocket.send(JSON.stringify(data));
+}
+
+const sendLineToServer = (line) => {
+    const data = {
+        type: 'new_line',
+        line
+    }
+    whiteboardSocket.send(JSON.stringify(data));
 }
 
 const connectAllSockets = ({roomId}) => {
     connectToRoom(roomId);
     connectMessage(roomId);
     connectDocument(roomId);
+    connectWhiteboard(roomId);
 }
 
 const disconnectAllSockets = () => {
     disconnectRoom();
     disconnectMessage();
     disconnectDocument();
+    disconnectWhiteboard();
 }
 
 const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
@@ -182,6 +244,9 @@ export {
     connectMessage,
     sendMessageToServer,
     sendDocumentToServer,
+    sendWhiteboardToServer,
+    sendLineToServer,
+    sendClearToServer,
     connectAllSockets,
     disconnectAllSockets
 };

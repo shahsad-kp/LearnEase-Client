@@ -4,42 +4,101 @@ import {TfiMarkerAlt} from "react-icons/tfi";
 import {useContext, useEffect, useMemo, useRef} from "react";
 import {BsEraser} from "react-icons/bs";
 import {AiOutlineClear} from "react-icons/ai";
-import {WhiteboardContext} from "../../../../../store/whiteboardContext.jsx";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {sendClearToServer, sendLineToServer, sendWhiteboardToServer} from "../../../../../api/socket.js";
+import {
+    changeColor,
+    changeTool, clearLines,
+} from "../../../../../redux/whiteboardSlice/whiteboardSlice.js";
+import {whiteboardCtx} from "../../../../../store/whiteboardData.jsx";
+import {getWhiteboard} from "../../../../../api/whiteboard.js";
 
 export const RightSideWhiteboard = () => {
     const canvasRef = useRef(null);
+    const contextRef = useRef(null);
     const classRoom = useSelector(state => state.classRoom.classRoom)
     const user = useSelector(state => state.auth.user)
-    const {
-        context,
-        selectedColor,
-        setSelectedColor,
-        selectedTool,
-        setSelectedTool,
-    } = useContext(WhiteboardContext);
+    const whiteboard = useSelector(state => state.whiteboard.whiteboard);
+    const whiteboardData = useContext(whiteboardCtx);
+    const dispatch = useDispatch();
 
     const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple', 'orange', 'brown', 'pink', 'gray'];
 
     const isLecturer = useMemo(() => {
+        if (classRoom === null || user === null) {
+            return false;
+        }
         return classRoom.lecturer.id === user.id;
-    }, [classRoom]);
+    }, [classRoom, user]);
+
+    const applyData = (data) => {
+        const canvas = canvasRef.current;
+        if (data) {
+            const image = new Image();
+            image.src = data;
+            image.onload = function () {
+                contextRef.current.drawImage(image, 0, 0);
+            };
+        } else {
+            contextRef.current.clearRect(0, 0, canvas.width, canvas.height);
+        }
+    }
 
     useEffect(() => {
+        if (whiteboardData.current === null && classRoom !== null) {
+            getWhiteboard({roomId: classRoom.id}).then(res => {
+                whiteboardData.current = res.data;
+                applyData(whiteboardData.current);
+            }).catch(err => {
+                console.log(err);
+            })
+        }
         const canvas = canvasRef.current;
+        contextRef.current = canvas.getContext('2d');
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
-        const newCtx = canvas.getContext('2d');
-        if(context.current){
-            newCtx.putImageData(context.current, 0, 0);
-        }
-        context.current = newCtx;
-
+        applyData(whiteboardData.current);
         return () => {
-            context.current = context.current.getImageData(0, 0, canvas.width, canvas.height);
-            
+            whiteboardData.current = canvas.toDataURL();
         }
-    }, [context]);
+    }, [classRoom, isLecturer, whiteboardData]);
+
+    useEffect(() => {
+        const sendData = () => {
+            if (!isLecturer || canvasRef.current === null) {
+                return;
+            }
+            const newData = canvasRef.current.toDataURL();
+            sendWhiteboardToServer(newData)
+        }
+        const intervalId = setInterval(sendData, 1000);
+        return () => {
+            clearInterval(intervalId);
+        }
+    }, [isLecturer]);
+
+    useEffect(() => {
+        if ((whiteboard.pendingLines.length === 0) || isLecturer) {
+            return;
+        }
+        const drawLine = (x0, y0, x1, y1, color, lineWidth) => {
+            contextRef.current.beginPath()
+            contextRef.current.moveTo(x0, y0)
+            contextRef.current.lineTo(x1, y1)
+            contextRef.current.lineWidth = lineWidth
+            contextRef.current.strokeStyle = color
+            contextRef.current.stroke()
+        }
+        for (let i = 0; i < whiteboard.pendingLines.length; i++) {
+            const line = whiteboard.pendingLines[i];
+            if (line.clear){
+                contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+                continue;
+            }
+            drawLine(line.x0, line.y0, line.x1, line.y1, line.color, line.lineWidth);
+        }
+        dispatch(clearLines());
+    }, [dispatch, isLecturer, whiteboard.pendingLines]);
 
     useEffect(
         () => {
@@ -58,29 +117,36 @@ export const RightSideWhiteboard = () => {
             }
 
             const drawLine = (x0, y0, x1, y1, color, lineWidth) => {
-                const context = canvas.getContext('2d');
-                context.beginPath()
-                context.moveTo(x0, y0)
-                context.lineTo(x1, y1)
-                context.lineWidth = lineWidth
-                context.strokeStyle = color
-                context.stroke()
+                contextRef.current.beginPath()
+                contextRef.current.moveTo(x0, y0)
+                contextRef.current.lineTo(x1, y1)
+                contextRef.current.lineWidth = lineWidth
+                contextRef.current.strokeStyle = color
+                contextRef.current.stroke()
+                sendLineToServer({
+                    x0: x0,
+                    y0: y0,
+                    x1: x1,
+                    y1: y1,
+                    color: color,
+                    lineWidth: lineWidth
+                })
             }
 
             const draw = (event) => {
                 if (isDrawing) {
                     let line = null;
-                    switch (selectedTool) {
+                    switch (whiteboard.tool.toLowerCase()) {
                         case 'pencil':
                             line = {
                                 x1: previousPosition.x,
                                 y1: previousPosition.y,
                                 x2: event.offsetX,
                                 y2: event.offsetY,
-                                color: selectedColor,
+                                color: whiteboard.color,
                                 width: 2
                             }
-                            
+
                             break;
                         case 'marker':
                             line = {
@@ -88,7 +154,7 @@ export const RightSideWhiteboard = () => {
                                 y1: previousPosition.y,
                                 x2: event.offsetX,
                                 y2: event.offsetY,
-                                color: selectedColor,
+                                color: whiteboard.color,
                                 width: 10
                             }
                             break;
@@ -114,7 +180,6 @@ export const RightSideWhiteboard = () => {
                 let previousCall = new Date().getTime();
                 return function () {
                     const time = new Date().getTime();
-
                     if ((time - previousCall) >= delay) {
                         previousCall = time;
                         callback.apply(null, arguments);
@@ -122,7 +187,7 @@ export const RightSideWhiteboard = () => {
                 };
             }
 
-            if (!isLecturer){
+            if (!isLecturer) {
                 return;
             }
 
@@ -138,20 +203,13 @@ export const RightSideWhiteboard = () => {
                 canvas.removeEventListener('mousemove', throttle(draw, 100));
             }
         },
-        [isLecturer, selectedColor, selectedTool]
+        [isLecturer, whiteboard.color, whiteboard.tool]
     )
-
-    const updateColor = color => {
-        setSelectedColor(color);
-        if (selectedTool === 'eraser') {
-            setSelectedTool('pencil');
-        }
-    }
 
 
     const clearCanvas = () => {
-        // TODO: clear canvas
-        context.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
+        sendClearToServer();
     }
 
     return (
@@ -162,46 +220,46 @@ export const RightSideWhiteboard = () => {
                     {
                         isLecturer && (
                             <div className={'rounded flex flex-col bg-secondary justify-between h-full shadow'}>
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one' + (selectedTool === 'pencil' ? ' bg-accent-color-one' : '')}
-                            onClick={() => setSelectedTool('pencil')}
-                        >
-                            <BiPencil/>
-                        </button>
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one' + (selectedTool === 'marker' ? ' bg-accent-color-one' : '')}
-                            onClick={() => setSelectedTool('marker')}
-                        >
-                            <TfiMarkerAlt/>
-                        </button>
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one' + (selectedTool === 'eraser' ? ' bg-accent-color-one' : '')}
-                            onClick={() => setSelectedTool('eraser')}
-                        >
-                            <BsEraser/>
-                        </button>
-                        {
-                            colors.map(
-                                (color, index) => (
-                                    <button
-                                        key={index}
-                                        className={'p-2.5 rounded active:bg-accent-color-one' + ((selectedColor === color && selectedTool !== 'eraser') ? ' bg-accent-color-one' : '')}
-                                        onClick={() => updateColor(color)}
-                                    >
-                                        <div className={'h-[15px] w-full border border-gray-600'}
-                                             style={{backgroundColor: color}}/>
-                                    </button>
-                                )
-                            )
-                        }
+                                <button
+                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'pencil' ? ' bg-accent-color-one' : '')}
+                                    onClick={() => dispatch(changeTool('pencil'))}
+                                >
+                                    <BiPencil/>
+                                </button>
+                                <button
+                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'marker' ? ' bg-accent-color-one' : '')}
+                                    onClick={() => dispatch(changeTool('marker'))}
+                                >
+                                    <TfiMarkerAlt/>
+                                </button>
+                                <button
+                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'eraser' ? ' bg-accent-color-one' : '')}
+                                    onClick={() => dispatch(changeTool('eraser'))}
+                                >
+                                    <BsEraser/>
+                                </button>
+                                {
+                                    colors.map(
+                                        (color, index) => (
+                                            <button
+                                                key={index}
+                                                className={'p-2.5 rounded active:bg-accent-color-one' + ((whiteboard.color === color && whiteboard.tool !== 'eraser') ? ' bg-accent-color-one' : '')}
+                                                onClick={() => dispatch(changeColor(color))}
+                                            >
+                                                <div className={'h-[15px] w-full border border-gray-600'}
+                                                     style={{backgroundColor: color}}/>
+                                            </button>
+                                        )
+                                    )
+                                }
 
-                        <button
-                            className={'p-2.5 rounded active:bg-accent-color-one'}
-                            onClick={clearCanvas}
-                        >
-                            <AiOutlineClear/>
-                        </button>
-                    </div>
+                                <button
+                                    className={'p-2.5 rounded active:bg-accent-color-one'}
+                                    onClick={clearCanvas}
+                                >
+                                    <AiOutlineClear/>
+                                </button>
+                            </div>
                         )
                     }
                     <div className={'flex-1 bg-secondary p-3 rounded shadow'}>

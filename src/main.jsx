@@ -5,14 +5,14 @@ import './index.css'
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
 import store from "./redux/store.js";
-import WhiteboardContext from "./store/whiteboardContext.jsx";
+import WhiteboardDataProvider from "./store/whiteboardData.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(<React.StrictMode>
     <BrowserRouter>
         <Provider store={store}>
-            <WhiteboardContext>
+            <WhiteboardDataProvider>
                 <App/>
-            </WhiteboardContext>
+            </WhiteboardDataProvider>
         </Provider>
     </BrowserRouter>
 </React.StrictMode>,)
