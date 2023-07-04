@@ -1,5 +1,6 @@
 import {BannerPage, HomeBody, HomeOutside, NavBar} from "../../components/";
-import BannerImage from '../../assets/banner-images/home-page-banner.jpg'
+import bigBannerImage from '../../assets/banner-images/home-page-banner.jpg';
+import smallBannerImage from '../../assets/banner-images/home-page-banner-small.jpg';
 import {useSelector} from "react-redux";
 
 export const HomePage = () => {
@@ -14,7 +15,7 @@ export const HomePage = () => {
         )
     } else {
         return (
-            <BannerPage banner={BannerImage}>
+            <BannerPage bigBanner={bigBannerImage} smallBanner={smallBannerImage}>
                 <HomeOutside/>
             </BannerPage>
         )

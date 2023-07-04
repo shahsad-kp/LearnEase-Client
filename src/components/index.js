@@ -27,6 +27,7 @@ import {RightSideGrades} from "./RoomPage/RightSide/RightSideMain/RightSideGrade
 import {SideBarActivity} from "./RoomPage/ClassRoomSideBar/Activity/SideBarActivity.jsx";
 import {CreateActivityModal} from "./RoomPage/ClassRoomSideBar/Activity/CreateActivityModal.jsx";
 import {ActivityModal} from "./RoomPage/ClassRoomSideBar/Activity/ActivityModal.jsx";
+import {LazyImage} from "./UtilityComponents/LazyImage/LazyImage.jsx";
 
 export {
     LoginForm,
@@ -57,5 +58,6 @@ export {
     RightSideGrades,
     SideBarActivity,
     CreateActivityModal,
-    ActivityModal
+    ActivityModal,
+    LazyImage,
 }

@@ -1,9 +1,10 @@
 import {LoginForm, BannerPage} from "../../components/";
-import BannerImage from '../../assets/banner-images/login-page-banner.jpg'
+import BannerImageBig from '../../assets/banner-images/login-page-banner.jpg';
+import BannerImageSmall from '../../assets/banner-images/login-page-banner-small.jpg'
 
 export const LoginPage = () => {
 	return (
-		<BannerPage banner={BannerImage} reverse>
+		<BannerPage bigBanner={BannerImageBig} smallBanner={BannerImageSmall} reverse>
 			<LoginForm/>
 		</BannerPage>
 	)

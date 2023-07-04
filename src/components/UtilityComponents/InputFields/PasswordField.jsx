@@ -33,7 +33,7 @@ export const PasswordField = (props) => {
                onClick={(e) => e.preventDefault()}
                onMouseDown={toggleShowPassword}
                onMouseUp={toggleHidePassword}
-               style={{paddingRight: ".75rem", outline: 'none'}}>
+               style={{paddingRight: ".75rem", outline: 'none', cursor: 'pointer'}}>
                 {showPassword ? <AiFillEyeInvisible/> : <AiFillEye/>}
             </i>
         </div>
