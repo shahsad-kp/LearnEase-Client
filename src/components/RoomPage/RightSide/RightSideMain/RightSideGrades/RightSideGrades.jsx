@@ -1,28 +1,53 @@
 import {ProgressBar, RightSmallVideos} from "../../../../";
-import {useSelector} from "react-redux";
-import {useMemo} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import {useEffect, useMemo} from "react";
 import {imageBaseURL} from "../../../../../api/apiConfiguration.js";
+import {getAllActivities} from "../../../../../api/activities.js";
+import {setActivities} from "../../../../../redux/classRoomSlice/classRoomSlice.js";
 
 export const RightSideGrades = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const dispatcher = useDispatch();
+
+    useEffect(() => {
+        if (classRoom) {
+            if (classRoom.activities === undefined) {
+                getAllActivities({roomId: classRoom.id}).then(data => {
+                    dispatcher(setActivities(data));
+                })
+            }
+        }
+    }, [classRoom, dispatcher]);
+
     const grades = useMemo(() => {
-        if (!classRoom) return [];
+        if (!(classRoom && classRoom.activities!==undefined)) return [];
+        const totalActivities = 2;
         const grades = classRoom.students.map(
-            student => ({
-                id: student.id,
-                name: student.name,
-                profilePicture: student.profilePicture,
-                totalActivities: (student.grades ? student.grades.totalActivities : 10),
-                passedActivities: (student.grades ? student.grades.passedActivities : 5),
-                totalPoints: (student.grades ? student.grades.totalPoints : 25)
-            })
+            student => {
+                let passedActivities = 0;
+                for (const activity of classRoom.activities) {
+                    for (const response of activity.responses){
+                        if (response.userId === student.id){
+                            if (response.isCorrect){
+                                passedActivities++;
+                            }
+                        }
+                    }
+                }
+                return {
+                    id: student.id,
+                    name: student.name,
+                    profilePicture: student.profilePicture,
+                    totalActivities,
+                    passedActivities,
+                    totalPoints: 50 / totalActivities * passedActivities
+                }
+            }
         );
         grades.sort((nodeA, nodeB) => nodeA.totalPoints - nodeB.totalPoints);
         grades.reverse()
         return grades;
     }, [classRoom])
-
-    
 
     return (
         <div className={'flex-1 w-full h-[calc(100vh-173px)]'}>
@@ -59,7 +84,8 @@ export const RightSideGrades = () => {
                         </div>
 
                     </div>
-                    <div className={'grid w-full gap-2.5 h-full overflow-y-auto'} style={{gridTemplateColumns: '1fr 1fr'}}>
+                    <div className={'grid w-full gap-2.5 h-full overflow-y-auto'}
+                         style={{gridTemplateColumns: '1fr 1fr'}}>
                         {
                             grades.map(grade => (
                                 <div

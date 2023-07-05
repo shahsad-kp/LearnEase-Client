@@ -1,8 +1,7 @@
 import {InputField} from "../../../UtilityComponents/InputFields/InputField.jsx";
 import {Modal} from "../../../UtilityComponents/Modal/Modal.jsx";
 import {useState} from "react";
-import {useDispatch} from "react-redux";
-import {addActivity} from "../../../../redux/classRoomSlice/classRoomSlice.js";
+import {sendNewActivityToServer} from "../../../../api/socket.js";
 
 // eslint-disable-next-line react/prop-types
 export const CreateActivityModal = ({closeFunction}) => {
@@ -11,7 +10,6 @@ export const CreateActivityModal = ({closeFunction}) => {
     const [options, setOptions] = useState(['', '', '', '']);
     const [optionsError, setOptionsError] = useState('');
     const [rightAnswer, setRightAnswer] = useState(null);
-    const dispatcher = useDispatch();
 
     const updateQuestion = (e) => {
         setQuestion(e.target.value);
@@ -56,19 +54,11 @@ export const CreateActivityModal = ({closeFunction}) => {
         e.preventDefault();
         if (validate()) {
             const activity = {
-                id: Math.random(),
-                title: question,
-                options: options,
+                question,
+                options,
                 correctAnswer: options[rightAnswer],
-                totalResponses: 0,
-                totalCorrectResponses: 0,
-                responses: [],
-                response: null,
             }
-
-            // TODO: Add activity to server
-
-            dispatcher(addActivity(activity));
+            sendNewActivityToServer(activity)
             closeFunction();
         }
     }
@@ -163,7 +153,9 @@ export const CreateActivityModal = ({closeFunction}) => {
                     <li className={'text-dangerColor font-serif text-xs'}>{optionsError}</li>
                 </ul>}
                 <div className={'flex flex-row gap-2.5 w-full'}>
-                    <button className={'bg-logo-green w-full rounded text-white p-1'}>Create Activity</button>
+                    <button
+                        className={'bg-logo-green w-full rounded text-white p-1'}
+                    >Create Activity</button>
                 </div>
             </form>
         </Modal>

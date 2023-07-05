@@ -15,7 +15,17 @@ export const SideBarParticipants = () => {
         if (!classRoom) {
             return [{}, [], false]
         } else {
-            return [classRoom.lecturer, classRoom.students, classRoom.lecturer.id === user.id]
+            const students = classRoom.students;
+            students.sort((a, b) => {
+                if (a.isActive === b.isActive) {
+                    return 0;
+                }
+                if (a.isActive) {
+                    return -1;
+                }
+                return 1;
+            })
+            return [classRoom.lecturer, students, classRoom.lecturer.id === user.id]
         }
     }, [classRoom, user]);
 
@@ -49,13 +59,13 @@ export const SideBarParticipants = () => {
                     {
                         isLecturer && <>
                             <button
-                                className={'rounded p-1 bg-primary'}>
+                                className={'rounded p-1 bg-primary cursor-not-allowed'}>
                                 {
                                     lecturer.settings.video.enabled ? <BsCameraVideo/> : <BsCameraVideoOff/>
                                 }
                             </button>
                             <button
-                                className={'rounded p-1 bg-primary'}>
+                                className={'rounded p-1 bg-primary cursor-not-allowed'}>
                                 {
                                     lecturer.settings.audio.enabled ? <IoMicOutline/> : <IoMicOffOutline/>
                                 }
@@ -82,49 +92,54 @@ export const SideBarParticipants = () => {
                     <ul className={'h-min gap-2 flex flex-col'}>
                         {students.map((student, index) => {
                             return <li
-                                className={'flex flex-row gap-2 items-center'}
+                                className={'flex flex-row gap-2 justify-between items-center'}
                                 key={index}
                             >
-                                {
-                                    isLecturer && <>
-                                        <button
-                                            className={'rounded p-1' + (student.settings.video.permission ? ' bg-primary' : ' bg-dangerColor')}
-                                            onClick={() => handleVideoButton(student.id, !student.settings.video.permission)}
-                                        >
-                                            {
-                                                student.settings.video.permission ?
-                                                    (student.settings.video.enabled ? <BsCameraVideo/> :
-                                                        <BsCameraVideoOff/>) :
-                                                    <BsCameraVideoOff/>
-                                            }
-                                        </button>
-                                        <button
-                                            className={'rounded p-1' + (student.settings.audio.permission ? ' bg-primary' : ' bg-dangerColor')}
-                                            onClick={() => handleAudioButton(student.id, !student.settings.audio.permission)}
-                                        >
-                                            {
-                                                student.settings.audio.permission ?
-                                                    (student.settings.audio.enabled ? <IoMicOutline/> :
-                                                        <IoMicOffOutline/>) :
-                                                    <IoMicOffOutline/>
-                                            }
-                                        </button>
-                                        {/*<button*/}
-                                        {/*    className={'rounded p-1' + (student.settings.screenShare.permission ? ' bg-primary' : ' bg-dangerColor')}>*/}
-                                        {/*    {*/}
-                                        {/*        student.settings.screenShare.permission ?*/}
-                                        {/*            (student.settings.screenShare.enabled ? <LuScreenShare/> : <LuScreenShareOff/>) :*/}
-                                        {/*            <LuScreenShareOff/>*/}
-                                        {/*    }*/}
-                                        {/*</button>*/}
-                                    </>
-                                }
-                                <img
-                                    src={`${imageBaseURL}${student.profilePicture}`}
-                                    alt={''}
-                                    className={'object-cover w-8 h-8 rounded-full'}
+                                <div className={'flex flex-row gap-2 items-center'}>
+                                    {
+                                        isLecturer && <>
+                                            <button
+                                                className={'rounded p-1' + (student.settings.video.permission ? ' bg-primary' : ' bg-dangerColor')}
+                                                onClick={() => handleVideoButton(student.id, !student.settings.video.permission)}
+                                            >
+                                                {
+                                                    student.settings.video.permission ?
+                                                        (student.settings.video.enabled ? <BsCameraVideo/> :
+                                                            <BsCameraVideoOff/>) :
+                                                        <BsCameraVideoOff color={'white'}/>
+                                                }
+                                            </button>
+                                            <button
+                                                className={'rounded p-1' + (student.settings.audio.permission ? ' bg-primary' : ' bg-dangerColor')}
+                                                onClick={() => handleAudioButton(student.id, !student.settings.audio.permission)}
+                                            >
+                                                {
+                                                    student.settings.audio.permission ?
+                                                        (student.settings.audio.enabled ? <IoMicOutline/> :
+                                                            <IoMicOffOutline/>) :
+                                                        <IoMicOffOutline color={'white'}/>
+                                                }
+                                            </button>
+                                            {/*<button*/}
+                                            {/*    className={'rounded p-1' + (student.settings.screenShare.permission ? ' bg-primary' : ' bg-dangerColor')}>*/}
+                                            {/*    {*/}
+                                            {/*        student.settings.screenShare.permission ?*/}
+                                            {/*            (student.settings.screenShare.enabled ? <LuScreenShare/> : <LuScreenShareOff/>) :*/}
+                                            {/*            <LuScreenShareOff/>*/}
+                                            {/*    }*/}
+                                            {/*</button>*/}
+                                        </>
+                                    }
+                                    <img
+                                        src={`${imageBaseURL}${student.profilePicture}`}
+                                        alt={''}
+                                        className={'object-cover w-8 h-8 rounded-full'}
+                                    />
+                                    <span className={'font-normal'}>{student.name}</span>
+                                </div>
+                                <div
+                                    className={'w-[7px] h-[7px] rounded-full' + (student.isActive ? ' bg-green-500' : ' bg-red-500')}
                                 />
-                                <span className={'font-normal'}>{student.name}</span>
                             </li>
                         })}
                     </ul>

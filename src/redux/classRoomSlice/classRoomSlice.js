@@ -15,12 +15,25 @@ const classRoomSlice = createSlice({
         addParticipant: (state, action) => {
             if (!state.classRoom.students) return;
             const student = state.classRoom.students.find(student => student.id === action.payload.id);
-            if (student) return;
+            if (student){
+                state.classRoom.students.map(student => {
+                    if (student.id === action.payload.id){
+                        student.isActive = true;
+                    }
+                    return student;
+                })
+                return;
+            }
             state.classRoom.students.unshift(action.payload)
         },
         removeParticipant: (state, action) => {
             if (!state.classRoom.students) return;
-            state.classRoom.students = state.classRoom.students.filter(student => student.id !== parseInt(action.payload))
+            state.classRoom.students.map(student => {
+                if (student.id === action.payload.id){
+                    student.isActive = false;
+                }
+                return student;
+            })
         },
         setMessages: (state, action) => {
             if (state.classRoom) {
@@ -123,19 +136,11 @@ const classRoomSlice = createSlice({
             }
         },
         addResponse: (state, action) => {
-            const {id, userData, activityId, response, isSelf} = action.payload;
+            const activityId = action.payload.activityId;
             if (state.classRoom) {
                 state.classRoom.activities.map(activity => {
                     if (activity.id === activityId) {
-                        activity.responses.push({
-                            id: id,
-                            name: userData.name,
-                            response,
-                            isCorrect: activity.correctAnswer === response
-                        });
-                    }
-                    if (isSelf) {
-                        activity.response = response;
+                        activity.responses.push(action.payload);
                     }
                     return activity;
                 })
