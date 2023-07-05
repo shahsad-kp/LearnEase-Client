@@ -15,10 +15,10 @@ export const RightSideParticipants = () => {
         const students = classRoom.students;
         for (const student of students) {
             row.push(student);
-            if (row.length === 3){
+            if (row.length === 3) {
                 page.push(row);
                 row = [];
-                if (page.length === 3){
+                if (page.length === 3) {
                     pages.push(page);
                     page = [];
                 }
@@ -60,7 +60,9 @@ export const RightSideParticipants = () => {
                     }}
                 />
                 <BsArrowRightCircle
-                    className={'w-5 h-5 cursor-pointer ' + (pageNumber !== (studentsPages.length - 1) ? ' fill-logo-green' : ' fill-gray-400')}
+                    className={`w-5 h-5 cursor-pointer 
+                    ${pageNumber !== (studentsPages.length - 1) ? ' fill-logo-green' : ' fill-gray-400'}`
+                    }
                     onClick={() => {
                         setPageNumber(value => {
                             if (value !== (studentsPages.length - 1)) return value + 1;

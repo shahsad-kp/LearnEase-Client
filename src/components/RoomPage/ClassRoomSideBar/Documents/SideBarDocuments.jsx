@@ -62,7 +62,7 @@ export const SideBarDocuments = () => {
     }, [documents]);
 
     const handleDownload = (url, filename) => {
-        
+
         axios.get(url, {
             responseType: 'blob',
         })
@@ -115,7 +115,9 @@ export const SideBarDocuments = () => {
                             ref={documentSelectRef}
                         />
                         <button
-                            className={'w-full h-10 rounded bg-accent-color-one gap-2.5 justify-center items-center flex'}
+                            className={
+                                'w-full h-10 rounded bg-accent-color-one gap-2.5 justify-center items-center flex'
+                            }
                             type={'button'}
                             onClick={(event) => {
                                 event.preventDefault();

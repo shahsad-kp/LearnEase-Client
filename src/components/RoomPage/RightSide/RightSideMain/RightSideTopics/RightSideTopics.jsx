@@ -13,10 +13,10 @@ export const RightSideTopics = () => {
         if (!classRoom) return [[], null];
         return [classRoom.topics, classRoom.selectedTopic];
     }, [classRoom]);
-    
+
     useEffect(() => {
         if (classRoom) {
-            if (classRoom.topics === undefined) getTopics({classRoomId:classRoom.id}).then(
+            if (classRoom.topics === undefined) getTopics({classRoomId: classRoom.id}).then(
                 topics => dispatcher(setTopics(topics))
             );
         }
@@ -37,7 +37,12 @@ export const RightSideTopics = () => {
                                 return (
                                     <li
                                         key={index}
-                                        className={'flex p-3 font-semibold rounded pointer ' + ((selectedTopic && (topic.id === selectedTopic.id)) ? 'bg-accent-color-one' : '')}
+                                        className={
+                                            `flex p-3 font-semibold rounded pointer 
+                                        ${(
+                                                selectedTopic &&
+                                                (topic.id === selectedTopic.id)) ? 'bg-accent-color-one' : ''
+                                            }`}
                                         onClick={() => dispatcher(selectTopic(topic))}
                                     >
                                         {topic.title}

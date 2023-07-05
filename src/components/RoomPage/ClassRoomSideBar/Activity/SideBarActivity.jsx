@@ -24,7 +24,7 @@ export const SideBarActivity = () => {
             }
         }
     }, [classRoom, dispatcher]);
-    
+
     const {activities, isLecturer, noOfStudents} = useMemo(
         () => {
             if (!(classRoom && classRoom.activities)) {
@@ -33,7 +33,7 @@ export const SideBarActivity = () => {
             let activities = classRoom.activities.map(activity => {
                 const correctResponses = activity.responses.filter(response => response.isCorrect);
                 const userResponse = activity.responses.find(response => response.userId === user.id);
-                const responses = activity.responses.map(response =>{
+                const responses = activity.responses.map(response => {
                     const user = classRoom.students.find(student => student.id === response.userId);
                     const name = user.name;
                     let option = activity.options.find(option => option.id === response.optionId)
@@ -102,7 +102,10 @@ export const SideBarActivity = () => {
                                                 {
                                                     activity.options.map((option, index) => {
                                                             let className;
-                                                            if (activity.response && activity.response.optionId === option.id) {
+                                                            if (
+                                                                activity.response &&
+                                                                activity.response.optionId === option.id
+                                                            ) {
                                                                 if (activity.response.isCorrect) {
                                                                     className = 'text-green-500'
                                                                 } else {
@@ -121,7 +124,10 @@ export const SideBarActivity = () => {
                                                                             option.id,
                                                                             activity.id
                                                                         )}
-                                                                        checked={activity.response && activity.response.optionId === option.id}
+                                                                        checked={
+                                                                            activity.response &&
+                                                                            activity.response.optionId === option.id
+                                                                        }
                                                                         disabled={activity.response}
                                                                     />
                                                                     <p className={className}>{option.option}</p>

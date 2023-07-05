@@ -38,11 +38,11 @@ export const RightSmallVideos = () => {
             </div>
             <div className={'flex flex-row justify-start gap-1.5'}>
                 <BsArrowLeftCircle
-                    className={' w-5 h-5 cursor-pointer ' + (pageNumber !== 0 ? ' fill-logo-green' : ' fill-gray-400')}
+                    className={` w-5 h-5 cursor-pointer ${pageNumber !== 0 ? ' fill-logo-green' : ' fill-gray-400'}`}
                     onClick={scrollTop}
                 />
                 <BsArrowRightCircle
-                    className={'w-5 h-5 cursor-pointer ' + (pageNumber !== 5 ? ' fill-logo-green' : ' fill-gray-400')}
+                    className={`w-5 h-5 cursor-pointer ${pageNumber !== 5 ? ' fill-logo-green' : ' fill-gray-400'}`}
                     onClick={scrollDown}
                 />
             </div>

@@ -121,8 +121,10 @@ export const CreateRoomModal = ({closeFunction}) => {
                                     key={index}
                                     data-tooltip-id={'tooltip'}
                                     data-tooltip-content={topic.title}
-                                    className={'flex flex-row gap-1 items-center px-3 py-1.5 mb-1 rounded' +
-                                        ' cursor-pointer' + (index === selectedTopicIdx ? ' bg-accent-color-one' : ' bg-gray-200')}
+                                    className={
+                                        `flex flex-row gap-1 items-center px-3 py-1.5 mb-1 rounded cursor-pointer
+                                        ${index === selectedTopicIdx ? ' bg-accent-color-one' : ' bg-gray-200'}`
+                                    }
                                     onClick={() => selectTopic(index)}
                                 >
                                             <span
@@ -137,7 +139,10 @@ export const CreateRoomModal = ({closeFunction}) => {
                             topics.length < 20 && (
                                 <div
                                     onClick={addNewTopic}
-                                    className={'flex flex-row gap-1 items-center bg-gray-200 px-3 py-1.5 mb-1 rounded cursor-pointer'}>
+                                    className={
+                                        'flex flex-row gap-1 items-center bg-gray-200 px-3 py-1.5 mb-1 ' +
+                                        'rounded cursor-pointer'
+                                    }>
                                     <GrAdd/>
                                     <span className={'whitespace-nowrap font-semibold'}>Add topic</span>
                                 </div>

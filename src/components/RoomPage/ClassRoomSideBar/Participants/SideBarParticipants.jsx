@@ -99,8 +99,17 @@ export const SideBarParticipants = () => {
                                     {
                                         isLecturer && <>
                                             <button
-                                                className={'rounded p-1' + (student.settings.video.permission ? ' bg-primary' : ' bg-dangerColor')}
-                                                onClick={() => handleVideoButton(student.id, !student.settings.video.permission)}
+                                                className={
+                                                    `rounded p-1${
+                                                        student.settings.video.permission ?
+                                                            ' bg-primary' : ' bg-dangerColor'
+                                                    }`}
+                                                onClick={
+                                                    () => handleVideoButton(
+                                                        student.id,
+                                                        !student.settings.video.permission
+                                                    )
+                                                }
                                             >
                                                 {
                                                     student.settings.video.permission ?
@@ -110,8 +119,15 @@ export const SideBarParticipants = () => {
                                                 }
                                             </button>
                                             <button
-                                                className={'rounded p-1' + (student.settings.audio.permission ? ' bg-primary' : ' bg-dangerColor')}
-                                                onClick={() => handleAudioButton(student.id, !student.settings.audio.permission)}
+                                                className={`rounded p-1${
+                                                    student.settings.audio.permission ?
+                                                        ' bg-primary' : ' bg-dangerColor'
+                                                }`
+                                                }
+                                                onClick={() => handleAudioButton(
+                                                    student.id,
+                                                    !student.settings.audio.permission
+                                                )}
                                             >
                                                 {
                                                     student.settings.audio.permission ?
@@ -138,7 +154,10 @@ export const SideBarParticipants = () => {
                                     <span className={'font-normal'}>{student.name}</span>
                                 </div>
                                 <div
-                                    className={'w-[7px] h-[7px] rounded-full' + (student.isActive ? ' bg-green-500' : ' bg-red-500')}
+                                    className={`w-[7px] h-[7px] rounded-full${
+                                        student.isActive ? 
+                                            ' bg-green-500' : ' bg-red-500'
+                                    }`}
                                 />
                             </li>
                         })}

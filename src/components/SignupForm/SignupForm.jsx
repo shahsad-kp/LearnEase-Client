@@ -2,8 +2,7 @@ import {Link, useNavigate} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {Fragment, useState} from "react";
-import {InputField, PasswordField} from "../";
-import {ProgressBar} from "../";
+import {InputField, PasswordField, ProgressBar} from "../";
 import {registerUser} from "../../api/user.js";
 
 
@@ -110,35 +109,33 @@ export const SignupForm = () => {
         if (!(validateName(values.name) &&
             validateEmail(values.email) &&
             validatePassword(values.password) &&
-            validateRepeatPassword(values.repeatPassword))){
+            validateRepeatPassword(values.repeatPassword))) {
             return;
         }
 
-        registerUser({name: values.name, email: values.email, password: values.password}).then(() => {
-            navigator('/', {replace: true})
-        }).catch(e => {
+        registerUser({name: values.name, email: values.email, password: values.password}).then(
+            () => navigator('/', {replace: true})
+        ).catch(e => {
             if (e.response.status === 401) {
                 setError(prev => ({...prev, password: e.response.data.detail}));
-            }
-            else if (e.response.status === 400){
-                if (e.response.data.password){
+            } else if (e.response.status === 400) {
+                if (e.response.data.password) {
                     setError(prev => ({...prev, password: e.response.data.password}))
                 }
-                if (e.response.data.email){
+                if (e.response.data.email) {
                     setError(prev => ({...prev, email: e.response.data.email}))
                 }
-                if (e.response.data.name){
+                if (e.response.data.name) {
                     setError(prevState => ({...prevState, name: e.response.data.name}))
                 }
-            }
-            else{
-                
+            } else {
+
                 setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
         })
     }
 
-    
+
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
             <div className={'w-3/4'}>
@@ -170,7 +167,8 @@ export const SignupForm = () => {
                                onBlur={() => setPasswordFocus(false)}
                                onChange={updatePassword}/>
                 {
-                    (passwordFocus && (error.password && error.password.length > 0) && values.password !== '') && <Fragment>
+                    (passwordFocus && (error.password && error.password.length > 0) && values.password !== '') &&
+                    <Fragment>
                         <ProgressBar current={4 - error.password.length} max={4}/>
                     </Fragment>
                 }
@@ -178,7 +176,9 @@ export const SignupForm = () => {
                     (error.password && error.password.length > 0) && <ul style={{listStyleType: 'none', padding: 0}}>
                         {
                             error.password.map((error, index) => {
-                                    return <li key={index} className={'text-dangerColor font-serif text-xs'}>{error}</li>
+                                    return <li key={index} className={'text-dangerColor font-serif text-xs'}>
+                                        {error}
+                                    </li>
                                 }
                             )
                         }

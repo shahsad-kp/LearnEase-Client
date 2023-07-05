@@ -15,9 +15,9 @@ export const SideBarChat = () => {
 
     useEffect(() => {
         if (classRoom) {
-            
+
             if (classRoom.messages === undefined) {
-                getAllMessages({roomId:classRoom.id}).then(messages =>{
+                getAllMessages({roomId: classRoom.id}).then(messages => {
                     console.log(messages)
                     dispatcher(setMessages(messages))
                 })
@@ -64,16 +64,32 @@ export const SideBarChat = () => {
                 <div className={'overflow-y-scroll w-full h-full'} ref={messagesRef}>
                     {
                         messages.map((message, index) => {
-                            return (<div key={index} className={'flex flex-col gap-1 w-full' + (message.sender.isSelf ? ' items-end' : ' justify-start')}>
+                            return (<div
+                                key={index}
+                                className={`flex flex-col gap-1 
+                                w-full${message.sender.isSelf ? ' items-end' : ' justify-start'}`}
+                            >
                                 <span className={'text-[10px]'}>{message.sender.name}</span>
-                                <div className={'flex items-center gap-2 ' + (message.sender.isSelf ? 'flex-row-reverse' : 'flex-row')}>
+                                <div
+                                    className={`flex items-center gap-2 
+                                    ${message.sender.isSelf ? 'flex-row-reverse' : 'flex-row'}`
+                                    }>
                                     <img
                                         src={`${imageBaseURL}${message.sender.profilePicture}`}
                                         alt={''}
                                         className={'object-cover w-8 h-8 rounded-full'}
                                     />
                                     <div className={'flex flex-col gap-1'}>
-                                        <span className={'px-2 py-1 rounded-full text-[10px]' + (message.sender.isSelf ? ' bg-white white-black' : ' bg-logo-green text-white')}>{message.text}</span>
+                                        <span
+                                            className={
+                                                `px-2 py-1 rounded-full text-[10px]]${
+                                                    message.sender.isSelf ? 
+                                                        ' bg-white white-black' : ' bg-logo-green text-white'
+                                                }`
+                                            }
+                                        >
+                                            {message.text}
+                                        </span>
                                     </div>
                                 </div>
                             </div>)

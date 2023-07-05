@@ -6,10 +6,7 @@ import {BsEraser} from "react-icons/bs";
 import {AiOutlineClear} from "react-icons/ai";
 import {useDispatch, useSelector} from "react-redux";
 import {sendClearToServer, sendLineToServer, sendWhiteboardToServer} from "../../../../../api/socket.js";
-import {
-    changeColor,
-    changeTool, clearLines,
-} from "../../../../../redux/whiteboardSlice/whiteboardSlice.js";
+import {changeColor, changeTool, clearLines,} from "../../../../../redux/whiteboardSlice/whiteboardSlice.js";
 import {whiteboardCtx} from "../../../../../store/whiteboardData.jsx";
 import {getWhiteboard} from "../../../../../api/whiteboard.js";
 
@@ -91,7 +88,7 @@ export const RightSideWhiteboard = () => {
         }
         for (let i = 0; i < whiteboard.pendingLines.length; i++) {
             const line = whiteboard.pendingLines[i];
-            if (line.clear){
+            if (line.clear) {
                 contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);
                 continue;
             }
@@ -221,19 +218,25 @@ export const RightSideWhiteboard = () => {
                         isLecturer && (
                             <div className={'rounded flex flex-col bg-secondary justify-between h-full shadow'}>
                                 <button
-                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'pencil' ? ' bg-accent-color-one' : '')}
+                                    className={`p-2.5 rounded active:bg-accent-color-one${
+                                        whiteboard.tool === 'pencil' ? ' bg-accent-color-one' : ''
+                                    }`}
                                     onClick={() => dispatch(changeTool('pencil'))}
                                 >
                                     <BiPencil/>
                                 </button>
                                 <button
-                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'marker' ? ' bg-accent-color-one' : '')}
+                                    className={`p-2.5 rounded active:bg-accent-color-one${
+                                        whiteboard.tool === 'marker' ? ' bg-accent-color-one' : ''
+                                    }`}
                                     onClick={() => dispatch(changeTool('marker'))}
                                 >
                                     <TfiMarkerAlt/>
                                 </button>
                                 <button
-                                    className={'p-2.5 rounded active:bg-accent-color-one' + (whiteboard.tool === 'eraser' ? ' bg-accent-color-one' : '')}
+                                    className={`p-2.5 rounded active:bg-accent-color-one${
+                                        whiteboard.tool === 'eraser' ? ' bg-accent-color-one' : ''
+                                    }`}
                                     onClick={() => dispatch(changeTool('eraser'))}
                                 >
                                     <BsEraser/>
@@ -243,7 +246,10 @@ export const RightSideWhiteboard = () => {
                                         (color, index) => (
                                             <button
                                                 key={index}
-                                                className={'p-2.5 rounded active:bg-accent-color-one' + ((whiteboard.color === color && whiteboard.tool !== 'eraser') ? ' bg-accent-color-one' : '')}
+                                                className={`p-2.5 rounded active:bg-accent-color-one${
+                                                    (whiteboard.color === color && whiteboard.tool !== 'eraser') ?
+                                                        ' bg-accent-color-one' : ''
+                                                }`}
                                                 onClick={() => dispatch(changeColor(color))}
                                             >
                                                 <div className={'h-[15px] w-full border border-gray-600'}

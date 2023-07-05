@@ -20,15 +20,15 @@ export const RightSideGrades = () => {
     }, [classRoom, dispatcher]);
 
     const grades = useMemo(() => {
-        if (!(classRoom && classRoom.activities!==undefined)) return [];
+        if (!(classRoom && classRoom.activities !== undefined)) return [];
         const totalActivities = 2;
         const grades = classRoom.students.map(
             student => {
                 let passedActivities = 0;
                 for (const activity of classRoom.activities) {
-                    for (const response of activity.responses){
-                        if (response.userId === student.id){
-                            if (response.isCorrect){
+                    for (const response of activity.responses) {
+                        if (response.userId === student.id) {
+                            if (response.isCorrect) {
                                 passedActivities++;
                             }
                         }
@@ -76,7 +76,9 @@ export const RightSideGrades = () => {
                                             </div>
                                         </div>
                                         <div className={'flex flex-col gap-0.5'}>
-                                            <h4 className={'text-xs text-gray-400'}>{student.passedActivities}/{student.totalActivities} activities</h4>
+                                            <h4 className={'text-xs text-gray-400'}>
+                                                {student.passedActivities}/{student.totalActivities} activities
+                                            </h4>
                                         </div>
                                     </div>
                                 ))
@@ -90,7 +92,10 @@ export const RightSideGrades = () => {
                             grades.map(grade => (
                                 <div
                                     key={grade.id}
-                                    className={'p-2 w-full bg-secondary h-min flex gap-1 flex-col items-center rounded shadow'}>
+                                    className={
+                                        'p-2 w-full bg-secondary h-min flex gap-1 flex-col items-center rounded shadow'
+                                    }
+                                >
                                     <div className={'w-full flex-col gap-2 flex items-center'}>
                                         <div className={'flex flex-row gap-2'}>
                                             <img
