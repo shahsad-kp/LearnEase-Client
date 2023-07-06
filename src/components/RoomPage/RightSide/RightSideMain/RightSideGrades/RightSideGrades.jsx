@@ -21,7 +21,7 @@ export const RightSideGrades = () => {
 
     const grades = useMemo(() => {
         if (!(classRoom && classRoom.activities !== undefined)) return [];
-        const totalActivities = 2;
+        const totalActivities = classRoom.activities.length;
         const grades = classRoom.students.map(
             student => {
                 let passedActivities = 0;
@@ -40,7 +40,7 @@ export const RightSideGrades = () => {
                     profilePicture: student.profilePicture,
                     totalActivities,
                     passedActivities,
-                    totalPoints: 50 / totalActivities * passedActivities
+                    totalPoints: Math.round((50 / totalActivities * passedActivities))
                 }
             }
         );
@@ -110,7 +110,7 @@ export const RightSideGrades = () => {
                                     <div className={'flex flex-col gap-1 items-center w-full'}>
                                         <span>Total Activities attended: {grade.totalActivities}</span>
                                         <span>Passed Activities: {grade.passedActivities}</span>
-                                        <span>Total Points: {grade.totalPoints}</span>
+                                        <span>Total Points: {grade.totalPoints}/50</span>
                                     </div>
                                     <ProgressBar
                                         color={'#FCBD02'}
