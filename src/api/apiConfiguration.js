@@ -33,12 +33,11 @@ axiosAuthorized.interceptors.response.use(
             return axiosAuthorized
                 .post('auth/token/refresh/', {refresh: localStorage.getItem('refreshToken')})
                 .then((res) => {
-                    const {accessToken, refreshToken} = res.data;
+                    const {access} = res.data;
 
-                    localStorage.setItem('accessToken', accessToken);
-                    localStorage.setItem('refreshToken', refreshToken);
+                    localStorage.setItem('accessToken', access);
 
-                    originalRequest.headers['Authorization'] = `Bearer ${accessToken}`;
+                    originalRequest.headers['Authorization'] = `Bearer ${access}`;
                     return axiosAuthorized(originalRequest);
                 })
                 .catch((error) => {
