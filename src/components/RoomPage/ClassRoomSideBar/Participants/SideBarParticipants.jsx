@@ -15,8 +15,9 @@ export const SideBarParticipants = () => {
         if (!classRoom) {
             return [{}, [], false]
         } else {
-            const students = classRoom.students;
-            students.sort((a, b) => {
+            let students = classRoom.students;
+            const studentsForSort = [...students]
+            studentsForSort.sort((a, b) => {
                 if (a.isActive === b.isActive) {
                     return 0;
                 }
@@ -25,6 +26,7 @@ export const SideBarParticipants = () => {
                 }
                 return 1;
             })
+            students = studentsForSort;
             return [classRoom.lecturer, students, classRoom.lecturer.id === user.id]
         }
     }, [classRoom, user]);

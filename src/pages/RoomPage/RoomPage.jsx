@@ -36,6 +36,7 @@ export const RoomPage = () => {
         return () => {
             dispatcher(leaveClassRoom())
             whiteboardData.current = null;
+            document.title = 'LearnEase'
         }
 
     }, []);
