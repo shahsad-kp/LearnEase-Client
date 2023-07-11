@@ -4,7 +4,7 @@ import {BsCameraVideo, BsCameraVideoOff} from "react-icons/bs";
 import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
 import {changeAudioPermission, changeVideoPermission} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {imageBaseURL} from "../../../../api/apiConfiguration.js";
-import {changePermission} from "../../../../api/socket.js";
+import {changePermission} from "../../../../api/classRoom.js";
 
 export const SideBarParticipants = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);

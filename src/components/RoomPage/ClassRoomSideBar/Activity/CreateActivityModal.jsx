@@ -1,7 +1,7 @@
 import {InputField} from "../../../UtilityComponents/InputFields/InputField.jsx";
 import {Modal} from "../../../UtilityComponents/Modal/Modal.jsx";
 import {useState} from "react";
-import {sendNewActivityToServer} from "../../../../api/socket.js";
+import {sendNewActivityToServer} from "../../../../api/activities.js";
 
 // eslint-disable-next-line react/prop-types
 export const CreateActivityModal = ({closeFunction}) => {

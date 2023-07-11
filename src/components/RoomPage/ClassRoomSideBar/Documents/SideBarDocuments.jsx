@@ -3,10 +3,9 @@ import {useCallback, useEffect, useRef, useState} from "react";
 import {IoCloseOutline, IoDocumentOutline, IoDownloadOutline} from "react-icons/io5";
 import {setDocuments} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {AiOutlineUpload} from "react-icons/ai";
-import {getAllDocuments, uploadDocument} from "../../../../api/documents.js";
+import {getAllDocuments, sendDocumentToServer, uploadDocument} from "../../../../api/documents.js";
 import axios from "axios";
 import fileDownload from "js-file-download";
-import {sendDocumentToServer} from "../../../../api/socket.js";
 
 export const SideBarDocuments = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);

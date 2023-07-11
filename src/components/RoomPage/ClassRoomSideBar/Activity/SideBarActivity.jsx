@@ -3,8 +3,7 @@ import {useEffect, useMemo, useRef, useState} from "react";
 import {setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {IoListOutline} from "react-icons/io5";
 import {ActivityModal, CreateActivityModal, ProgressBar} from "../../..";
-import {getAllActivities} from "../../../../api/activities.js";
-import {addResponseToServer} from "../../../../api/socket.js";
+import {addResponseToServer, getAllActivities} from "../../../../api/activities.js";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -113,7 +112,8 @@ export const SideBarActivity = () => {
                                                                 }
                                                             }
                                                             return (
-                                                                <li key={index}
+                                                                <li
+                                                                    key={index}
                                                                     className={'text-[11px] flex flex-row'}>
                                                                     <input
                                                                         value={option}

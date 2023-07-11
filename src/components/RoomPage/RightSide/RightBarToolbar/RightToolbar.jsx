@@ -7,7 +7,7 @@ import {useNavigate} from "react-router-dom";
 import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
 import {IoMdRadioButtonOn} from "react-icons/io";
 import {useReactMediaRecorder} from "react-media-recorder";
-import {changeSettings} from "../../../../api/socket.js";
+import {changeSettings} from "../../../../api/classRoom.js";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);

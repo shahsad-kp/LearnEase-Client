@@ -5,10 +5,14 @@ import {useContext, useEffect, useMemo, useRef} from "react";
 import {BsEraser} from "react-icons/bs";
 import {AiOutlineClear} from "react-icons/ai";
 import {useDispatch, useSelector} from "react-redux";
-import {sendClearToServer, sendLineToServer, sendWhiteboardToServer} from "../../../../../api/socket.js";
 import {changeColor, changeTool, clearLines,} from "../../../../../redux/whiteboardSlice/whiteboardSlice.js";
 import {whiteboardCtx} from "../../../../../store/whiteboardData.jsx";
-import {getWhiteboard} from "../../../../../api/whiteboard.js";
+import {
+    getWhiteboard,
+    sendClearToServer,
+    sendLineToServer,
+    sendWhiteboardToServer
+} from "../../../../../api/whiteboard.js";
 
 export const RightSideWhiteboard = () => {
     const canvasRef = useRef(null);

@@ -2,8 +2,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useMemo, useRef, useState} from "react";
 import {IoSendOutline} from "react-icons/io5";
 import {setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {sendMessageToServer} from "../../../../api/socket.js";
-import {getAllMessages} from "../../../../api/messages.js";
+import {getAllMessages, sendMessageToServer} from "../../../../api/messages.js";
 import {imageBaseURL} from "../../../../api/apiConfiguration.js";
 
 export const SideBarChat = () => {
