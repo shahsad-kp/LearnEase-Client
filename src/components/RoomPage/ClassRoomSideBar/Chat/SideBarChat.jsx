@@ -16,10 +16,8 @@ export const SideBarChat = () => {
         if (classRoom) {
 
             if (classRoom.messages === undefined) {
-                getAllMessages({roomId: classRoom.id}).then(messages => {
-                    console.log(messages)
-                    dispatcher(setMessages(messages))
-                })
+                getAllMessages({roomId: classRoom.id}).then(messages =>
+                    dispatcher(setMessages(messages)));
             }
         }
     }, []);

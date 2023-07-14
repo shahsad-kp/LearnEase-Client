@@ -14,9 +14,13 @@ const classRoomSlice = createSlice({
         },
         addParticipant: (state, action) => {
             if (!state.classRoom.students) return;
+            if (state.classRoom.lecturer.id === action.payload.id) {
+                state.classRoom.lecturer.isActive = true;
+                return;
+            }
             const student = state.classRoom.students.find(student => student.id === action.payload.id);
             if (student){
-                state.classRoom.students.map(student => {
+                state.classRoom.students = state.classRoom.students.map(student => {
                     if (student.id === action.payload.id){
                         student.isActive = true;
                     }
@@ -28,8 +32,12 @@ const classRoomSlice = createSlice({
         },
         removeParticipant: (state, action) => {
             if (!state.classRoom.students) return;
-            state.classRoom.students.map(student => {
-                if (student.id === action.payload.id){
+            if (state.classRoom.lecturer.id === action.payload){
+                state.classRoom.lecturer.isActive = false;
+                return;
+            }
+            state.classRoom.students = state.classRoom.students.map(student => {
+                if (student.id === action.payload){
                     student.isActive = false;
                 }
                 return student;

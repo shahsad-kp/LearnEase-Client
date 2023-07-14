@@ -12,8 +12,7 @@ export const RightSideParticipants = () => {
         const pages = [];
         let page = []
         let row = [];
-        const students = classRoom.students;
-        for (const student of students) {
+        for (const student of classRoom.students) {
             row.push(student);
             if (row.length === 3) {
                 page.push(row);
@@ -42,7 +41,11 @@ export const RightSideParticipants = () => {
                         <div key={index} className={'flex flex-row h-1/3 gap-1.5'}>
                             {row.map((student, index) => (
                                 <div key={index} className={'flex flex-col w-1/3 rounded'}>
-                                    <VideoCall isLecturer={false} name={student.name} isSelf={student.isSelf}/>
+                                    <VideoCall
+                                        isLecturer={false}
+                                        name={student.name}
+                                        userId={student.id}
+                                    />
                                 </div>
                             ))}
                         </div>
@@ -61,8 +64,7 @@ export const RightSideParticipants = () => {
                 />
                 <BsArrowRightCircle
                     className={`w-5 h-5 cursor-pointer 
-                    ${pageNumber !== (studentsPages.length - 1) ? ' fill-logo-green' : ' fill-gray-400'}`
-                    }
+                    ${pageNumber !== (studentsPages.length - 1) ? ' fill-logo-green' : ' fill-gray-400'}`}
                     onClick={() => {
                         setPageNumber(value => {
                             if (value !== (studentsPages.length - 1)) return value + 1;

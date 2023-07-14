@@ -1,7 +1,7 @@
 import {useSelector} from "react-redux";
-import {useMemo, useRef, useState} from "react";
 import {BsArrowLeftCircle, BsArrowRightCircle} from "react-icons/bs";
 import {VideoCall} from "../../../../UtilityComponents/VideoCall/VideoCall.jsx";
+import {useMemo, useRef, useState} from "react";
 
 export const RightSmallVideos = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom)
@@ -10,7 +10,7 @@ export const RightSmallVideos = () => {
     const students = useMemo(() => {
         if (!classRoom) return [];
         return classRoom.students.filter(student => !student.isSelf);
-    }, [classRoom])
+    }, [classRoom]);
 
     const scrollDown = () => {
         if (videos.current) {
@@ -25,13 +25,21 @@ export const RightSmallVideos = () => {
     };
 
     return (
+        students.length > 0 &&
         <div className={'flex flex-col bg-secondary gap-1.5 shadow rounded p-2 w-min h-full'}>
             <div className={'w-full h-full overflow-y-scroll'} ref={videos}>
                 <div className={'flex flex-col gap-1.5 h-min w-full'}>
                     {
-                        students.map((student, index) => {
-                            return <VideoCall key={index} className={'!w-[250px] !h-[150px]'} name={student.name}
-                                              isSelf={student.isLecturer} isLecturer={false}/>
+                        classRoom.students.map((student, index) => {
+                            return <VideoCall
+                                key={index}
+                                className={'!w-[250px] !h-[150px]'}
+                                name={student.name}
+                                userId={student.id}
+                                isLecturer={false}
+                                height={'150px'}
+                                width={'250px'}
+                            />
                         })
                     }
                 </div>

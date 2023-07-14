@@ -12,6 +12,7 @@ const connectAllSockets = ({roomId}) => {
     connectDocument(roomId);
     connectWhiteboard(roomId);
     connectActivities(roomId);
+    // connectVideoCall(roomId);
 }
 
 const disconnectAllSockets = () => {
@@ -20,6 +21,7 @@ const disconnectAllSockets = () => {
     disconnectDocument();
     disconnectWhiteboard();
     disconnectActivities();
+    // disconnectVideoCall();
 }
 
 const connectWebSocket = (endpoint, {onOpen, onMessage, onError, onClose}) => {
@@ -48,5 +50,6 @@ export {
     connectWebSocket,
     connectMessage,
     connectAllSockets,
-    disconnectAllSockets
+    disconnectAllSockets,
+    wsBaseUrl
 };

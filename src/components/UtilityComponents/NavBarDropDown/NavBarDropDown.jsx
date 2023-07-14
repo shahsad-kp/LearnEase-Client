@@ -54,7 +54,7 @@ export const NavBarDropDown = () => {
                 onClick={() => setDrop(state => !state)}
             >
                 <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
-                     className={'object-cover h-full rounded border-accent-color-one'}/>
+                     className={'object-cover h-full rounded-full border-accent-color-one'}/>
             </div>
             {drop &&
                 <div

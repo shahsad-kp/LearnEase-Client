@@ -2,20 +2,19 @@ import {ClassRoomBody, NavBar} from "../../components/";
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect} from "react";
-import {
-    joinClassRoom,
-    leaveClassRoom
-} from "../../redux/classRoomSlice/classRoomSlice.js";
+import {joinClassRoom, leaveClassRoom} from "../../redux/classRoomSlice/classRoomSlice.js";
 import {getClassRoomData} from "../../api/classRoom.js";
 import {connectAllSockets, disconnectAllSockets} from "../../api/socket.js";
 import {whiteboardCtx} from "../../store/whiteboardData.jsx";
+import VideoCallProvider from "../../store/VideoCallProvider.jsx";
 
 
 export const RoomPage = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
+    const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch()
     const {roomId} = useParams();
-    const whiteboardData = useContext(whiteboardCtx);
+    const whiteboardData = useContext(whiteboardCtx)
 
     useEffect(() => {
         connectAllSockets({roomId})
@@ -27,6 +26,19 @@ export const RoomPage = () => {
     useEffect(() => {
         if (!(classRoom && (classRoom.id === roomId))) {
             getClassRoomData({roomId}).then((classRoom) => {
+                if (classRoom){
+                    if (classRoom.lecturer.id === user.id){
+                        classRoom.lecturer.isActive = true;
+                    }
+                    else {
+                        classRoom.students = classRoom.students.map(student => {
+                            if (student.id === user.id){
+                                student.isActive = true;
+                            }
+                            return student;
+                        })
+                    }
+                }
                 dispatcher(joinClassRoom(classRoom));
             }).catch((error) => {
                 console.log(error)
@@ -36,17 +48,20 @@ export const RoomPage = () => {
         return () => {
             dispatcher(leaveClassRoom())
             whiteboardData.current = null;
-            document.title = 'LearnEase'
+            document.title = 'LearnEase';
         }
 
     }, []);
 
+
     return (
-        <section className={'h-screen w-screen flex flex-col bg-primary'}>
-            <NavBar navLinks={true}/>
-            <ClassRoomBody>
-                <Outlet/>
-            </ClassRoomBody>
-        </section>
+        <VideoCallProvider>
+            <section className={'h-screen w-screen flex flex-col bg-primary'}>
+                <NavBar navLinks={true}/>
+                <ClassRoomBody>
+                    <Outlet/>
+                </ClassRoomBody>
+            </section>
+        </VideoCallProvider>
     )
 }

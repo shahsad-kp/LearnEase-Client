@@ -113,6 +113,43 @@ const changePermission = ({userId, permission}) => {
     roomSocket.send(JSON.stringify(data));
 }
 
+const sendOffers = ({offers}) => {
+    const data = {
+        type: 'offers',
+        offers
+    }
+    videoCallSocket.send(JSON.stringify(data));
+
+}
+
+const sendOffer = ({offer, to}) => {
+    console.log('sending offer')
+    const data = {
+        type: 'offer',
+        offer,
+        to
+    }
+    roomSocket.send(JSON.stringify(data));
+}
+
+const sendAnswer = ({answer, to}) => {
+    const data = {
+        type: 'answer',
+        answer,
+        to
+    }
+    roomSocket.send(JSON.stringify(data));
+}
+
+const sendIceCandidate = ({candidate, to}) => {
+    const data = {
+        type: 'ice_candidate',
+        candidate,
+        to
+    }
+    roomSocket.send(JSON.stringify(data));
+}
+
 export {
     connectToRoom,
     disconnectRoom,
@@ -121,5 +158,9 @@ export {
     getClassRoomData,
     getHistory,
     changeSettings,
-    changePermission
+    changePermission,
+    sendOffer,
+    sendAnswer,
+    sendIceCandidate,
+    sendOffers,
 }
