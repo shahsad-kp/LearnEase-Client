@@ -6,24 +6,21 @@ import {videoCallContext} from "../../../store/VideoCallProvider.jsx";
 export const VideoCall = ({name, width, height, isLecturer, userId, className = ''}) => {
     const user = useSelector(state => state.auth.user);
     const videoRef = useRef(null);
-    const {videoConnections, localStream} = useContext(videoCallContext)
+    const {videoConnections, localStream, connectedUsers} = useContext(videoCallContext)
+    const mediaRef = useRef(new MediaStream());
 
     const isSelf = useMemo(() => user.id === userId, [user, userId]);
 
     useEffect(() => {
         if (isSelf){
             if (!localStream.current) return;
-            console.log('localStream', localStream.current)
             videoRef.current.srcObject = localStream.current;
         } else {
-            if (!videoConnections.current) return;
-            const connection = videoConnections.current.find(connection => connection.userId === userId);
-            if (connection){
-                console.log('connection', connection)
-                videoRef.current.srcObject = connection.remoteStream;
+            if (connectedUsers.has(userId)){
+                videoRef.current.srcObject = videoConnections.current.get(userId).remoteStream;
             }
         }
-    }, [isSelf, localStream, userId, videoConnections]);
+    }, [connectedUsers, isSelf, localStream, userId, videoConnections]);
 
     return (
         <div
@@ -34,6 +31,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
                 muted={isSelf}
                 ref={videoRef}
                 style={{height: '100%', width: '100%'}}
+                autoPlay={true}
             />
             <div className={'absolute left-0 top-0 flex flex-row text-sm'}>
                 <div className={'rounded-tl bg-logo-yellow px-2 font-semibold'}>
