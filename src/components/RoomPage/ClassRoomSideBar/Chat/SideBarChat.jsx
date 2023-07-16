@@ -1,14 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useContext, useEffect, useMemo, useRef, useState} from "react";
 import {IoSendOutline} from "react-icons/io5";
 import {setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {getAllMessages, sendMessageToServer} from "../../../../api/messages.js";
-import {imageBaseURL} from "../../../../api/apiConfiguration.js";
+import {getAllMessages} from "../../../../service/api/messages.js";
+import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
+import {messageSocketContext} from "../../../../service/api/MessageSocket.jsx";
 
 export const SideBarChat = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch();
+    const {sendMessageToServer} = useContext(messageSocketContext);
     const [message, setMessage] = useState('');
     const messagesRef = useRef(null);
 

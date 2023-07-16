@@ -7,12 +7,8 @@ import {AiOutlineClear} from "react-icons/ai";
 import {useDispatch, useSelector} from "react-redux";
 import {changeColor, changeTool, clearLines,} from "../../../../../redux/whiteboardSlice/whiteboardSlice.js";
 import {whiteboardCtx} from "../../../../../store/whiteboardData.jsx";
-import {
-    getWhiteboard,
-    sendClearToServer,
-    sendLineToServer,
-    sendWhiteboardToServer
-} from "../../../../../api/whiteboard.js";
+import {getWhiteboard} from "../../../../../service/api/whiteboard.js";
+import {whiteboardContext} from "../../../../../service/sockets/WhiteboardSocket.jsx";
 
 export const RightSideWhiteboard = () => {
     const canvasRef = useRef(null);
@@ -21,6 +17,11 @@ export const RightSideWhiteboard = () => {
     const user = useSelector(state => state.auth.user)
     const whiteboard = useSelector(state => state.whiteboard.whiteboard);
     const whiteboardData = useContext(whiteboardCtx);
+    const {
+        sendWhiteboardToServer,
+        sendClearToServer,
+        sendLineToServer
+    } = useContext(whiteboardContext)
     const dispatch = useDispatch();
 
     const colors = ['black', 'red', 'green', 'blue', 'yellow', 'purple', 'orange', 'brown', 'pink', 'gray'];

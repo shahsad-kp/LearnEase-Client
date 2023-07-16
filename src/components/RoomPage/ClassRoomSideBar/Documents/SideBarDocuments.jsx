@@ -1,16 +1,18 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useCallback, useEffect, useRef, useState} from "react";
+import {useCallback, useContext, useEffect, useRef, useState} from "react";
 import {IoCloseOutline, IoDocumentOutline, IoDownloadOutline} from "react-icons/io5";
 import {setDocuments} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {AiOutlineUpload} from "react-icons/ai";
-import {getAllDocuments, sendDocumentToServer, uploadDocument} from "../../../../api/documents.js";
+import {getAllDocuments, uploadDocument} from "../../../../service/api/documents.js";
 import axios from "axios";
 import fileDownload from "js-file-download";
+import {documentSocketContext} from "../../../../service/sockets/DocumentSocket.jsx";
 
 export const SideBarDocuments = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user);
     const dispatcher = useDispatch();
+    const {sendDocumentToServer} = useContext(documentSocketContext)
     const [document, setDocument] = useState(null);
     const documentsRef = useRef(null);
     const documentSelectRef = useRef(null);

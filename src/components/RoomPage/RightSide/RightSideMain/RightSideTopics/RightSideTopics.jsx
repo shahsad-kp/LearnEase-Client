@@ -2,7 +2,7 @@ import {RightSmallVideos} from "../../../../";
 import {useEffect, useMemo} from "react";
 import {selectTopic, setTopics} from "../../../../../redux/classRoomSlice/classRoomSlice.js";
 import {useDispatch, useSelector} from "react-redux";
-import {getTopics} from "../../../../../api/classRoom.js";
+import {getTopics} from "../../../../../service/api/classRoom.js";
 
 // eslint-disable-next-line react/prop-types
 export const RightSideTopics = () => {

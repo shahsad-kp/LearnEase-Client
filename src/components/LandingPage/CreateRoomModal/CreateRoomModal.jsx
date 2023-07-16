@@ -3,7 +3,7 @@ import {homePageButton, homePageTextAreaClass} from "../../styles.js";
 import {Modal, InputField} from "../../";
 import {useEffect, useRef, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {createClassRoom} from "../../../api/classRoom.js";
+import {createClassRoom} from "../../../service/api/classRoom.js";
 
 
 // eslint-disable-next-line react/prop-types

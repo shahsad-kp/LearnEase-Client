@@ -1,24 +1,22 @@
 import {createContext, useCallback, useEffect, useMemo, useRef, useState} from "react";
 import useWebSocket from "react-use-websocket";
-import {useSelector} from "react-redux";
-import {useParams} from "react-router-dom";
+import {wsBaseUrl} from "../api/socket.js";
+import {refreshToken} from "../api/apiConfiguration.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
-export const videoCallContext = createContext(null)
+export const videoCallContext = createContext({})
 
 // eslint-disable-next-line react/prop-types
-const VideoCallProvider = ({children}) => {
+const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
     const localStream = useRef(null);
     const [gotLocalStream, setGotLocalStream] = useState(false);
     const isCalling = useRef(false);
     const connections = useRef(new Map());
     const [connectedUsers, setConnectedUsers] = useState(new Set());
-    const {roomId} = useParams()
-    const loggedInUser = useSelector(state => state.auth.user);
 
     const endPoint = useMemo(() => {
-        return `ws://localhost:8000/ws/video_call/${roomId}/${loggedInUser.id}/`;
-    }, [roomId, loggedInUser]);
+        return `${wsBaseUrl}video_call/${roomId}/?token=${accessToken}`;
+    }, [roomId, accessToken]);
 
     let videoCallSocket;
 
@@ -193,7 +191,15 @@ const VideoCallProvider = ({children}) => {
         "onClose": () => {
             isCalling.current = false;
         },
-        "shouldReconnect": () => true,
+        "shouldReconnect": (event) => {
+            if (event.code === 4001){
+                refreshToken().then(token => {
+                    setAccessToken(token);
+                })
+            }
+            return true;
+        },
+        "reconnectAttempts": 10,
         "onMessage": onMessage
     });
 
@@ -204,4 +210,4 @@ const VideoCallProvider = ({children}) => {
     )
 }
 
-export default VideoCallProvider;
+export default VideoCallSocket;

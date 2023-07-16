@@ -3,7 +3,7 @@ import {bannerPageButtonClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {useState} from "react";
 import {InputField, PasswordField} from "../";
-import {loginUser} from "../../api/user.js";
+import {loginUser} from "../../service/api/user.js";
 
 export const LoginForm = () => {
     const [values, setValues] = useState({

@@ -3,7 +3,7 @@ import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {Fragment, useState} from "react";
 import {InputField, PasswordField, ProgressBar} from "../";
-import {registerUser} from "../../api/user.js";
+import {registerUser} from "../../service/api/user.js";
 
 
 export const SignupForm = () => {

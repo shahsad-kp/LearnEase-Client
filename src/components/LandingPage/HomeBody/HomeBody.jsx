@@ -3,7 +3,7 @@ import {CreateRoomModal, InputField} from "../../";
 import {homePageButton} from "../../styles.js";
 import {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {getHistory} from "../../../api/classRoom.js";
+import {getHistory} from "../../../service/api/classRoom.js";
 
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);

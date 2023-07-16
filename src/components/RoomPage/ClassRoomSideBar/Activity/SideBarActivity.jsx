@@ -1,9 +1,10 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useMemo, useRef, useState} from "react";
+import {useContext, useEffect, useMemo, useRef, useState} from "react";
 import {setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {IoListOutline} from "react-icons/io5";
 import {ActivityModal, CreateActivityModal, ProgressBar} from "../../..";
-import {addResponseToServer, getAllActivities} from "../../../../api/activities.js";
+import {getAllActivities} from "../../../../service/api/activities.js";
+import {activityContext} from "../../../../service/sockets/ActivitySocket.jsx";
 
 export const SideBarActivity = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -13,6 +14,7 @@ export const SideBarActivity = () => {
     const [showModal, setShowModal] = useState(false);
     const [activity, setActivity] = useState(null);
     const [activityModalOpen, setActivityModalOpen] = useState(false);
+    const {addResponseToServer} = useContext(activityContext)
 
     useEffect(() => {
         if (classRoom) {

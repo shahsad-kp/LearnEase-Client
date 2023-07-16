@@ -1,15 +1,16 @@
 import {useDispatch, useSelector} from "react-redux";
-import {useMemo} from "react";
+import {useContext, useMemo} from "react";
 import {BsCameraVideo, BsCameraVideoOff} from "react-icons/bs";
 import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
 import {changeAudioPermission, changeVideoPermission} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {imageBaseURL} from "../../../../api/apiConfiguration.js";
-import {changePermission} from "../../../../api/classRoom.js";
+import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
+import {classRoomSocketContext} from "../../../../service/sockets/ClassRoomSocket.jsx";
 
 export const SideBarParticipants = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user);
-    const dispatcher = useDispatch()
+    const dispatcher = useDispatch();
+    const {changePermission} = useContext(classRoomSocketContext);
 
     const [lecturer, students, isLecturer] = useMemo(() => {
         if (!classRoom) {

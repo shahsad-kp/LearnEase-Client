@@ -1,6 +1,6 @@
 import {useContext, useEffect, useMemo, useRef} from "react";
 import {useSelector} from "react-redux";
-import {videoCallContext} from "../../../store/VideoCallProvider.jsx";
+import {videoCallContext} from "../../../service/sockets/VideoCallSocket.jsx";
 import ConnectionAnimation from '../../../assets/loading-images/connecting.mp4';
 
 // eslint-disable-next-line react/prop-types
@@ -11,7 +11,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
 
     const connected = useMemo(() => connectedUsers.has(userId), [connectedUsers, userId]);
     const isSelf = useMemo(() => user.id === userId, [user, userId]);
-    console.log(connected)
+
     useEffect(() => {
         if (isSelf) {
             if (!gotLocalStream) return;

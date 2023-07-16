@@ -3,10 +3,9 @@ import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect} from "react";
 import {joinClassRoom, leaveClassRoom} from "../../redux/classRoomSlice/classRoomSlice.js";
-import {getClassRoomData} from "../../api/classRoom.js";
-import {connectAllSockets, disconnectAllSockets} from "../../api/socket.js";
+import {getClassRoomData} from "../../service/api/classRoom.js";
 import {whiteboardCtx} from "../../store/whiteboardData.jsx";
-import VideoCallProvider from "../../store/VideoCallProvider.jsx";
+import {SocketsProvider} from "../../service/sockets/SocketsProvider.jsx";
 
 
 export const RoomPage = () => {
@@ -15,13 +14,6 @@ export const RoomPage = () => {
     const dispatcher = useDispatch()
     const {roomId} = useParams();
     const whiteboardData = useContext(whiteboardCtx)
-
-    useEffect(() => {
-        connectAllSockets({roomId})
-        return () => {
-            disconnectAllSockets()
-        }
-    }, [roomId]);
 
     useEffect(() => {
         if (!(classRoom && (classRoom.id === roomId))) {
@@ -55,13 +47,13 @@ export const RoomPage = () => {
 
 
     return (
-        <VideoCallProvider>
+        <SocketsProvider>
             <section className={'h-screen w-screen flex flex-col bg-primary'}>
                 <NavBar navLinks={true}/>
                 <ClassRoomBody>
                     <Outlet/>
                 </ClassRoomBody>
             </section>
-        </VideoCallProvider>
+        </SocketsProvider>
     )
 }

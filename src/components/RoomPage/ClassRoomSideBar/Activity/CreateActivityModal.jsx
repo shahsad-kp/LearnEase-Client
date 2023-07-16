@@ -1,7 +1,7 @@
 import {InputField} from "../../../UtilityComponents/InputFields/InputField.jsx";
 import {Modal} from "../../../UtilityComponents/Modal/Modal.jsx";
-import {useState} from "react";
-import {sendNewActivityToServer} from "../../../../api/activities.js";
+import {useContext, useState} from "react";
+import {activityContext} from "../../../../service/sockets/ActivitySocket.jsx";
 
 // eslint-disable-next-line react/prop-types
 export const CreateActivityModal = ({closeFunction}) => {
@@ -10,6 +10,7 @@ export const CreateActivityModal = ({closeFunction}) => {
     const [options, setOptions] = useState(['', '', '', '']);
     const [optionsError, setOptionsError] = useState('');
     const [rightAnswer, setRightAnswer] = useState(null);
+    const {sendNewActivityToServer} = useContext(activityContext);
 
     const updateQuestion = (e) => {
         setQuestion(e.target.value);

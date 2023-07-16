@@ -1,8 +1,8 @@
 import {ProgressBar, RightSmallVideos} from "../../../../";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useMemo} from "react";
-import {imageBaseURL} from "../../../../../api/apiConfiguration.js";
-import {getAllActivities} from "../../../../../api/activities.js";
+import {imageBaseURL} from "../../../../../service/api/apiConfiguration.js";
+import {getAllActivities} from "../../../../../service/api/activities.js";
 import {setActivities} from "../../../../../redux/classRoomSlice/classRoomSlice.js";
 
 export const RightSideGrades = () => {

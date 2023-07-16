@@ -1,19 +1,20 @@
 import {IoMicOffOutline, IoMicOutline, IoStopCircleOutline} from "react-icons/io5";
 import {useSelector} from "react-redux";
 import {HiOutlineHandRaised} from "react-icons/hi2";
-import {useMemo, useState} from "react";
+import {useContext, useMemo, useState} from "react";
 import {MdLogout} from "react-icons/md";
 import {useNavigate} from "react-router-dom";
 import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
 import {IoMdRadioButtonOn} from "react-icons/io";
 import {useReactMediaRecorder} from "react-media-recorder";
-import {changeSettings} from "../../../../api/classRoom.js";
+import {classRoomSocketContext} from "../../../../service/sockets/ClassRoomSocket.jsx";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user)
     const navigator = useNavigate();
     const [screenShareControl, setScreenShareControl] = useState();
+    const {changeSettings} = useContext(classRoomSocketContext);
     const {
         status: recordingStatus,
         startRecording,

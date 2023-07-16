@@ -1,7 +1,7 @@
 import {SideBarActivity, SideBarBottom, SideBarChat, SideBarDocuments, SideBarParticipants, VideoCall} from "../../";
 import {useContext, useState} from "react";
 import {useSelector} from "react-redux";
-import {videoCallContext} from "../../../store/VideoCallProvider.jsx";
+import {videoCallContext} from "../../../service/sockets/VideoCallSocket.jsx";
 
 export const ClassRoomSideBar = () => {
 	const classRoom = useSelector(state => state.classRoom.classRoom);

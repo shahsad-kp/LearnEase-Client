@@ -1,6 +1,6 @@
 import {axiosInstance} from "./apiConfiguration.js";
-import store from "../redux/store.js";
-import {login} from "../redux/authSlice/authSlice.js";
+import store from "../../redux/store.js";
+import {login} from "../../redux/authSlice/authSlice.js";
 
 const loginUser = async ({email, password}) => {
     try{

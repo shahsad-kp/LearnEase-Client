@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import classNames from "classnames";
 import {logout} from "../../../redux/authSlice/authSlice.js";
 import {useNavigate} from "react-router-dom";
-import {imageBaseURL} from "../../../api/apiConfiguration.js";
+import {imageBaseURL} from "../../../service/api/apiConfiguration.js";
 
 export const NavBarDropDown = () => {
     const user = useSelector(state => state.auth.user)
