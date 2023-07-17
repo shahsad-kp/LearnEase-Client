@@ -4,7 +4,7 @@ import VideoCallSocket from "./VideoCallSocket.jsx";
 import {useState} from "react";
 import WhiteboardSocket from "./WhiteboardSocket.jsx";
 import DocumentSocket from "./DocumentSocket.jsx";
-import MessageSocket from "../api/MessageSocket.jsx";
+import MessageSocket from "./MessageSocket.jsx";
 import ActivitySocket from "./ActivitySocket.jsx";
 
 // eslint-disable-next-line react/prop-types

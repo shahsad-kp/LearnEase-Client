@@ -4,7 +4,7 @@ import {IoSendOutline} from "react-icons/io5";
 import {setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
 import {getAllMessages} from "../../../../service/api/messages.js";
 import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
-import {messageSocketContext} from "../../../../service/api/MessageSocket.jsx";
+import {messageSocketContext} from "../../../../service/sockets/MessageSocket.jsx";
 
 export const SideBarChat = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
