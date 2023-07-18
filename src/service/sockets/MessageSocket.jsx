@@ -1,9 +1,9 @@
 import {createContext, useCallback, useMemo} from "react";
-import {wsBaseUrl} from "./socket.js";
+import {wsBaseUrl} from "../api/socket.js";
 import {useDispatch} from "react-redux";
 import {addMessage} from "../../redux/classRoomSlice/classRoomSlice.js";
 import useWebSocket from "react-use-websocket";
-import {refreshToken} from "./apiConfiguration.js";
+import {refreshToken} from "../api/apiConfiguration.js";
 
 // eslint-disable-next-line react-refresh/only-export-components
 export const messageSocketContext = createContext({})

@@ -1,6 +1,6 @@
-import {axiosInstance} from "./apiConfiguration.js";
+import {axiosAuthorized, axiosInstance} from "./apiConfiguration.js";
 import store from "../../redux/store.js";
-import {login} from "../../redux/authSlice/authSlice.js";
+import {login, updateUser} from "../../redux/authSlice/authSlice.js";
 
 const loginUser = async ({email, password}) => {
     try{
@@ -30,4 +30,17 @@ const registerUser = async ({name, email, password}) => {
     }
 }
 
-export {loginUser, registerUser};
+const updateUserApi = async (data) => {
+    try{
+        const response = await axiosAuthorized.patch('user/update/', data);
+        store.dispatch(updateUser(response.data))
+
+        return response.data
+    }
+    catch(error){
+        console.log(error)
+        return Promise.reject(error)
+    }
+}
+
+export {loginUser, registerUser, updateUserApi};
