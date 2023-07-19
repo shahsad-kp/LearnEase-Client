@@ -33,6 +33,7 @@ const ClassRoomSocket = ({children, roomId, accessToken, setAccessToken}) => {
             const student_id = data.student_id;
             dispatch(removeParticipant(student_id));
         } else if (data.type === 'change_settings') {
+            console.log('change_settings', data)
             const userId = data.user_id;
             const settings = data.settings
             dispatch(changeParticipantSettings({userId, settings}));

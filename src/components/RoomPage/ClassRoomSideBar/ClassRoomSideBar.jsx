@@ -35,6 +35,7 @@ export const ClassRoomSideBar = () => {
 					isLecturer={true}
 					height={'100%'}
 					width={'100%'}
+					settings={classRoom.lecturer.settings}
 				/>
 			</div>
 			<div className={'w-full h-[calc(100vh-385px)] shadow rounded bg-secondary'}>

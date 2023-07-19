@@ -13,14 +13,19 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
     const isCalling = useRef(false);
     const connections = useRef(new Map());
     const [connectedUsers, setConnectedUsers] = useState(new Set());
+    const screenTrackRef = useRef(null);
 
-    const endPoint = useMemo(() => {
+    const endPoint = useMemo(
+        () => {
         return `${wsBaseUrl}video_call/${roomId}/?token=${accessToken}`;
-    }, [roomId, accessToken]);
+    },
+        [roomId, accessToken]
+    );
 
     let videoCallSocket;
 
-    useEffect(() => {
+    useEffect(
+        () => {
         if (!localStream.current) {
             navigator.mediaDevices.getUserMedia({
                 "video": true,
@@ -49,9 +54,12 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 })
             }
         }
-    }, [gotLocalStream, localStream]);
+    },
+        [gotLocalStream, localStream]
+    );
 
-    const createConnection = useCallback((userId) => {
+    const createConnection = useCallback(
+        (userId) => {
         const remoteStream = new MediaStream();
         const connection = new RTCPeerConnection({
             "iceServers": [
@@ -70,9 +78,11 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 }))
             }
         }
+
         connection.ontrack = (event) => {
             remoteStream.addTrack(event.track);
         }
+
         connection.onconnectionstatechange = () => {
             console.log('connection state changed', connection.connectionState)
             if (connection.connectionState === 'connected') {
@@ -91,18 +101,23 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 })
             }
         }
+
         if (gotLocalStream) {
             localStream.current.getTracks().forEach(track => {
                 connection.addTrack(track, localStream.current);
             })
         }
+
         return {
             "connection": connection,
             "remoteStream": remoteStream
         }
-    }, [gotLocalStream, videoCallSocket]);
+    },
+        [gotLocalStream, videoCallSocket]
+    );
 
-    const onMessage = useCallback((message) => {
+    const onMessage = useCallback(
+        (message) => {
         const data = JSON.parse(message.data);
         if (data.type === 'request-connection') {
             const userId = data.userId;
@@ -177,9 +192,13 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 })
             connections.current.set(userId, userConnection)
         }
-    }, [connections, createConnection, videoCallSocket]);
+    },
+        [connections, createConnection, videoCallSocket]
+    );
 
-    videoCallSocket = useWebSocket(endPoint, {
+    videoCallSocket = useWebSocket(
+        endPoint,
+        {
         "onOpen": () => {
             if (!isCalling.current) {
                 videoCallSocket.sendMessage(JSON.stringify({
@@ -201,10 +220,41 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
         },
         "reconnectAttempts": 10,
         "onMessage": onMessage
-    });
+    }
+    );
+
+    const data = useMemo(
+        () => ({
+        localStream, 
+        "videoConnections": connections, 
+        connectedUsers, 
+        gotLocalStream,
+        screenTrackRef,
+    }),
+        [connectedUsers, gotLocalStream]
+    );
+
+    // useEffect(() => {
+    //     if (classRoom === null) {
+    //         return;
+    //     }
+    //     const usersIds = classRoom.students.filter(student => student.isActive).map(student => student.id);
+    //     if (classRoom.lecturer.isActive) {
+    //         usersIds.push(classRoom.lecturer.id);
+    //     }
+    //     for (let connectedUserId of connectedUsers) {
+    //         if (!usersIds.includes(connectedUserId)) {
+    //             setConnectedUsers((prev) => {
+    //                 const newSet = new Set(prev);
+    //                 newSet.delete(connectedUserId);
+    //                 return newSet;
+    //             })
+    //         }
+    //     }
+    // }, [classRoom, connectedUsers]);
 
     return (
-        <videoCallContext.Provider value={{localStream, "videoConnections": connections, connectedUsers, gotLocalStream}}>
+        <videoCallContext.Provider value={data}>
             {children}
         </videoCallContext.Provider>
     )

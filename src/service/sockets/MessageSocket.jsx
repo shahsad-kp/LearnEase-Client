@@ -11,7 +11,7 @@ export const messageSocketContext = createContext({})
 // eslint-disable-next-line react/prop-types
 const MessageSocket = ({children, roomId, accessToken, setAccessToken}) => {
     const endPoint = useMemo(() => {
-        return `${wsBaseUrl}classroom/${roomId}/?token=${accessToken}`
+        return `${wsBaseUrl}messages/${roomId}/?token=${accessToken}`
     }, [roomId, accessToken]);
 
     const dispatch = useDispatch();
@@ -57,8 +57,9 @@ const MessageSocket = ({children, roomId, accessToken, setAccessToken}) => {
     )
 
     const sendMessageToServer = useCallback(({message}) => {
+        console.log(message)
         const data = {
-            type: 'send_message',
+            type: 'chat_message',
             message
         }
         socket.sendJsonMessage(data);

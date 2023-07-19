@@ -8,6 +8,7 @@ import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
 import {IoMdRadioButtonOn} from "react-icons/io";
 import {useReactMediaRecorder} from "react-media-recorder";
 import {classRoomSocketContext} from "../../../../service/sockets/ClassRoomSocket.jsx";
+import {videoCallContext} from "../../../../service/sockets/VideoCallSocket.jsx";
 
 export const RightToolbar = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -21,6 +22,7 @@ export const RightToolbar = () => {
         stopRecording,
         mediaBlobUrl
     } = useReactMediaRecorder({screen: true});
+    // const {clickScreenSharing} = useContext(videoCallContext);
 
     const {userSettings, isLecturer} = useMemo(
         () => {
@@ -226,7 +228,6 @@ export const RightToolbar = () => {
                             `w-min h-10 box-border p-2 xl:bg-primary rounded${videoControl.permission ?
                                 (screenShareControl ? ' !bg-accent-color-one' : '') : ' !bg-red-300'}`
                         }
-                        onClick={() => controlScreenShare(screenShareControl)}
                     >
                         <BsCast className={'w-12 h-full'}/>
                     </button>
