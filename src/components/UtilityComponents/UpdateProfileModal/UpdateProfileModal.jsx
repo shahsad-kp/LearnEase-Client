@@ -97,7 +97,9 @@ export const UpdateProfileModal = ({closeFunction}) => {
         const formData = new FormData()
         formData.append('name', values.name);
         formData.append('email', values.email);
-        formData.append('profilePicture', values.profilePicture)
+        if (values.profilePicture){
+            formData.append('profilePicture', values.profilePicture)
+        }
         updateUserApi(formData).then(closeFunction)
     }, [closeFunction, validateEmail, validateName, values])
 
