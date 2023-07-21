@@ -1,4 +1,4 @@
-import {ClassRoomBody, NavBar} from "../../components/";
+import {NavBar} from "../../components/";
 import {Outlet, useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {useContext, useEffect} from "react";
@@ -6,6 +6,7 @@ import {joinClassRoom, leaveClassRoom} from "../../redux/classRoomSlice/classRoo
 import {getClassRoomData} from "../../service/api/classRoom.js";
 import {whiteboardCtx} from "../../store/whiteboardData.jsx";
 import {SocketsProvider} from "../../service/sockets/SocketsProvider.jsx";
+import {ClassRoomBody} from "../../components/RoomPage/RoomBody/RoomBody.jsx";
 
 
 export const RoomPage = () => {

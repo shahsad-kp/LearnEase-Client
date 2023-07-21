@@ -39,7 +39,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
             videoAttached.current = false;
             return <img
                 key={`loading-${userId}`}
-                className={`absolute object-cover object-center rounded w-[${width}] h-[${height}]`}
+                className={`absolute object-cover object-center rounded-sm w-[${width}] h-[${height}]`}
                 style={{height: '100%', width: '100%'}}
                 src={ConnectionAnimation}
                 alt={''}
@@ -49,7 +49,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
             videoAttached.current = false;
             return <div
                 key={`video-${userId}`}
-                className={`absolute bg-black object-center rounded w-[${width}] h-[${height}]`}
+                className={`absolute bg-black object-center rounded-sm w-[${width}] h-[${height}]`}
                 style={{height: '100%', width: '100%'}}
             >
                 <span>Camera Off</span>
@@ -58,7 +58,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
         else if (isSelf){
             return <video
                 key={`video-${userId}`}
-                className={`absolute object-cover object-center rounded w-[${width}] h-[${height}]`}
+                className={`absolute object-cover object-center rounded-sm w-[${width}] h-[${height}]`}
                 muted={isSelf}
                 ref={videoRef}
                 style={{height: '100%', width: '100%'}}
@@ -70,7 +70,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
         else{
             return <video
                 key={`video-${userId}`}
-                className={`absolute object-cover object-center rounded w-[${width}] h-[${height}]`}
+                className={`absolute object-cover object-center rounded-sm w-[${width}] h-[${height}]`}
                 muted={isSelf}
                 ref={videoRef}
                 style={{height: '100%', width: '100%'}}
@@ -82,9 +82,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
 
     useEffect(() => {
         if (videoStatus && !videoAttached.current) {
-            if (!videoRef.current) {
-                return;
-            }
+            if (!videoRef.current) { /* empty */ }
             else if (isSelf && gotLocalStream){
                 videoRef.current.srcObject = localStream.current;
                 videoAttached.current = true;
@@ -100,14 +98,14 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
 
     return (
         <div
-            className={`h-full bg-cover bg-center rounded relative w-[${width}] h-[${height}] ${className}`}
+            className={`h-full bg-cover bg-center rounded-sm relative w-[${width}] h-[${height}] ${className}`}
         >
             {display}
             <div className={'absolute left-0 top-0 flex flex-row text-sm'}>
-                <div className={'rounded-tl bg-logo-yellow px-2 font-semibold'}>
+                <div className={'rounded-tl-sm bg-logo-yellow px-2 font-semibold'}>
                     {isLecturer ? 'Lecturer' : 'Student'}
                 </div>
-                <div className={'rounded-br px-2 ' + (!isSelf ? ' bg-accent-color-one' : ` bg-dangerColor`)}>
+                <div className={'rounded-br-sm px-2 ' + (!isSelf ? ' bg-accent-color-one' : ` bg-dangerColor`)}>
                     {isSelf ? 'You' : name}
                 </div>
             </div>

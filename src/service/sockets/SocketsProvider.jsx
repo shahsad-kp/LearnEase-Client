@@ -15,13 +15,13 @@ export const SocketsProvider = ({children}) => {
         <ClassRoomSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
             <DocumentSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
                 <MessageSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
-                    <VideoCallSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
-                        <ActivitySocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
-                            <WhiteboardSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
+                    <ActivitySocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
+                        <WhiteboardSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
+                            <VideoCallSocket roomId={roomId} accessToken={accessToken} setAccessToken={setAccessToken}>
                                 {children}
-                            </WhiteboardSocket>
-                        </ActivitySocket>
-                    </VideoCallSocket>
+                            </VideoCallSocket>
+                        </WhiteboardSocket>
+                    </ActivitySocket>
                 </MessageSocket>
             </DocumentSocket>
         </ClassRoomSocket>

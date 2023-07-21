@@ -58,7 +58,8 @@ const classRoomSlice = createSlice({
                 const {userId, settings} = action.payload;
                 if (state.classRoom.lecturer.id === userId){
                     state.classRoom.lecturer.settings = {...state.classRoom.lecturer.settings, ...settings};
-                } else {
+                }
+                else {
                     state.classRoom.students = state.classRoom.students.map(student => {
                         if (student.id === userId){
                             student.settings = {...student.settings, ...settings};
