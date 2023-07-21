@@ -129,7 +129,6 @@ export const SignupForm = () => {
                     setError(prevState => ({...prevState, name: e.response.data.name}))
                 }
             } else {
-
                 setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
         })
@@ -169,7 +168,7 @@ export const SignupForm = () => {
                 {
                     (passwordFocus && (error.password && error.password.length > 0) && values.password !== '') &&
                     <Fragment>
-                        <ProgressBar current={4 - error.password.length} max={4}/>
+                        <ProgressBar className={'max-w-[60%]'} current={4 - error.password.length} max={4}/>
                     </Fragment>
                 }
                 {

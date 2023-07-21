@@ -1,5 +1,5 @@
 import {createContext, useCallback, useMemo} from "react";
-import store from "../../redux/store.js";
+import {store} from "../../redux/store.js";
 import {addDocument} from "../../redux/classRoomSlice/classRoomSlice.js";
 import {wsBaseUrl} from "../api/socket.js";
 import useWebSocket from "react-use-websocket";

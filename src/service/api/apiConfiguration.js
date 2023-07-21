@@ -1,10 +1,10 @@
 import axios from "axios";
-import store from "../../redux/store.js";
+import {store} from "../../redux/store.js";
 import {logout} from "../../redux/authSlice/authSlice.js";
 
 
-const baseURL = 'http://localhost:8000/api/';
-const imageBaseURL = 'http://localhost:8000';
+const baseURL = 'http://35.232.201.4/api/';
+const imageBaseURL = 'http://35.232.201.4';
 
 const axiosAuthorized = axios.create({
     baseURL: baseURL,

@@ -1,4 +1,4 @@
-import {createContext, useCallback, useEffect, useMemo} from "react";
+import {createContext, useCallback, useMemo} from "react";
 import useWebSocket from "react-use-websocket";
 import {wsBaseUrl} from "../api/socket.js";
 import {
@@ -33,7 +33,6 @@ const ClassRoomSocket = ({children, roomId, accessToken, setAccessToken}) => {
             const student_id = data.student_id;
             dispatch(removeParticipant(student_id));
         } else if (data.type === 'change_settings') {
-            console.log('change_settings', data)
             const userId = data.user_id;
             const settings = data.settings
             dispatch(changeParticipantSettings({userId, settings}));

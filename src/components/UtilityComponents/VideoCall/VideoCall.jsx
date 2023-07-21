@@ -49,10 +49,10 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
             videoAttached.current = false;
             return <div
                 key={`video-${userId}`}
-                className={`absolute bg-black object-center rounded-sm w-[${width}] h-[${height}]`}
+                className={`absolute bg-black object-center flex justify-center items-center rounded-sm w-[${width}] h-[${height}]`}
                 style={{height: '100%', width: '100%'}}
             >
-                <span>Camera Off</span>
+                <span className={'text-white font-semibold'}>Camera Off</span>
             </div>
         }
         else if (isSelf){

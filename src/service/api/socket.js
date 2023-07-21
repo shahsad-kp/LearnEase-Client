@@ -1,4 +1,4 @@
-const wsBaseUrl = 'ws://localhost:8000/ws/';
+const wsBaseUrl = 'ws://35.232.201.4/ws/';
 
 export {
     wsBaseUrl

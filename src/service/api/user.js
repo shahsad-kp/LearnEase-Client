@@ -1,5 +1,5 @@
 import {axiosAuthorized, axiosInstance} from "./apiConfiguration.js";
-import store from "../../redux/store.js";
+import {store} from "../../redux/store.js";
 import {login, updateUser} from "../../redux/authSlice/authSlice.js";
 
 const loginUser = async ({email, password}) => {
