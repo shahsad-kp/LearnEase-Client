@@ -7,6 +7,8 @@ import {logout} from "../../../redux/authSlice/authSlice.js";
 import {useNavigate} from "react-router-dom";
 import {imageBaseURL} from "../../../service/api/apiConfiguration.js";
 import {UpdateProfileModal} from "../UpdateProfileModal/UpdateProfileModal.jsx";
+import useDarkSide from "../DarkMode/useDarkMode.js";
+import {DarkModeSwitch} from "react-toggle-dark-mode";
 
 export const NavBarDropDown = () => {
     const user = useSelector(state => state.auth.user)
@@ -26,10 +28,13 @@ export const NavBarDropDown = () => {
         'font-semibold',
         'p-2.5',
         'hover:bg-gray-100',
+        'dark:hover:bg-gray-700',
         'flex',
         'flex-row',
         'gap-1.5',
-        'items-center'
+        'items-center',
+        'text-dark',
+        'dark:text-white'
     )
 
     useEffect(() => {
@@ -46,6 +51,16 @@ export const NavBarDropDown = () => {
         };
     }, []);
 
+    const [colorTheme, setTheme] = useDarkSide();
+    const [darkSide, setDarkSide] = useState(
+        colorTheme === "light"
+    );
+
+    const toggleDarkMode = (checked) => {
+        setTheme(colorTheme);
+        setDarkSide(checked);
+    };
+
     return (
         <>
             <div
@@ -53,26 +68,26 @@ export const NavBarDropDown = () => {
                 id={'drop-down'}
             >
                 <div
-                    className={'h-full border-accent-color-one profile-picture cursor-pointer'}
+                    className={'h-full border-accent-color-one dark:border-dark-accent-color-one profile-picture cursor-pointer'}
                     onClick={() => setDrop(state => !state)}
                 >
                     <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
-                         className={'object-cover h-full rounded-full border-accent-color-one'}/>
+                         className={'object-cover h-full rounded-full border-accent-color-one dark:border-dark-accent-color-one'}/>
                 </div>
                 {drop &&
                     <div
-                        className={`navbar-dropdown z-50 fixed md:absolute top-14 right-0 bg-white shadow rounded 
+                        className={`navbar-dropdown z-50 fixed md:absolute top-14 right-0 bg-secondary dark:bg-dark-secondary shadow rounded 
                     flex flex-col w-screen md:w-fit min-w-[350px]`}
                         id={'second-component'}
                     >
-                        <div className={'flex flex-row w-min justify-center gap-2.5 border p-2.5 rounded m-2.5'}>
+                        <div className={'flex flex-row w-min justify-center gap-2.5 border border-primary dark:border-dark-primary shadow p-2.5 rounded m-2.5'}>
                             <div style={{width: '40px', height: '40px'}}>
                                 <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
-                                     className={'object-cover rounded h-full w-full border-accent-color-one'}/>
+                                     className={'object-cover rounded h-full w-full border-accent-color-one dark:border-dark-accent-color-one'}/>
                             </div>
                             <div className={'w-max'}>
-                                <p className={'text-sm font-thin'}>Logined as</p>
-                                <p className={'text-sm font-semibold'}>{user ? user.name : 'User'}</p>
+                                <p className={'text-sm font-thin text-dark dark:text-white'}>Logined as</p>
+                                <p className={'text-sm font-semibold text-dark dark:text-white'}>{user ? user.name : 'User'}</p>
                             </div>
                         </div>
                         <ul className={'w-full flex flex-col'}>
@@ -83,7 +98,17 @@ export const NavBarDropDown = () => {
                                 <RxAvatar/>Update Profile
                             </li>
                             <li
-                                className={dropDownItemsClasses + ' text-dangerColor'}
+                                className={dropDownItemsClasses}
+                                onClick={() => toggleDarkMode(!darkSide)}
+                            >
+                                <DarkModeSwitch
+                                    checked={darkSide}
+                                    onChange={toggleDarkMode}
+                                    size={15}
+                                />Change Theme
+                            </li>
+                            <li
+                                className={dropDownItemsClasses + ' text-danger-color dark:text-dark-danger-color'}
                                 onClick={handleLogout}
                             >
                                 <FiLogOut/>Logout

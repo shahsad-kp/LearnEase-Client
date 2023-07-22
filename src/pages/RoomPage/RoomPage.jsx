@@ -49,7 +49,7 @@ export const RoomPage = () => {
 
     return (
         <SocketsProvider>
-            <section className={'h-screen w-screen flex flex-col bg-primary'}>
+            <section className={'h-screen w-screen flex flex-col bg-primary dark:bg-dark-primary'}>
                 <NavBar navLinks={true}/>
                 <ClassRoomBody>
                     <Outlet/>

@@ -77,14 +77,14 @@ export const ActivitiesList = () => {
     if (!activities) return <div/>;
     return (
         <>
-            <div className={'md:p-3 gap-2 bg-primary h-full flex flex-col rounded-sm w-full'}>
+            <div className={'md:p-3 gap-2 bg-primary dark:bg-dark-primary h-full flex flex-col rounded-sm w-full'}>
                 <div className={'overflow-y-scroll w-full gap-2 flex flex-col h-full'}>
                     {
                         activities.map((activity) => {
                             return (
                                 <div
                                     key={activity.id}
-                                    className={'p-2 bg-secondary rounded flex flex-col gap-2 w-full'}
+                                    className={'p-2 bg-secondary dark:bg-dark-secondary rounded flex flex-col gap-2 w-full'}
                                     onClick={() => {
                                         if (!isLecturer) return;
                                         setActivity(activity);
@@ -94,9 +94,9 @@ export const ActivitiesList = () => {
                                     <h5 className={'font-bold text-[11px]'}>{activity.question}</h5>
                                     {isLecturer
                                         ? <ul style={{listStyle: "disc"}} className={'px-3'}>
-                                            <li className={'text-[11px]'}>Total
+                                            <li className={'text-[11px] text-black dark:text-white'}>Total
                                                 Response: {activity.totalResponses.length}</li>
-                                            <li className={'text-[11px]'}>Total Right
+                                            <li className={'text-[11px] text-black dark:text-white'}>Total Right
                                                 Answers: {activity.totalCorrectResponses}</li>
                                         </ul>
                                         : <form className={'flex flex-col gap-1'}>
@@ -153,14 +153,14 @@ export const ActivitiesList = () => {
                     }
                 </div>
                 {isLecturer && <button
-                    className={'w-full p-2 h-10 bg-accent-color-one rounded justify-center items-center flex gap-2'}
+                    className={'w-full p-2 h-10 bg-accent-color-one dark:bg-dark-accent-color-one rounded justify-center items-center flex gap-2'}
                     type={'submit'}
                     onClick={() => {
                         setShowModal(isLecturer);
                     }}
                 >
-                    <IoListOutline/>
-                    <span>New Quiz</span>
+                    <IoListOutline className={'text-black dark:text-white'}/>
+                    <span className={'text-black dark:text-white'}>New Quiz</span>
                 </button>}
             </div>
             {

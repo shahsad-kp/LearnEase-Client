@@ -3,7 +3,7 @@ import {ComponentsController} from "../../../GeneralComponents/ComponentsControl
 // eslint-disable-next-line react/prop-types
 export const LargeScreenLeftController = ({selected, setSelected}) => {
 	return (
-		<div className={'p-2 bg-secondary w-full shadow rounded flex flex-row justify-evenly'}>
+		<div className={'p-2 bg-secondary dark:bg-dark-secondary w-full shadow rounded flex flex-row justify-evenly'}>
 			<ComponentsController selected={selected} setSelected={setSelected}/>
 		</div>
 	)

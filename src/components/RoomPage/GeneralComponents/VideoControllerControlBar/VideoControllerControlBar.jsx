@@ -1,7 +1,7 @@
 import {IoMicOffOutline, IoMicOutline} from "react-icons/io5";
-import {BsCameraVideo, BsCameraVideoOff, BsCast} from "react-icons/bs";
+import {BsCameraVideo, BsCameraVideoOff} from "react-icons/bs";
 import {HiOutlineHandRaised} from "react-icons/hi2";
-import {MdLogout} from "react-icons/md";
+import {MdLogout, MdOutlineCastForEducation} from "react-icons/md";
 import {useCallback, useContext, useMemo} from "react";
 import {videoCallContext} from "../../../../service/sockets/VideoCallSocket.jsx";
 import {useSelector} from "react-redux";
@@ -56,13 +56,13 @@ export const VideoControllerControlBar = () => {
 		<>
 			<div className={'flex flex-row gap-3'}>
 				<button
-                    className={`rounded-full p-2 active:text-secondary active:bg-accent-color-one ${
+                    className={`rounded-full p-2 active:text-secondary dark:active:text-secondary active:bg-accent-color-one dark:active:bg-dark-accent-color-one ${
                         audioSetting.permission ? (
                             audioSetting.enabled ? 
-                                'text-black' : 
+                                'text-black dark:text-white' : 
                                 'text-gray-500'
                             )
-                            : 'text-dangerColor'
+                            : 'text-danger-color dark:text-dark-danger-color'
                     }`}
                     onClick={() => {
                         if (!audioSetting.permission){
@@ -84,13 +84,13 @@ export const VideoControllerControlBar = () => {
                     }
                 </button>
 				<button
-                    className={`rounded-full p-2 active:text-secondary active:bg-accent-color-one ${
+                    className={`rounded-full p-2 active:text-secondary dark:active:text-secondary active:bg-accent-color-one dark:active:bg-dark-accent-color-one ${
                         videoSetting.permission ? (
                             videoSetting.enabled ? 
-                                'text-black' : 
+                                'text-black dark:text-white' : 
                                 'text-gray-500'
                             )
-                            : 'text-dangerColor'
+                            : 'text-danger-color'
                     }`}
                     onClick={() => {
                         if (!videoSetting.permission){
@@ -114,19 +114,19 @@ export const VideoControllerControlBar = () => {
 			</div>
 			<div className={'flex flex-row gap-3'}>
 				<button
-                    className={`rounded-full p-2 active:text-secondary active:bg-accent-color-one`}
+                    className={`rounded-full p-2 active:bg-accent-color-one dark:active:bg-dark-accent-color-one`}
                 >
-                    <BsCast/>
+                    <MdOutlineCastForEducation className={'text-secondary dark:text-white'}/>
                 </button>
 			</div>
 			<div className={'flex flex-row gap-3'}>
 				<button
-                    className={`rounded-full p-2 text-gray-500 active:text-secondary active:bg-accent-color-one`}
+                    className={`rounded-full p-2 text-black dark:text-white active:text-secondary dark:active:text-dark-secondary active:bg-accent-color-one dark:active:bg-dark-accent-color-one`}
                 >
                     <HiOutlineHandRaised/>
                 </button>
 				<button
-                    className={`rounded-full p-2 text-dangerColor active:text-secondary active:bg-dangerColor`}
+                    className={`rounded-full p-2 text-danger-color dark:text-dark-danger-color active:text-secondary dark:active:text-dark-secondary active:bg-danger-color dark:active:bg-dark-danger-color`}
                     onClick={leaveClass}
                 >
                     <MdLogout/>

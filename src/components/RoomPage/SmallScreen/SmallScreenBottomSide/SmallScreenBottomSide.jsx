@@ -20,7 +20,7 @@ export const SmallScreenBottomSide = () => {
 
 	return (
 		<div className={'h-full flex flex-col'}>
-            <div className={'flex-1 flex flex-col h-full bg-primary p-3'}>
+            <div className={'flex-1 flex flex-col h-full bg-primary dark:bg-dark-primary p-3'}>
                 {content}
             </div>
             <SmallScreenBottomBar setSelected={setSelected} selected={selected}/>

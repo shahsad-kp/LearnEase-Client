@@ -90,8 +90,8 @@ export const DocumentsList = () => {
         <div
             className={'flex flex-col h-full gap-2'}
         >
-            <div className={'font-semibold'}>Documents</div>
-            <hr width={'100%'} className={'h-0.5 bg-secondary'}/>
+            <div className={'font-semibold text-black dark:text-white'}>Documents</div>
+            <hr width={'100%'} className={'h-0.5 bg-secondary dark:bg-dark-secondary'}/>
             <div
                 className={'flex flex-col gap-2 h-full overflow-y-auto'}
                 ref={documentsRef}
@@ -103,11 +103,11 @@ export const DocumentsList = () => {
                             className={'flex flex-row items-center gap-2'}
                         >
                             <div className={'flex flex-row gap-1 items-center'}>
-                                <IoDocumentOutline/>
-                                <span className={'text-[16px] font-semibold'}>{document.title}</span>
+                                <IoDocumentOutline className={'text-black dark:text-white'}/>
+                                <span className={'text-[16px] font-semibold text-black dark:text-white'}>{document.title}</span>
                             </div>
                             <IoDownloadOutline
-                                className={'cursor-pointer'}
+                                className={'cursor-pointer text-black dark:text-white'}
                                 onClick={() => handleDownload(document.docfile, document.title)}
                             />
                         </div>
@@ -118,7 +118,7 @@ export const DocumentsList = () => {
                 isLecturer &&
                 <form className={'w-full h-fit flex flex-row justify-between rounded gap-2'}>
                     <input
-                        className={'hidden'}
+                        className={'hidden text-black dark:text-white'}
                         placeholder={'Enter message..'}
                         type={'file'}
                         onChange={(event) => setDocument(event.target.files[0])}
@@ -126,7 +126,7 @@ export const DocumentsList = () => {
                     />
                     <button
                         className={
-                            'w-full h-10 rounded bg-accent-color-one gap-2.5 justify-center items-center flex'
+                            'w-full h-10 rounded bg-accent-color-one dark:bg-dark-accent-color-one gap-2.5 justify-center items-center flex'
                         }
                         type={'button'}
                         onClick={(event) => {
@@ -138,19 +138,19 @@ export const DocumentsList = () => {
                             }
                         }}
                     >
-                        {!document ? <IoDocumentOutline/> : <AiOutlineUpload/>}
-                        <span>{document ? `Upload file` : 'Select File'}</span>
+                        {!document ? <IoDocumentOutline className={'text-black dark:text-white'}/> : <AiOutlineUpload className={'text-black dark:text-white'}/>}
+                        <span className={'text-black dark:text-white'}>{document ? `Upload file` : 'Select File'}</span>
                     </button>
                     {
                         document &&
                         <button
-                            className={'bg-dangerColor h-10 w-10 p-2 rounded justify-center items-center flex'}
+                            className={'bg-danger-color dark:bg-dark-danger-color h-10 w-10 p-2 rounded justify-center items-center flex'}
                             onClick={() => {
                                 documentSelectRef.current.value = null;
                                 setDocument(null);
                             }}
                         >
-                            <IoCloseOutline/>
+                            <IoCloseOutline className={'text-black dark:text-white'}/>
                         </button>}
                 </form>}
         </div>

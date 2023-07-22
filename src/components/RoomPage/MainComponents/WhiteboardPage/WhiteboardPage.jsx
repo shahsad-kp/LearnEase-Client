@@ -217,38 +217,38 @@ export const WhiteboardPage = () => {
         const firstCol = [
             <button
                 key={'pencil'}
-                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one${
-                    whiteboard.tool === 'pencil' ? ' bg-accent-color-one' : ''
+                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one dark:active:bg-dark-accent-color-one ${
+                    whiteboard.tool === 'pencil' ? ' bg-accent-color-one dark:bg-dark-accent-color-one' : ''
                 }`}
                 onClick={() => dispatch(changeTool('pencil'))}
             >
-                <BiPencil/>
+                <BiPencil className={'text-black dark:text-white'}/>
             </button>,
             <button
                 key={'marker'}
-                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one${
-                    whiteboard.tool === 'marker' ? ' bg-accent-color-one' : ''
+                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one dark:active:bg-dark-accent-color-one ${
+                    whiteboard.tool === 'marker' ? ' bg-accent-color-one dark:bg-dark-accent-color-one' : ''
                 }`}
                 onClick={() => dispatch(changeTool('marker'))}
             >
-                <TfiMarkerAlt/>
+                <TfiMarkerAlt className={'text-black dark:text-white'}/>
             </button>,
             <button
                 key={'eraser'}
-                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one${
-                    whiteboard.tool === 'eraser' ? ' bg-accent-color-one' : ''
+                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one dark:active:bg-dark-accent-color-one${
+                    whiteboard.tool === 'eraser' ? ' bg-accent-color-one dark:bg-dark-accent-color-one' : ''
                 }`}
                 onClick={() => dispatch(changeTool('eraser'))}
             >
-                <BsEraser/>
+                <BsEraser className={'text-black dark:text-white'}/>
             </button>];
         const secondCol = [];
         colors.map((color, index) => {
             const element = <button
                 key={`color-${color}-${index}`}
-                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one${
+                className={`h-10 w-10 p-2.5 xl:p-2.5 rounded active:bg-accent-color-one dark:active:bg-dark-accent-color-one${
                     (whiteboard.color === color && whiteboard.tool !== 'eraser') ?
-                        ' bg-accent-color-one' : ''
+                        ' bg-accent-color-one dark:bg-dark-accent-color-one' : ''
                 }`}
                 onClick={() => dispatch(changeColor(color))}
             >
@@ -263,10 +263,10 @@ export const WhiteboardPage = () => {
         })
         secondCol.push(<button
             key={'clear-canvas'}
-            className={'p-2.5 rounded active:bg-accent-color-one'}
+            className={'p-2.5 rounded active:bg-accent-color-one dark:active:bg-dark-accent-color-one'}
             onClick={clearCanvas}
         >
-            <AiOutlineClear/>
+            <AiOutlineClear className={'text-black dark:text-white'}/>
         </button>)
         return {firstCol, secondCol}
     }, [clearCanvas, colors, dispatch, whiteboard]);
@@ -280,17 +280,17 @@ export const WhiteboardPage = () => {
             {
                 isLecturer && (
                     <div className={'h-full flex flex-row md:flex-col gap-2 md:gap-0'}>
-                        <div className={'bg-secondary shadow rounded md:rounded-b-[0px] h-full flex flex-col justify-between'}>
+                        <div className={'bg-secondary dark:bg-dark-secondary shadow rounded md:rounded-b-[0px] h-full flex flex-col justify-between'}>
                             {firstCol.map(element => element)}
                         </div>
-                        <div className={'bg-secondary shadow rounded md:rounded-t-[0px] h-full flex flex-col justify-between'}>
+                        <div className={'bg-secondary dark:bg-dark-secondary shadow rounded md:rounded-t-[0px] h-full flex flex-col justify-between'}>
                             {secondCol.map(element => element)}
                         </div>
                     </div>
                 )
             }
-            <div className={'flex-1 bg-secondary p-3 rounded shadow'}>
-                <canvas id={'canvas'} className={'w-full h-full rounded'} ref={canvasRef}
+            <div className={'flex-1 bg-secondary dark:bg-dark-secondary p-2 rounded shadow'}>
+                <canvas id={'canvas'} className={'w-full h-full rounded-sm'} ref={canvasRef}
                         style={{backgroundColor: 'white'}}/>
             </div>
         </div>

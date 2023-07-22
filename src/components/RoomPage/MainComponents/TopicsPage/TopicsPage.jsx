@@ -31,25 +31,25 @@ export const TopicsPage = () => {
 
     return (
         <div className={'w-full flex h-full flex-col md:flex-row-reverse gap-2'}>
-            <div className={'w-full h-full md:flex-[4] bg-secondary rounded shadow p-3'}>
+            <div className={'w-full h-full md:flex-[4] bg-secondary dark:bg-dark-secondary rounded shadow p-3'}>
                 <div className={'h-full overflow-y-auto'}>
                     {
-                        selectedTopic && <div className={'h-full font-serif'}>{selectedTopic.content}</div>
+                        selectedTopic && <div className={'h-full font-serif text-black dark:text-white'}>{selectedTopic.content}</div>
                     }
                 </div>
             </div>
             <div className={'w-full md:w-min md:flex-[1] flex h-min md:h-full'}>
-                <ul className={'w-max md:w-full h-min md:h-full md:bg-secondary md:shadow md:rounded flex flex-row gap-1'}>
+                <ul className={'w-max md:w-full h-min md:h-full md:bg-secondary md:dark:bg-dark-secondary md:shadow md:rounded flex flex-row gap-1'}>
                     {
                         topics.map((topic, index) => {
                             return (
                                 <li
                                     key={index}
                                     className={
-                                        `flex py-0.5 px-1.5 h-min md:px-4 md:py-2 w-fit md:w-full rounded pointer font-medium md:font-semibold font-sans
+                                        `flex py-0.5 px-1.5 h-min md:px-4 md:py-2 w-fit md:w-full rounded text-black dark:text-white pointer font-medium md:font-semibold font-sans
                                         ${(
                                             selectedTopic &&
-                                            (topic.id === selectedTopic.id)) ? 'bg-accent-color-one' : ''
+                                            (topic.id === selectedTopic.id)) ? 'bg-accent-color-one dark:bg-dark-accent-color-one' : ''
                                         }`}
                                     onClick={() => dispatcher(selectTopic(topic))}
                                 >

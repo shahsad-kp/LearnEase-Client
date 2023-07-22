@@ -105,7 +105,7 @@ export const VideoCall = ({name, width, height, isLecturer, userId, className = 
                 <div className={'rounded-tl-sm bg-logo-yellow px-2 font-semibold'}>
                     {isLecturer ? 'Lecturer' : 'Student'}
                 </div>
-                <div className={'rounded-br-sm px-2 ' + (!isSelf ? ' bg-accent-color-one' : ` bg-dangerColor`)}>
+                <div className={'rounded-br-sm px-2 ' + (!isSelf ? ' bg-accent-color-one' : ` bg-danger-color`)}>
                     {isSelf ? 'You' : name}
                 </div>
             </div>

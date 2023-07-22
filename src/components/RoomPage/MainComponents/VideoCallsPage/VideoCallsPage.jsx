@@ -30,7 +30,7 @@ export const VideoCallsPage = () => {
 
     return (
         <div
-            className={'h-full w-full flex flex-col gap-2 p-2 bg-secondary shadow rounded'}
+            className={'h-full w-full flex flex-col gap-2 p-2 bg-secondary dark:bg-dark-secondary shadow rounded'}
         >
             <div
                 className={'flex-1 w-full overflow-x-auto overflow-y-hidden rounded-sm md:overflow-y-auto md:overflow-x-hidden'}
@@ -69,7 +69,7 @@ export const VideoCallsPage = () => {
                     onClick={() => scrollVideo('left')}
                 >
                     <BsArrowLeftCircle
-                        className={'w-5 h-5 cursor-pointer fill-logo-green'}
+                        className={'w-5 h-5 cursor-pointer fill-logo-green dark:fill-dark-logo-green'}
                     />
                 </button>
                 <button
@@ -77,7 +77,7 @@ export const VideoCallsPage = () => {
                     onClick={() => scrollVideo('right')}
                 >
                     <BsArrowRightCircle
-                        className={`w-5 h-5 cursor-pointer fill-logo-green`}
+                        className={`w-5 h-5 cursor-pointer fill-logo-green dark:fill-dark-logo-green`}
                     />
                 </button>
             </div>

@@ -86,12 +86,12 @@ export const LoginForm = () => {
                 <InputField type={'email'} placeholder={'Email'} value={values.email}
                             onChange={updateEmail}/>
                 {errors.email && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{errors.email}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{errors.email}</li>
                 </ul>}
                 <PasswordField value={values.password} onChange={updatePassword}
                                placeholder={'Password'}/>
                 {errors.password && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{errors.password}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{errors.password}</li>
                 </ul>}
                 <button
                     className={bannerPageButtonClass}

@@ -4,7 +4,7 @@ import {
 
 export const LargeScreenRightSideController = () => {
 	return (
-		<div className={'p-2 bg-secondary w-full shadow rounded flex flex-row justify-between'}>
+		<div className={'p-2 bg-secondary dark:bg-dark-secondary w-full shadow rounded flex flex-row justify-between'}>
 			<VideoControllerControlBar/>
 		</div>
 	)

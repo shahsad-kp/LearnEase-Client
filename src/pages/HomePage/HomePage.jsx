@@ -8,7 +8,7 @@ export const HomePage = () => {
 
     if (user) {
         return (
-            <div className={'w-screen min-h-screen md:h-screen bg-primary flex flex-col'}>
+            <div className={'w-screen min-h-screen md:h-screen dark:bg-dark-primary bg-primary flex flex-col'}>
                 <NavBar/>
                 <HomeBody/>
             </div>

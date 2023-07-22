@@ -32,7 +32,7 @@ export const LargeScreenLeftSide = () => {
 
 	return (
 		<div className={'hidden max-w-[20%] md:flex flex-col flex-1 gap-2 h-full'}>
-            <div className={'w-full h-[200px] shadow rounded p-2 bg-white'} style={{}}>
+            <div className={'w-full h-[200px] shadow rounded p-2 bg-secondary dark:bg-dark-secondary'} style={{}}>
                 <VideoCall
                     name={classRoom.lecturer.name}
                     userId={classRoom.lecturer.id}
@@ -43,7 +43,7 @@ export const LargeScreenLeftSide = () => {
                     settings={classRoom.lecturer.settings}
                 />
             </div>
-            <div className={'w-full flex-1 p-2 shadow rounded bg-secondary'}>
+            <div className={'w-full flex-1 p-2 shadow rounded bg-secondary dark:bg-dark-secondary'}>
                 {content}
             </div>
             <LargeScreenLeftController selected={selected} setSelected={setSelected}/>

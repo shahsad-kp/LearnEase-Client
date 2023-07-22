@@ -104,9 +104,9 @@ export const UpdateProfileModal = ({closeFunction}) => {
     }, [closeFunction, validateEmail, validateName, values])
 
     return (
-        <Modal closeFunction={closeFunction} classNames={'bg-white rounded !w-[20rem] w-xs p-4'}>
+        <Modal closeFunction={closeFunction} classNames={'bg-secondary dark:bg-dark-secondary dark:border dark:border-dark-primary rounded !w-[20rem] w-xs p-4'}>
             <div className={'flex flex-col gap-2.5 w-full'}>
-                <div className={'bg-red rounded-full object-fill w-24'}>
+                <div className={'rounded-full object-fill w-24'}>
                     <img
                         className={'rounded-full cursor-pointer'}
                         src={
@@ -133,10 +133,10 @@ export const UpdateProfileModal = ({closeFunction}) => {
                     placeholder={'Fullname'}
                     onChange={updateName}
                     value={values.name}
-                    classNames={'w-full'}
+                    classNames={'w-full text-black dark:text-white'}
                 />
                 {error.name && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{error.name}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.name}</li>
                 </ul>}
                 <InputField
                     placeholder={'Email'}
@@ -144,10 +144,10 @@ export const UpdateProfileModal = ({closeFunction}) => {
                     value={values.email}
                     type={'email'}
                     // disabled={otpSend}
-                    classNames={'w-full'}
+                    classNames={'w-full text-black dark:text-white'}
                 />
                 {error.email && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{error.email}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.email}</li>
                 </ul>}
                 {/*{otpSend && <>*/}
                 {/*    <InputField*/}
@@ -158,11 +158,11 @@ export const UpdateProfileModal = ({closeFunction}) => {
                 {/*        classNames={'w-full'}*/}
                 {/*    />*/}
                 {/*    {error.otp && <ul>*/}
-                {/*        <li className={'text-dangerColor font-serif text-xs'}>{error.otp}</li>*/}
+                {/*        <li className={'text-danger-color font-serif text-xs'}>{error.otp}</li>*/}
                 {/*    </ul>}*/}
                 {/*</>}*/}
                 <button
-                    className={homePageButton + ' !w-full'}
+                    className={homePageButton + ' !w-full text-black dark:text-white'}
                     onClick={handleSubmit}
                 >
                     Update Profile

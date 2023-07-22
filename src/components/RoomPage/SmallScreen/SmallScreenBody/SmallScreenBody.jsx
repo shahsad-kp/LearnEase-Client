@@ -2,7 +2,7 @@ import {SmallScreenBottomSide} from "../SmallScreenBottomSide/SmallScreenBottomS
 
 // eslint-disable-next-line react/prop-types
 export const SmallScreenBody = ({children}) => {
-	return (<div className={'md:hidden flex flex-col h-full w-full bg-primary'}>
+	return (<div className={'md:hidden flex flex-col h-full w-full bg-primary dark:bg-dark-primary'}>
 		<div className={'h-full w-full max-h-[50%] p-3'}>
 			{children}
 		</div>

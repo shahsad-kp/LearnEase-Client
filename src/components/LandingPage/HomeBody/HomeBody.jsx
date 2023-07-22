@@ -40,7 +40,7 @@ export const HomeBody = () => {
                             <div className={'w-full flex flex-row gap-2.5'}>
                                 <InputField type={'text'}
                                             placeholder={'Enter room id'}
-                                            classNames={'md:max-w-xs !max-w-full font-mono'}
+                                            classNames={'md:max-w-xs !max-w-full font-mono text-black dark:text-white'}
                                             value={roomId}
                                             onChange={(e) => setRoomId(e.target.value)}
                                 />
@@ -60,8 +60,8 @@ export const HomeBody = () => {
                     </div>
                 </div>
                 <div className={'h-full w-full flex justify-center items-center'}>
-                    <div className={'w-[90%] md:w-1/2 max-h-full bg-white flex flex-col shadow rounded-md p-3.5'}>
-                        <h3 className={'font-semibold border-b pb-2 mb-2'}>History</h3>
+                    <div className={'w-[90%] md:w-1/2 max-h-full bg-secondary dark:bg-dark-secondary flex flex-col shadow rounded-md p-3.5'}>
+                        <h3 className={'font-semibold text-dark dark:text-white border-b pb-2 mb-2'}>History</h3>
                         <div
                             className={'flex flex-col gap-2.5  overflow-y-auto'}
                             style={{maxHeight: 'calc(100vh - 200px)'}}
@@ -69,13 +69,13 @@ export const HomeBody = () => {
                             {
                                 history.length ? history.map((room, index) => (
                                     <div key={index} className={'flex justify-between'}>
-                                        <div>{room.title}</div>
+                                        <div className={'text-black dark:text-white'}>{room.title}</div>
                                         <div className={'flex flex-row gap-1.5'}>
-                                            <span>{room.created_at.toLocaleDateString()}</span>
-                                            <span className={'text-logo-green cursor-pointer'}>View</span>
+                                            <span className={'text-black dark:text-white'} >{room.created_at.toLocaleDateString()}</span>
+                                            <span className={'text-logo-green dark:text-dark-logo-green cursor-pointer'}>View</span>
                                         </div>
                                     </div>
-                                )) : <div className={'text-center italic'}>No history</div>
+                                )) : <div className={'text-center italic text-black dark:text-white'}>No history</div>
                             }
                         </div>
                     </div>

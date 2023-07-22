@@ -10,7 +10,7 @@ export const NavBar = ({navLinks}) => {
     const {roomId} = useParams()
 
     return (
-        <nav className="flex flex-row h-14 justify-between bg-white shadow">
+        <nav className="flex flex-row h-14 justify-between bg-secondary dark:bg-dark-secondary shadow">
             <div className={'m-3 h-7 w-7'}>
                 <img src={LogoSmall} alt={'Logo'} className={'object-contain h-full'}/>
             </div>
@@ -20,7 +20,9 @@ export const NavBar = ({navLinks}) => {
                     <NavLink
                         replace={true}
                         to={`/${roomId}/room/`}
-                        className={`flex flex-row items-center font-semibold text-gray-500 border-2 border-[#ffffff00]`}
+                        className={({isActive}) => {
+                            return `flex flex-row items-center font-semibold ${isActive ? 'border-logo-yellow dark:border-dark-logo-yellow border-b-2 text-black dark:text-white' : 'border-0 text-gray-500'}`
+                        }}
                     >
                         <span className={'hidden md:block'}>Classroom</span>
                         <BsPersonVideo className={'md:hidden'}/>
@@ -28,7 +30,9 @@ export const NavBar = ({navLinks}) => {
                     <NavLink
                         replace={true}
                         to={`/${roomId}/whiteboard/`}
-                        className={`flex flex-row items-center font-semibold text-gray-500 border-2 border-[#ffffff00]`}
+                        className={({isActive}) => {
+                            return `flex flex-row items-center font-semibold ${isActive ? 'border-logo-yellow dark:border-dark-logo-yellow border-b-2 text-black dark:text-white' : 'border-0 text-gray-500'}`
+                        }}
                     >
                         <span className={'hidden md:block'}>Whiteboard</span>
                         <TfiBlackboard className={'md:hidden'}/>
@@ -36,7 +40,9 @@ export const NavBar = ({navLinks}) => {
                     <NavLink
                         replace={true}
                         to={`/${roomId}/topics/`}
-                        className={'flex flex-row items-center font-semibold text-gray-500 border-2 border-[#ffffff00]'}
+                        className={({isActive}) => {
+                            return `flex flex-row items-center font-semibold ${isActive ? 'border-logo-yellow dark:border-dark-logo-yellow border-b-2 text-black dark:text-white' : 'border-0 text-gray-500'}`
+                        }}
                     >
                         <span className={'hidden md:block'}>Topics</span>
                         <IoBookOutline className={'md:hidden'}/>
@@ -44,7 +50,9 @@ export const NavBar = ({navLinks}) => {
                     <NavLink
                         replace={true}
                         to={`/${roomId}/grade/`}
-                        className={'flex flex-row items-center font-semibold text-gray-500 border-2 border-[#ffffff00]'}
+                        className={({isActive}) => {
+                            return `flex flex-row items-center font-semibold ${isActive ? 'border-logo-yellow dark:border-dark-logo-yellow border-b-2 text-black dark:text-white' : 'border-0 text-gray-500'}`
+                        }}
                     >
                         <span className={'hidden md:block'}>Grade</span>
                         <TfiBlackboard className={'md:hidden'}/>

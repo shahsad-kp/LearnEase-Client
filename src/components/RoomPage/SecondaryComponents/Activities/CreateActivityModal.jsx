@@ -70,25 +70,25 @@ export const CreateActivityModal = ({closeFunction}) => {
     }
 
     return (
-        <Modal closeFunction={closeFunction} classNames={' bg-secondary p-4 rounded md:!max-w-[25%]'}>
+        <Modal closeFunction={closeFunction} classNames={'bg-secondary dark:bg-dark-secondary dark:border-dark-primary dark:border p-4 rounded md:!max-w-[25%]'}>
             <form className={'flex flex-col gap-2.5 w-full'} onSubmit={handleSubmit}>
                 <h5 className={'font-semibold'}>Create Activity</h5>
                 <InputField
                     type={'text'}
-                    classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                    classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                     placeholder={'Question'}
                     value={question}
                     onChange={updateQuestion}
                 />
                 {questionError && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{questionError}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{questionError}</li>
                 </ul>}
                 <div className={'flex flex-col gap-2 w-full'}>
-                    <h5 className={'font-semibold'}>Options</h5>
+                    <h5 className={'font-semibold text-black dark:text-white'}>Options</h5>
                     <div className={'w-full justify-between flex gap-2 flex-row'}>
                         <InputField
                             type={'text'}
-                            classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                            classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                             placeholder={'Option 1'}
                             name={'0'}
                             value={options[0]}
@@ -104,7 +104,7 @@ export const CreateActivityModal = ({closeFunction}) => {
                     <div className={'w-full justify-between flex gap-2 flex-row'}>
                         <InputField
                             type={'text'}
-                            classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                            classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                             placeholder={'Option 2'}
                             name={'1'}
                             value={options[1]}
@@ -120,7 +120,7 @@ export const CreateActivityModal = ({closeFunction}) => {
                     <div className={'w-full justify-between flex gap-2 flex-row'}>
                         <InputField
                             type={'text'}
-                            classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                            classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                             placeholder={'Option 3'}
                             name={'2'}
                             value={options[2]}
@@ -136,7 +136,7 @@ export const CreateActivityModal = ({closeFunction}) => {
                     <div className={'w-full justify-between flex gap-2 flex-row'}>
                         <InputField
                             type={'text'}
-                            classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                            classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                             placeholder={'Option 4'}
                             name={'3'}
                             value={options[3]}
@@ -151,11 +151,11 @@ export const CreateActivityModal = ({closeFunction}) => {
                     </div>
                 </div>
                 {optionsError && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{optionsError}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{optionsError}</li>
                 </ul>}
                 <div className={'flex flex-row gap-2.5 w-full'}>
                     <button
-                        className={'bg-logo-green w-full rounded text-white p-1'}
+                        className={'bg-logo-green dark:bg-dark-logo-green w-full rounded text-white p-1'}
                     >Create Activity</button>
                 </div>
             </form>

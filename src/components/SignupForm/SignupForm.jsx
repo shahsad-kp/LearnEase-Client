@@ -148,7 +148,7 @@ export const SignupForm = () => {
                             value={values.name}
                             onChange={updateName}/>
                 {error.name && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{error.name}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{error.name}</li>
                 </ul>}
                 <InputField type={'email'}
                             className={bannerPageInputClass}
@@ -156,7 +156,7 @@ export const SignupForm = () => {
                             value={values.email}
                             onChange={updateEmail}/>
                 {error.email && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{error.email}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{error.email}</li>
                 </ul>}
                 <PasswordField placeholder={'Password'}
                                value={values.password}
@@ -175,7 +175,7 @@ export const SignupForm = () => {
                     (error.password && error.password.length > 0) && <ul style={{listStyleType: 'none', padding: 0}}>
                         {
                             error.password.map((error, index) => {
-                                    return <li key={index} className={'text-dangerColor font-serif text-xs'}>
+                                    return <li key={index} className={'text-danger-color font-serif text-xs'}>
                                         {error}
                                     </li>
                                 }
@@ -187,7 +187,7 @@ export const SignupForm = () => {
                                value={values.repeatPassword}
                                onChange={updateRepeatPassword}/>
                 {error.repeatPassword && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{error.repeatPassword}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{error.repeatPassword}</li>
                 </ul>}
 
                 <button

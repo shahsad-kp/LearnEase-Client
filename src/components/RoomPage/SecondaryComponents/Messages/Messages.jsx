@@ -58,9 +58,9 @@ export const Messages = () => {
     if (!messages) return <div/>;
 
     return (
-        <div className={'p-2 relative bg-primary h-full gap-2 flex flex-col w-full'}>
+        <div className={'p-2 relative bg-primary dark:bg-dark-primary h-full gap-2 flex flex-col w-full'}>
             <div className={'w-full gap-2 flex h-min flex-col'}>
-                <h3 className={'font-semibold'}>Messages</h3>
+                <h3 className={'font-semibold text-black dark:text-white'}>Messages</h3>
                 <hr width={'100%'} className={'border'}/>
             </div>
             <div className={'overflow-y-scroll overflow-x-hidden h-[calc(100vh-540px)] md:h-[calc(100vh-455px)] w-full'} ref={messagesRef}>
@@ -85,7 +85,7 @@ export const Messages = () => {
                                             className={
                                                 `px-2 py-1 w-full h-max overflow-x-hidden rounded ${
                                                     message.sender.isSelf ? 
-                                                        ' bg-white white-black' : ' bg-logo-green text-white'
+                                                        ' bg-white dark:bg-black text-black dark:text-white' : ' bg-logo-green dark:bg-dark-logo-green text-white'
                                                 }`
                                             }
                                         >
@@ -102,13 +102,13 @@ export const Messages = () => {
                 <input
                     type={'text'}
                     placeholder={'Type a message'}
-                    className={'w-full rounded shadow h-full p-2 focus:outline-0'}
+                    className={'w-full rounded shadow h-full p-2 bg-secondary dark:bg-dark-secondary focus:outline-0 text-black dark:text-white'}
                     onChange={(event) => setMessage(event.target.value)}
                     value={message}
                 />
                 <button
                     type={'submit'}
-                    className={'text-logo-yellow absolute right-0 h-full p-1'}
+                    className={'text-logo-yellow dark:text-dark-logo-yellow absolute right-0 h-full p-1'}
                     onClick={sendMessage}
                 >
                     <IoSend/>

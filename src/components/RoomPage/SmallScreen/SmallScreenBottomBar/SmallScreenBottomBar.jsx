@@ -7,7 +7,7 @@ import {ComponentsController} from "../../GeneralComponents/ComponentsController
 export const SmallScreenBottomBar = ({selected, setSelected}) => {
     const [secondBar, setSecondBar] = useState(false);
     return (
-        <div className={'bg-secondary flex flex-col gap-2 p-2 rounded-t shadow'}>
+        <div className={'bg-secondary dark:bg-dark-secondary flex flex-col gap-2 p-2 rounded-t shadow'}>
             <div className={`${secondBar ? 'flex' : 'hidden'} flex-row gap-3 justify-center`}>
                 <VideoControllerControlBar/>
             </div>
@@ -18,7 +18,7 @@ export const SmallScreenBottomBar = ({selected, setSelected}) => {
                 >
                     {!secondBar
                         ? <IoMdArrowDropupCircle className={'text-gray-500'}/>
-                        : <IoMdArrowDropdownCircle className={'text-black'}/>}
+                        : <IoMdArrowDropdownCircle className={'text-black dark:text-white'}/>}
                 </div>
                 <ComponentsController selected={selected} setSelected={setSelected}/>
             </div>

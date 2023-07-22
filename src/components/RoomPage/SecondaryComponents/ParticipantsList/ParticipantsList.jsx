@@ -8,7 +8,7 @@ export const ParticipantsList = () => {
     if (!classRoom) {
         return (<>
             <div className={'flex flex-col gap-2'}>
-                <div className={'font-semibold'}>Lecturer</div>
+                <div className={'font-semibold text-black dark:text-white'}>Lecturer</div>
                 <hr width={'100%'} className={'h-0.5 bg-[#838383]'}/>
                 <div className={'flex flex-col gap-1 items-center w-full'}>
                     <div className={'flex flex-row gap-2 items-center w-full'}>
@@ -21,7 +21,7 @@ export const ParticipantsList = () => {
                 </div>
             </div>
             <div className={'flex flex-col gap-2'}>
-                <div className={'font-semibold'}>Students</div>
+                <div className={'font-semibold text-black dark:text-white'}>Students</div>
                 <hr width={'100%'} className={'h-0.5 bg-[#838383]'}/>
                 <div className={'flex flex-col gap-1 items-center w-full overflow-y-auto'}>
                     <div className={'flex flex-row gap-2 items-center w-full'}>
@@ -45,7 +45,7 @@ export const ParticipantsList = () => {
 
     return (<>
         <div className={'flex flex-col gap-2'}>
-            <div className={'font-semibold'}>Lecturer</div>
+            <div className={'font-semibold text-black dark:text-white'}>Lecturer</div>
             <hr width={'100%'} className={'h-0.5 bg-[#838383]'}/>
             <div className={'flex flex-col gap-1 items-center w-full'}>
                 <div className={'flex flex-row gap-2 items-center w-full'}>
@@ -59,14 +59,14 @@ export const ParticipantsList = () => {
                         />
                     </div>
                     <div className={'flex flex-col justify-between w-full'}>
-                        <span className={'font-semibold'}>{classRoom.lecturer.name}</span>
-                        <span className={'font-thin'}>{classRoom.lecturer.isActive ? 'Active' : 'Inactive'}</span>
+                        <span className={'font-semibold text-black dark:text-white'}>{classRoom.lecturer.name}</span>
+                        <span className={'font-thin text-black dark:text-white'}>{classRoom.lecturer.isActive ? 'Active' : 'Inactive'}</span>
                     </div>
                 </div>
             </div>
         </div>
         <div className={'flex flex-col gap-2'}>
-            <div className={'font-semibold'}>Students</div>
+            <div className={'font-semibold text-black dark:text-white'}>Students</div>
             <hr width={'100%'} className={'h-0.5 bg-[#838383]'}/>
             <div className={'flex flex-col gap-1 items-center w-full overflow-y-auto'}>
                 {classRoom.students.map(student => (
@@ -84,8 +84,8 @@ export const ParticipantsList = () => {
                             />
                         </div>
                         <div className={'flex flex-col justify-between w-full'}>
-                            <span className={'font-semibold'}>{student.name}</span>
-                            <span className={'font-thin'}>{student.isActive ? 'Active' : 'Inactive'}</span>
+                            <span className={'font-semibold text-black dark:text-white'}>{student.name}</span>
+                            <span className={'font-thin text-black dark:text-white'}>{student.isActive ? 'Active' : 'Inactive'}</span>
                         </div>
                     </div>
                 ))}

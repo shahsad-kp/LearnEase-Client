@@ -101,17 +101,17 @@ export const CreateRoomModal = ({closeFunction}) => {
         }
     }, [topics]);
 
-    return (<Modal closeFunction={closeFunction} classNames={' bg-secondary p-3 rounded'}>
+    return (<Modal closeFunction={closeFunction} classNames={'bg-secondary dark:bg-dark-secondary p-3 rounded'}>
             <div className={'flex flex-col gap-2.5 w-100%'}>
                 <InputField
                     type={'text'}
-                    classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                    classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                     placeholder={'Enter room name'}
                     value={roomName}
                     onChange={updateRoomName}
                 />
                 {roomNameError && <ul>
-                    <li className={'text-dangerColor font-serif text-xs'}>{roomNameError}</li>
+                    <li className={'text-danger-color font-serif text-xs'}>{roomNameError}</li>
                 </ul>}
                 <form className={'max-w-screen-xl flex flex-col gap-1.5'}>
                     <div className={'flex flex-row overflow-x-scroll gap-1'} ref={topicsRef}>
@@ -141,7 +141,7 @@ export const CreateRoomModal = ({closeFunction}) => {
                                     onClick={addNewTopic}
                                     className={
                                         'flex flex-row gap-1 items-center bg-gray-200 px-3 py-1.5 mb-1 ' +
-                                        'rounded cursor-pointer'
+                                        'rounded cursor-pointer  bg-primary dark:bg-dark-primary'
                                     }>
                                     <GrAdd/>
                                     <span className={'whitespace-nowrap font-semibold'}>Add topic</span>
@@ -154,7 +154,7 @@ export const CreateRoomModal = ({closeFunction}) => {
                         <InputField
                             id={'topic-name'}
                             type={'text'}
-                            classNames={'!max-w-[100%] md:max-w-screen-xl'}
+                            classNames={'!max-w-[100%] md:max-w-screen-xl text-black dark:text-white'}
                             placeholder={'Enter topic'}
                             value={topics[selectedTopicIdx] ? topics[selectedTopicIdx].title : ''}
                             onChange={(event) => {
@@ -174,7 +174,7 @@ export const CreateRoomModal = ({closeFunction}) => {
 
                     </div>
                     {topicError && <ul>
-                        <li className={'text-dangerColor font-serif text-xs'}>{topicError}</li>
+                        <li className={'text-danger-color font-serif text-xs'}>{topicError}</li>
                     </ul>}
                     <button
                         className={homePageButton + ' !w-full'}
