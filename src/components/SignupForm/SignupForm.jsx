@@ -70,7 +70,8 @@ export const SignupForm = () => {
             errors.push(passwordErrors[3]);
         }
         setError(prev => ({...prev, password: errors}));
-        return false;
+        return !(errors && errors.length > 0);
+
     }
 
     const validateRepeatPassword = (value) => {
@@ -105,14 +106,12 @@ export const SignupForm = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-
         if (!(validateName(values.name) &&
             validateEmail(values.email) &&
             validatePassword(values.password) &&
             validateRepeatPassword(values.repeatPassword))) {
             return;
         }
-
         registerUser({name: values.name, email: values.email, password: values.password}).then(
             () => navigator('/', {replace: true})
         ).catch(e => {

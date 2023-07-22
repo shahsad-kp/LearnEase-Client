@@ -1,4 +1,4 @@
-const wsBaseUrl = 'ws://35.232.201.4/ws/';
+const wsBaseUrl = 'wss://learnease.tech/ws/';
 
 export {
     wsBaseUrl

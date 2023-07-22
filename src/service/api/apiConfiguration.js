@@ -3,8 +3,8 @@ import {store} from "../../redux/store.js";
 import {logout} from "../../redux/authSlice/authSlice.js";
 
 
-const baseURL = 'http://35.232.201.4/api/';
-const imageBaseURL = 'http://35.232.201.4';
+const baseURL = 'https://learnease.tech/api/';
+const imageBaseURL = 'https://learnease.tech';
 
 const axiosAuthorized = axios.create({
     baseURL: baseURL,
