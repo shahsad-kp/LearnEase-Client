@@ -84,8 +84,8 @@ export const HomeBody = () => {
                                         <div className={'flex flex-row gap-1.5'}>
                                             <span
                                                 className={'text-black dark:text-white'}>{room.created_at.toLocaleDateString()}</span>
-                                            <span
-                                                className={'text-logo-green dark:text-dark-logo-green cursor-pointer'}>View</span>
+                                            {/*<span*/}
+                                            {/*    className={'text-logo-green dark:text-dark-logo-green cursor-pointer'}>View</span>*/}
                                         </div>
                                     </div>
                                 )) : <div className={'text-center italic text-black dark:text-white'}>No history</div>
