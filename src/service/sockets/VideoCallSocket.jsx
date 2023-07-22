@@ -228,10 +228,12 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 audio: state,
                 video
             })
-            console.log('toggle mic', state)
             if (gotLocalStream) {
                 localStream.current.getAudioTracks().forEach(track => {
-                    track.enabled = state;
+                    if (track.kind === 'audio'){
+                        console.log(track)
+                        track.enabled = state;
+                    }
                 })
             }
             for (const userConnection of connections.current.values()) {
@@ -252,10 +254,11 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
                 "video": state
             })
 
-            console.log('toggle camera', state)
             if (gotLocalStream) {
                 localStream.current.getVideoTracks().forEach(track => {
-                    track.enabled = state;
+                    if (track.kind === 'video'){
+                        track.enabled = state;
+                    }
                 })
             }
             for (const userConnection of connections.current.values()) {

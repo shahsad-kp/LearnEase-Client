@@ -1,15 +1,18 @@
 import LogoBanner from '../../../assets/logo/logo-banner.png'
+import DarkLogoBanner from '../../../assets/logo/dark theme logo.svg'
 import {CreateRoomModal, InputField} from "../../";
 import {homePageButton} from "../../styles.js";
-import {useEffect, useState} from "react";
+import {useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getHistory} from "../../../service/api/classRoom.js";
+import useDarkSide from "../../UtilityComponents/DarkMode/useDarkMode.js";
 
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);
     const [createRoomModal, setCreateRoomModal] = useState(false);
     const [roomId, setRoomId] = useState('');
     const navigator = useNavigate();
+    const [theme, setTheme] = useDarkSide();
 
     useEffect(() => {
         getHistory().then(totalHistory => {
@@ -28,26 +31,33 @@ export const HomeBody = () => {
         navigator(`/${roomId}/room/`);
     }
 
+    const image = useMemo(() => {
+        return theme === 'dark' ? DarkLogoBanner : LogoBanner;
+    }, [theme]);
+
     return (
         <>
             <main className={'flex flex-col md:flex-row justify-center h-full gap-3.5 md:gap-0 p-3.5 md:p-0'}>
                 <div className={'h-full w-full flex justify-center items-center'}>
                     <div className={'w-[90%] md:w-1/2 flex flex-col gap-9'}>
                         <div className={''}>
-                            <img src={LogoBanner} alt={'logo'}/>
+                            <img src={image} alt={'logo'}/>
                         </div>
                         <div className={'w-full flex flex-col gap-2.5'}>
                             <div className={'w-full flex flex-row gap-2.5'}>
-                                <InputField type={'text'}
-                                            placeholder={'Enter room id'}
-                                            classNames={'md:max-w-xs !max-w-full font-mono text-black dark:text-white'}
-                                            value={roomId}
-                                            onChange={(e) => setRoomId(e.target.value)}
+                                <InputField
+                                    type={'text'}
+                                    placeholder={'Enter room id'}
+                                    classNames={'md:max-w-xs !max-w-full font-mono text-black dark:text-white'}
+                                    value={roomId}
+                                    onChange={(e) => setRoomId(e.target.value)
+                                    }
                                 />
                                 <button
                                     className={homePageButton}
                                     onClick={joinClassroom}
-                                >Join</button>
+                                >Join
+                                </button>
                             </div>
                             <div>
                                 <button
@@ -60,7 +70,8 @@ export const HomeBody = () => {
                     </div>
                 </div>
                 <div className={'h-full w-full flex justify-center items-center'}>
-                    <div className={'w-[90%] md:w-1/2 max-h-full bg-secondary dark:bg-dark-secondary flex flex-col shadow rounded-md p-3.5'}>
+                    <div
+                        className={'w-[90%] md:w-1/2 max-h-full bg-secondary dark:bg-dark-secondary flex flex-col shadow rounded-md p-3.5'}>
                         <h3 className={'font-semibold text-dark dark:text-white border-b pb-2 mb-2'}>History</h3>
                         <div
                             className={'flex flex-col gap-2.5  overflow-y-auto'}
@@ -71,8 +82,10 @@ export const HomeBody = () => {
                                     <div key={index} className={'flex justify-between'}>
                                         <div className={'text-black dark:text-white'}>{room.title}</div>
                                         <div className={'flex flex-row gap-1.5'}>
-                                            <span className={'text-black dark:text-white'} >{room.created_at.toLocaleDateString()}</span>
-                                            <span className={'text-logo-green dark:text-dark-logo-green cursor-pointer'}>View</span>
+                                            <span
+                                                className={'text-black dark:text-white'}>{room.created_at.toLocaleDateString()}</span>
+                                            <span
+                                                className={'text-logo-green dark:text-dark-logo-green cursor-pointer'}>View</span>
                                         </div>
                                     </div>
                                 )) : <div className={'text-center italic text-black dark:text-white'}>No history</div>
