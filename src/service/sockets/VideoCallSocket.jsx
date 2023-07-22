@@ -15,6 +15,8 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
     const connections = useRef(new Map());
     const [connectedUsers, setConnectedUsers] = useState(new Set());
     const {changeSettings} = useContext(classRoomSocketContext);
+    const screenShareStream = useRef(null);
+    const [screenShare, setScreenShare] = useState(false);
     let videoCallSocket;
 
     const endPoint = useMemo(
@@ -272,6 +274,44 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
         [changeSettings, gotLocalStream]
     );
 
+    const toggleScreenShare = useCallback(
+        () => {
+            if (screenShare) {
+               for (const userConnection of connections.current.values()) {
+                   userConnection.connection.getSenders().forEach(sender => {
+                       if (sender.track.kind === 'video') {
+                           sender.replaceTrack(localStream.current.getVideoTracks()[0]).then(r => {
+                               console.log(r);
+                           }).catch(err => {
+                               console.log(err);
+                           });
+                       }
+                   })
+               }
+            } else {
+                navigator.mediaDevices.getDisplayMedia({cursor:true}).then(stream => {
+                    const screenTrack = stream.getTracks()[0];
+                    screenShareStream.current = stream;
+                    for (const userConnection of connections.current.values()) {
+                        userConnection.connection.getSenders().forEach(sender => {
+                            if (sender.track.kind === 'video') {
+                                sender.replaceTrack(screenTrack).then(r => {
+                                    console.log(r);
+                                }).catch(err => {
+                                    console.log(err);
+                                });
+                            }
+                        })
+                    }
+                    setScreenShare(true);
+                }).catch(err => {
+                    console.log(err);
+                })
+            }
+        },
+        [screenShare]
+    )
+
     const data = useMemo(
         () => ({
             localStream,
@@ -279,9 +319,11 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
             connectedUsers,
             gotLocalStream,
             toggleMic,
-            toggleCamera
+            toggleCamera,
+            toggleScreenShare,
+            screenShare
         }),
-        [connectedUsers, gotLocalStream, toggleCamera, toggleMic]
+        [connectedUsers, gotLocalStream, screenShare, toggleCamera, toggleMic, toggleScreenShare]
     );
 
     return (

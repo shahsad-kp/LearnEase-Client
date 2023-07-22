@@ -8,7 +8,7 @@ import {useSelector} from "react-redux";
 import {useNavigate} from "react-router-dom";
 
 export const VideoControllerControlBar = () => {
-    const {toggleMic, toggleCamera} = useContext(videoCallContext);
+    const {toggleMic, toggleCamera, toggleScreenShare, screenShare} = useContext(videoCallContext);
     const classRoom = useSelector(state => state.classRoom.classRoom);
     const user = useSelector(state => state.auth.user);
     const navigate = useNavigate();
@@ -112,13 +112,21 @@ export const VideoControllerControlBar = () => {
                     }
                 </button>
 			</div>
-			{/*<div className={'flex flex-row gap-3'}>*/}
-			{/*	<button*/}
-            {/*        className={`rounded-full p-2 active:bg-accent-color-one dark:active:bg-dark-accent-color-one`}*/}
-            {/*    >*/}
-            {/*        <MdOutlineCastForEducation className={'text-secondary dark:text-white'}/>*/}
-            {/*    </button>*/}
-			{/*</div>*/}
+			<div className={'flex flex-row gap-3'}>
+				<button
+                    className={`rounded-full p-2 active:text-secondary dark:active:text-secondary active:bg-accent-color-one dark:active:bg-dark-accent-color-one ${
+                        videoSetting.permission ? (
+                            screenShare ? 
+                                'text-black dark:text-white' : 
+                                'text-gray-500'
+                            )
+                            : 'text-danger-color'
+                    }`}
+                    onClick={toggleScreenShare}
+                >
+                    <MdOutlineCastForEducation className={'text-secondary dark:text-white'}/>
+                </button>
+			</div>
 			<div className={'flex flex-row gap-3'}>
 				<button
                     className={`rounded-full p-2 text-black dark:text-white active:text-secondary dark:active:text-dark-secondary active:bg-accent-color-one dark:active:bg-dark-accent-color-one`}
