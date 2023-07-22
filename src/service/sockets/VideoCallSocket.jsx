@@ -232,7 +232,7 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
             })
             if (gotLocalStream) {
                 localStream.current.getAudioTracks().forEach(track => {
-                    if (track.kind === 'audio'){
+                    if (track.kind === 'audio') {
                         console.log(track)
                         track.enabled = state;
                     }
@@ -258,7 +258,7 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
 
             if (gotLocalStream) {
                 localStream.current.getVideoTracks().forEach(track => {
-                    if (track.kind === 'video'){
+                    if (track.kind === 'video') {
                         track.enabled = state;
                     }
                 })
@@ -277,19 +277,24 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
     const toggleScreenShare = useCallback(
         () => {
             if (screenShare) {
-               for (const userConnection of connections.current.values()) {
-                   userConnection.connection.getSenders().forEach(sender => {
-                       if (sender.track.kind === 'video') {
-                           sender.replaceTrack(localStream.current.getVideoTracks()[0]).then(r => {
-                               console.log(r);
-                           }).catch(err => {
-                               console.log(err);
-                           });
-                       }
-                   })
-               }
+                for (const userConnection of connections.current.values()) {
+                    userConnection.connection.getSenders().forEach(sender => {
+                        if (sender.track.kind === 'video') {
+                            sender.replaceTrack(localStream.current.getVideoTracks()[0]).then(r => {
+                                console.log(r);
+                            }).catch(err => {
+                                console.log(err);
+                            });
+                        }
+                    })
+                }
+                screenShareStream.current.getTracks().forEach(track => {
+                    track.stop();
+                })
+                screenShareStream.current = null;
+                setScreenShare(false);
             } else {
-                navigator.mediaDevices.getDisplayMedia({cursor:true}).then(stream => {
+                navigator.mediaDevices.getDisplayMedia({cursor: true}).then(stream => {
                     const screenTrack = stream.getTracks()[0];
                     screenShareStream.current = stream;
                     for (const userConnection of connections.current.values()) {
