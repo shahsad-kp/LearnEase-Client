@@ -34,7 +34,7 @@ export const PasswordField = (props) => {
                onMouseDown={toggleShowPassword}
                onMouseUp={toggleHidePassword}
                style={{paddingRight: ".75rem", outline: 'none', cursor: 'pointer'}}>
-                {showPassword ? <AiFillEyeInvisible/> : <AiFillEye/>}
+                {showPassword ? <AiFillEyeInvisible className={'text-grey-500'}/> : <AiFillEye className={'text-grey-500'}/>}
             </i>
         </div>
     )
