@@ -27,7 +27,7 @@ export const PasswordField = (props) => {
         <div className={bannerPageInputClass}
              style={{padding: 0, display: "flex", flexDirection: "row", alignItems: "center"}}>
             <input {...props} type={showPassword ? 'text' : 'password'}
-                   className={'w-full h-full focus:outline-0 bg-primary p-3 rounded-md'}/>
+                   className={'w-full h-full focus:outline-0 bg-primary dark:bg-dark-primary p-3 rounded-md'}/>
             <i onTouchStart={handleTouchStart}
                onTouchEnd={handleTouchEnd}
                onClick={(e) => e.preventDefault()}

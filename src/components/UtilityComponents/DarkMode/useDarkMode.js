@@ -1,15 +1,37 @@
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useState} from "react";
 
 export default function useDarkSide() {
-    const [theme, setTheme] = useState(localStorage.getItem('theme') || "dark");
-    const colorTheme = theme === "dark" ? "light" : "dark";
+    const [colorTheme, _setTheme] = useState(
+        localStorage.getItem('theme') ||
+        window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark': 'light'
+    );
 
-    useEffect(() => {
+    const setTheme = useCallback((theme) => {
         const root = window.document.documentElement;
-        root.classList.remove(colorTheme);
+        root.classList.remove(theme==='dark' ? 'light': 'dark');
         root.classList.add(theme);
         localStorage.setItem('theme', theme);
-    }, [theme, colorTheme]);
+        _setTheme(theme)
+    }, [])
+
+    useEffect(() => {
+        const changeColorScheme = () => {
+            const isDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            const newColorScheme = isDark ? 'light' : 'dark';
+            setTheme(newColorScheme)
+        }
+        window.matchMedia('(prefers-color-scheme: dark)').addEventListener(
+            'change',
+            changeColorScheme
+        );
+
+        return () => {
+            window.matchMedia('(prefers-color-scheme: dark)').removeEventListener(
+                'change',
+                changeColorScheme
+            );
+        }
+    }, [setTheme])
 
     return [colorTheme, setTheme]
 }

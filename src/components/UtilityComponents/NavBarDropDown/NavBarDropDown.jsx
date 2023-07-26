@@ -1,7 +1,7 @@
 import {RxAvatar} from "react-icons/rx";
 import {FiLogOut} from "react-icons/fi";
 import {useDispatch, useSelector} from "react-redux";
-import {useEffect, useState} from "react";
+import {useCallback, useEffect, useMemo, useState} from "react";
 import classNames from "classnames";
 import {logout} from "../../../redux/authSlice/authSlice.js";
 import {useNavigate} from "react-router-dom";
@@ -52,14 +52,19 @@ export const NavBarDropDown = () => {
     }, []);
 
     const [colorTheme, setTheme] = useDarkSide();
-    const [darkSide, setDarkSide] = useState(
-        colorTheme === "light"
-    );
 
-    const toggleDarkMode = (checked) => {
-        setTheme(colorTheme);
-        setDarkSide(checked);
-    };
+    const isDarkMode = useMemo(() => {
+        return colorTheme === 'dark';
+    }, [colorTheme])
+
+    const toggleTheme = useCallback((checked) => {
+        if (checked === undefined){
+            setTheme(!colorTheme)
+        }
+        else{
+            setTheme(checked ? 'dark' : 'light')
+        }
+    }, [colorTheme, setTheme]);
 
     return (
         <>
@@ -99,11 +104,11 @@ export const NavBarDropDown = () => {
                             </li>
                             <li
                                 className={dropDownItemsClasses}
-                                onClick={() => toggleDarkMode(!darkSide)}
+                                onClick={toggleTheme}
                             >
                                 <DarkModeSwitch
-                                    checked={darkSide}
-                                    onChange={toggleDarkMode}
+                                    checked={isDarkMode}
+                                    onChange={toggleTheme}
                                     size={15}
                                 />Change Theme
                             </li>

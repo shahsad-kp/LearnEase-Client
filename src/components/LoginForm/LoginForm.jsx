@@ -81,24 +81,24 @@ export const LoginForm = () => {
             <div className={'w-3/4'}>
                 <img src={LogoBanner} className={'object-cover'} alt={'Logo'}/>
             </div>
-            <h3 className={'font-semibold'}>Login to your Account</h3>
+            <h3 className={'font-semibold text-black dark:text-white'}>Login to your Account</h3>
             <form className={'flex flex-col items-center gap-2.5 w-3/4'}>
                 <InputField type={'email'} placeholder={'Email'} value={values.email}
                             onChange={updateEmail}/>
                 {errors.email && <ul>
-                    <li className={'text-danger-color font-serif text-xs'}>{errors.email}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{errors.email}</li>
                 </ul>}
                 <PasswordField value={values.password} onChange={updatePassword}
                                placeholder={'Password'}/>
                 {errors.password && <ul>
-                    <li className={'text-danger-color font-serif text-xs'}>{errors.password}</li>
+                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{errors.password}</li>
                 </ul>}
                 <button
                     className={bannerPageButtonClass}
                     onClick={handleSubmit}
                 >Login
                 </button>
-                <Link className={'italic'} to={'/register/'}>New here? Click here</Link>
+                <Link className={'italic text-black dark:text-white'} to={'/register/'}>New here? Click here</Link>
             </form>
         </section>
     )
