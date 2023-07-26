@@ -1,5 +1,5 @@
 import {BannerPage, HomeBody, HomeOutside, NavBar} from "../../components/";
-import bigBannerImage from '../../assets/banner-images/home-page-banner.jpg';
+import bigBannerImage from '../../assets/banner-images/home-page-banner.png';
 import smallBannerImage from '../../assets/banner-images/home-page-banner-small.jpg';
 import {useSelector} from "react-redux";
 

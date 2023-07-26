@@ -10,7 +10,7 @@ export const HomeOutside = () => {
             <div className={'w-3/4'}>
                 <img src={logoBanner} className={'object-cover'} alt={'Logo'}/>
             </div>
-            <p className={'text-center font-semibold italic'}>Welcome to Our Virtual Classroom! Experience seamless
+            <p className={'text-center font-semibold italic text-black dark:text-white'}>Welcome to Our Virtual Classroom! Experience seamless
                 online learning with our innovative platform. Connect, engage, and excel with interactive tools,
                 rich resources, and a supportive community of passionate learners.</p>
             <button className={bannerPageButtonClass}

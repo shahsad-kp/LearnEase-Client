@@ -1,7 +1,7 @@
 import {LazyImage} from "../UtilityComponents/LazyImage/LazyImage.jsx";
 import {DarkModeSwitch} from "react-toggle-dark-mode";
 import useDarkSide from "../UtilityComponents/DarkMode/useDarkMode.js";
-import {useCallback, useMemo} from "react";
+import {useMemo} from "react";
 
 // eslint-disable-next-line react/prop-types
 export const BannerPage = ({children, bigBanner, smallBanner, reverse}) => {
@@ -9,15 +9,7 @@ export const BannerPage = ({children, bigBanner, smallBanner, reverse}) => {
 
     const isDarkMode = useMemo(() => {
         return colorTheme === 'dark';
-    }, [colorTheme])
-
-    const toggleTheme = useCallback((checked) => {
-        if (checked === undefined) {
-            setTheme(!colorTheme)
-        } else {
-            setTheme(checked ? 'dark' : 'light')
-        }
-    }, [colorTheme, setTheme]);
+    }, [colorTheme]);
 
 
     return (<div
@@ -30,7 +22,7 @@ export const BannerPage = ({children, bigBanner, smallBanner, reverse}) => {
         {children}
         <DarkModeSwitch
             checked={isDarkMode}
-            onChange={toggleTheme}
+            onChange={checked => setTheme(checked ? 'dark' : 'light')}
             size={15}
             className={'absolute right-10 top-10'}
         />
