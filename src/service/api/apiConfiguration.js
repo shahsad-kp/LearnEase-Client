@@ -2,9 +2,8 @@ import axios from "axios";
 import {store} from "../../redux/store.js";
 import {logout} from "../../redux/authSlice/authSlice.js";
 
-
-const baseURL = 'https://learnease.tech/api/';
-const imageBaseURL = 'https://learnease.tech';
+const baseURL = import.meta.env.VITE_BACKEND_URL;
+const imageBaseURL = import.meta.env.VITE_IMAGE_BASE_URL;
 
 const axiosAuthorized = axios.create({
     baseURL: baseURL,

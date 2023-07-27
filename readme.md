@@ -39,8 +39,11 @@ git clone https://github.com/shahsad-kp/LearnEase-Client.git
 npm install
 ```
 
+#### 4 Environment Variables:
+- Refer [environment variables](https://github.com/shahsad-kp/LearnEase-Client#environment-variables) for setting up the required environment variables for the LearnEase frontend.
 
-#### 4 Start the Development Server (Frontend):
+
+#### 5 Start the Development Server (Frontend):
 - After the dependencies are installed, start the frontend development server by running the following command:
 ```bash
 npm run dev
@@ -53,7 +56,16 @@ Before deploying your application, make sure to set up the backend server on you
 For backend deployment, please refer to the backend repository for instructions and deployment guides:
 
 [LearnEase Backend Repository](https://github.com/shahsad-kp/LearnEase-Server)
-    
+
+## Environment Variables
+
+To run this project, you will need to add the following environment variables to your .env file and store it in the root directory of the project:
+
+`VITE_BACKEND_URL`
+
+`VITE_IMAGE_BASE_URL`
+
+
 ## Feedback
 
 If you have any feedback, please reach me at shahsadkpklr@gmail.com or connect me at [LinkedIn](https://www.linkedin.com/in/shahsad-kp/)
