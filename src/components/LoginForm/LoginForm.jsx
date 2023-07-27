@@ -1,9 +1,11 @@
 import {Link, useNavigate} from "react-router-dom";
 import {bannerPageButtonClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
-import {useState} from "react";
+import {useCallback, useContext, useMemo, useState} from "react";
 import {InputField, PasswordField} from "../";
 import {loginUser} from "../../service/api/user.js";
+import LogoBannerDark from "../../assets/logo/dark-logo-banner.png";
+import {themeCtx} from "../../store/themeCtx.jsx";
 
 export const LoginForm = () => {
     const [values, setValues] = useState({
@@ -11,6 +13,17 @@ export const LoginForm = () => {
         password: ''
     });
     const [errors, setErrors] = useState({});
+
+    const {colorTheme} = useContext(themeCtx);
+
+    const getLogo = useCallback((theme) => {
+        if (theme === 'dark') {
+            return LogoBannerDark;
+        } else {
+            return LogoBanner;
+        }
+    }, []);
+    const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
 
     const navigator = useNavigate()
 
@@ -79,7 +92,7 @@ export const LoginForm = () => {
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
             <div className={'w-3/4'}>
-                <img src={LogoBanner} className={'object-cover'} alt={'Logo'}/>
+                <img src={logo} className={'object-cover'} alt={'Logo'}/>
             </div>
             <h3 className={'font-semibold text-black dark:text-white'}>Login to your Account</h3>
             <form className={'flex flex-col items-center gap-2.5 w-3/4'}>

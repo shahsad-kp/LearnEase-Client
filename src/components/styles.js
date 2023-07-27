@@ -17,6 +17,8 @@ const bannerPageButtonClass = classNames(
 const bannerPageInputClass = classNames(
     'bg-primary',
     'dark:bg-dark-primary',
+    'text-black',
+    'dark:text-white',
     'h-10',
     'w-full',
     'rounded',

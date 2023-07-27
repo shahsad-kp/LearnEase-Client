@@ -1,19 +1,20 @@
 import {Link, useNavigate} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
-import {Fragment, useState} from "react";
+import {Fragment, useCallback, useContext, useMemo, useState} from "react";
 import {InputField, PasswordField, ProgressBar} from "../";
 import {registerUser} from "../../service/api/user.js";
+import {themeCtx} from "../../store/themeCtx.jsx";
+import LogoBannerDark from "../../assets/logo/dark-logo-banner.png";
 
 
 export const SignupForm = () => {
-    const passwordErrors = [
+    const passwordErrors = useMemo(() => [
         "Must be at least 8 characters long.",
         "Must contain at least one uppercase letter.",
         "Must contain at least one lowercase letter.",
         "Must contain at least one number."
-    ]
-
+    ], [])
     const [values, setValues] = useState({
         name: '',
         email: '',
@@ -22,10 +23,17 @@ export const SignupForm = () => {
     });
     const [error, setError] = useState({});
     const navigator = useNavigate();
-
+    const {colorTheme} = useContext(themeCtx)
+    const getLogo = useCallback((theme) => {
+        if (theme === 'dark') {
+            return LogoBannerDark;
+        } else {
+            return LogoBanner;
+        }
+    }, []);
+    const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
     const [passwordFocus, setPasswordFocus] = useState(false);
-
-    const validateName = (value) => {
+    const validateName = useCallback((value) => {
         if (value.trim() === '') {
             setError(prev => ({...prev, name: 'Name can\'t be empty..'}));
             return false;
@@ -33,11 +41,9 @@ export const SignupForm = () => {
             setError(prev => ({...prev, name: ''}));
             return true;
         }
-    }
-
-    const validateEmail = (value) => {
+    }, [])
+    const validateEmail = useCallback((value) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-
         if (regex.test(value)) {
             setError(prev => ({...prev, email: ''}));
             return true;
@@ -48,9 +54,8 @@ export const SignupForm = () => {
             setError(prev => ({...prev, email: 'Email is not valid..'}))
             return false;
         }
-    }
-
-    const validatePassword = (value) => {
+    }, [])
+    const validatePassword = useCallback((value) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         const errors = [];
         if (regex.test(value)) {
@@ -72,9 +77,9 @@ export const SignupForm = () => {
         setError(prev => ({...prev, password: errors}));
         return !(errors && errors.length > 0);
 
-    }
+    }, [passwordErrors])
 
-    const validateRepeatPassword = (value) => {
+    const validateRepeatPassword = useCallback((value) => {
         if (value !== values.password) {
             setError(prev => ({...prev, repeatPassword: 'Passwords don\'t match..'}));
             return false;
@@ -82,29 +87,29 @@ export const SignupForm = () => {
             setError(prev => ({...prev, repeatPassword: ''}));
             return true;
         }
-    }
+    }, [values.password])
 
-    const updateName = (event) => {
+    const updateName = useCallback((event) => {
         validateName(event.target.value);
         setValues(prev => ({...prev, name: event.target.value}));
-    }
+    }, [validateName])
 
-    const updateEmail = (event) => {
+    const updateEmail = useCallback((event) => {
         validateEmail(event.target.value);
         setValues(prev => ({...prev, email: event.target.value}));
-    }
+    }, [validateEmail])
 
-    const updatePassword = (event) => {
+    const updatePassword = useCallback((event) => {
         validatePassword(event.target.value);
         setValues(prev => ({...prev, password: event.target.value}));
-    }
+    }, [validatePassword])
 
-    const updateRepeatPassword = (event) => {
+    const updateRepeatPassword = useCallback((event) => {
         validateRepeatPassword(event.target.value);
         setValues(prev => ({...prev, repeatPassword: event.target.value}));
-    }
+    }, [validateRepeatPassword])
 
-    const handleSubmit = (event) => {
+    const handleSubmit = useCallback((event) => {
         event.preventDefault();
         if (!(validateName(values.name) &&
             validateEmail(values.email) &&
@@ -131,13 +136,20 @@ export const SignupForm = () => {
                 setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
         })
-    }
+    }, [
+        navigator,
+        validateEmail,
+        validateName,
+        validatePassword,
+        validateRepeatPassword,
+        values
+    ])
 
 
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
             <div className={'w-3/4'}>
-                <img src={LogoBanner} className={'object-cover'} alt={'Logo'}/>
+                <img src={logo} className={'object-cover'} alt={'Logo'}/>
             </div>
             <h3 className={'font-semibold text-black dark:text-white'}>Register now</h3>
             <form className={'flex flex-col items-center gap-2.5 w-3/4'} onSubmit={handleSubmit}>

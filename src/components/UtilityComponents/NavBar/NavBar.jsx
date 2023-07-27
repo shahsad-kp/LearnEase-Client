@@ -1,18 +1,31 @@
-import LogoSmall from '../../../assets/logo/logo-smaller.png'
 import {NavBarDropDown} from "../../";
 import {NavLink, useParams} from "react-router-dom";
 import {BsPersonVideo} from "react-icons/bs";
 import {TfiBlackboard} from "react-icons/tfi";
 import {IoBookOutline} from "react-icons/io5";
+import {useCallback, useContext, useMemo} from "react";
+import {themeCtx} from "../../../store/themeCtx.jsx";
+import LogoSmallDark from "../../../assets/logo/dark-logo-smaller.png";
+import LogoSmall from "../../../assets/logo/logo-smaller.png";
 
 // eslint-disable-next-line react/prop-types
 export const NavBar = ({navLinks}) => {
-    const {roomId} = useParams()
+    const {roomId} = useParams();
+    const {colorTheme} = useContext(themeCtx);
+
+    const getLogo = useCallback((theme) => {
+        if (theme === 'dark') {
+            return LogoSmallDark;
+        } else {
+            return LogoSmall;
+        }
+    }, []);
+    const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
 
     return (
         <nav className="flex flex-row h-14 justify-between bg-secondary dark:bg-dark-secondary shadow">
             <div className={'m-3 h-7 w-7'}>
-                <img src={LogoSmall} alt={'Logo'} className={'object-contain h-full'}/>
+                <img src={logo} alt={'Logo'} className={'object-contain h-full'}/>
             </div>
             {
                 navLinks &&

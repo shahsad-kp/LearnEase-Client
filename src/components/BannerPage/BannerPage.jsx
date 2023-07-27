@@ -1,16 +1,15 @@
 import {LazyImage} from "../UtilityComponents/LazyImage/LazyImage.jsx";
 import {DarkModeSwitch} from "react-toggle-dark-mode";
-import useDarkSide from "../UtilityComponents/DarkMode/useDarkMode.js";
-import {useMemo} from "react";
+import {useContext, useMemo} from "react";
+import {themeCtx} from "../../store/themeCtx.jsx";
 
 // eslint-disable-next-line react/prop-types
 export const BannerPage = ({children, bigBanner, smallBanner, reverse}) => {
-    const [colorTheme, setTheme] = useDarkSide();
+    const {colorTheme, setTheme} = useContext(themeCtx);
 
     const isDarkMode = useMemo(() => {
         return colorTheme === 'dark';
     }, [colorTheme]);
-
 
     return (<div
         className={

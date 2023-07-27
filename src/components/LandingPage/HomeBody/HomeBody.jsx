@@ -1,18 +1,18 @@
 import LogoBanner from '../../../assets/logo/logo-banner.png'
-import DarkLogoBanner from '../../../assets/logo/dark theme logo.svg'
+import DarkLogoBanner from '../../../assets/logo/dark-logo-banner.png'
 import {CreateRoomModal, InputField} from "../../";
 import {homePageButton} from "../../styles.js";
-import {useEffect, useMemo, useState} from "react";
+import {useContext, useEffect, useMemo, useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {getHistory} from "../../../service/api/classRoom.js";
-import useDarkSide from "../../UtilityComponents/DarkMode/useDarkMode.js";
+import {themeCtx} from "../../../store/themeCtx.jsx";
 
 export const HomeBody = () => {
     const [history, setHistory] = useState([]);
     const [createRoomModal, setCreateRoomModal] = useState(false);
     const [roomId, setRoomId] = useState('');
     const navigator = useNavigate();
-    const [theme, setTheme] = useDarkSide();
+    const {colorTheme} = useContext(themeCtx);
 
     useEffect(() => {
         getHistory().then(totalHistory => {
@@ -32,8 +32,8 @@ export const HomeBody = () => {
     }
 
     const image = useMemo(() => {
-        return theme === 'dark' ? DarkLogoBanner : LogoBanner;
-    }, [theme]);
+        return colorTheme === 'dark' ? DarkLogoBanner : LogoBanner;
+    }, [colorTheme]);
 
     return (
         <>
