@@ -17,6 +17,8 @@ export const WhiteboardPage = () => {
     const user = useSelector(state => state.auth.user)
     const whiteboard = useSelector(state => state.whiteboard.whiteboard);
     const whiteboardData = useContext(whiteboardCtx);
+    const isDrawing = useRef(false);
+    let previousPosition = useRef({x: 0, y: 0});
     const {
         sendWhiteboardToServer,
         sendClearToServer,
@@ -107,17 +109,15 @@ export const WhiteboardPage = () => {
 
     useEffect(() => {
         const canvas = canvasRef.current;
-        let isDrawing = false;
-        let previousPosition = {x: 0, y: 0};
 
         const startDrawing = (event) => {
-            isDrawing = true;
-            previousPosition = {x: event.offsetX, y: event.offsetY};
+            previousPosition.current = {x: event.offsetX, y: event.offsetY};
+            isDrawing.current = true;
         }
 
         const stopDrawing = () => {
-            isDrawing = false;
-            previousPosition = {x: 0, y: 0};
+            previousPosition.current = {x: 0, y: 0};
+            isDrawing.current = false;
         }
 
         const drawLine = (x0, y0, x1, y1, color, lineWidth) => {
@@ -138,13 +138,13 @@ export const WhiteboardPage = () => {
         }
 
         const draw = (event) => {
-            if (isDrawing) {
+            if (isDrawing.current) {
                 let line = null;
                 switch (whiteboard.tool.toLowerCase()) {
                     case 'pencil':
                         line = {
-                            x1: previousPosition.x,
-                            y1: previousPosition.y,
+                            x1: previousPosition.current.x,
+                            y1: previousPosition.current.y,
                             x2: event.offsetX,
                             y2: event.offsetY,
                             color: whiteboard.color,
@@ -154,8 +154,8 @@ export const WhiteboardPage = () => {
                         break;
                     case 'marker':
                         line = {
-                            x1: previousPosition.x,
-                            y1: previousPosition.y,
+                            x1: previousPosition.current.x,
+                            y1: previousPosition.current.y,
                             x2: event.offsetX,
                             y2: event.offsetY,
                             color: whiteboard.color,
@@ -164,8 +164,8 @@ export const WhiteboardPage = () => {
                         break;
                     case 'eraser':
                         line = {
-                            x1: previousPosition.x,
-                            y1: previousPosition.y,
+                            x1: previousPosition.current.x,
+                            y1: previousPosition.current.y,
                             x2: event.offsetX,
                             y2: event.offsetY,
                             color: 'white',
@@ -176,7 +176,7 @@ export const WhiteboardPage = () => {
                         break;
                 }
                 drawLine(line.x1, line.y1, line.x2, line.y2, line.color, line.width)
-                previousPosition = {x: event.offsetX, y: event.offsetY};
+                previousPosition.current = {x: event.offsetX, y: event.offsetY};
             }
         }
 
@@ -204,7 +204,7 @@ export const WhiteboardPage = () => {
             canvas.removeEventListener('mousedown', startDrawing);
             canvas.removeEventListener('mouseup', stopDrawing);
             canvas.removeEventListener('mouseout', stopDrawing);
-            canvas.removeEventListener('mousemove', throttle(draw, 100));
+            canvas.removeEventListener('mousemove', throttle(draw, 10));
         }
     }, [isLecturer, sendLineToServer, whiteboard.color, whiteboard.tool])
 
