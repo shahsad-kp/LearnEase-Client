@@ -16,6 +16,7 @@ export const WhiteboardPage = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom)
     const user = useSelector(state => state.auth.user)
     const whiteboard = useSelector(state => state.whiteboard.whiteboard);
+    console.log(whiteboard);
     const whiteboardData = useContext(whiteboardCtx);
     const isDrawing = useRef(false);
     let previousPosition = useRef({x: 0, y: 0});
@@ -201,12 +202,13 @@ export const WhiteboardPage = () => {
         canvas.addEventListener('mousemove', throttle(draw, 10));
 
         return () => {
+            console.log('remove event listener')
             canvas.removeEventListener('mousedown', startDrawing);
             canvas.removeEventListener('mouseup', stopDrawing);
             canvas.removeEventListener('mouseout', stopDrawing);
             canvas.removeEventListener('mousemove', throttle(draw, 10));
         }
-    }, [isLecturer, sendLineToServer, whiteboard.color, whiteboard.tool])
+    }, [isLecturer, sendLineToServer, whiteboard])
 
     const clearCanvas = useCallback(() => {
         contextRef.current.clearRect(0, 0, canvasRef.current.width, canvasRef.current.height);

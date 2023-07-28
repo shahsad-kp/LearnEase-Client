@@ -19,7 +19,6 @@ const whiteboardSlice = createSlice({
             }
         },
         changeTool: (state, payload) => {
-            console.log('payload')
             state.whiteboard.tool = payload.payload;
         },
         addLine: (state, payload) => {
@@ -27,6 +26,9 @@ const whiteboardSlice = createSlice({
         },
         clearLines: (state) => {
             state.whiteboard.pendingLines = [];
+        },
+        clearWhiteboardData: state => {
+            state.whiteboard = initialState.whiteboard;
         }
     }
 })
@@ -36,5 +38,6 @@ export const {
     changeTool,
     clearLines,
     addLine,
+    clearWhiteboardData
 } = whiteboardSlice.actions
 export default whiteboardSlice.reducer

@@ -7,6 +7,7 @@ import {getClassRoomData} from "../../service/api/classRoom.js";
 import {whiteboardCtx} from "../../store/whiteboardData.jsx";
 import {SocketsProvider} from "../../service/sockets/SocketsProvider.jsx";
 import {ClassRoomBody} from "../../components/RoomPage/RoomBody/RoomBody.jsx";
+import {clearWhiteboardData} from "../../redux/whiteboardSlice/whiteboardSlice.js";
 
 
 export const RoomPage = () => {
@@ -39,7 +40,8 @@ export const RoomPage = () => {
         }
         if (classRoom) document.title = classRoom.title;
         return () => {
-            dispatcher(leaveClassRoom())
+            dispatcher(leaveClassRoom());
+            dispatcher(clearWhiteboardData())
             whiteboardData.current = null;
             document.title = 'LearnEase';
         }
