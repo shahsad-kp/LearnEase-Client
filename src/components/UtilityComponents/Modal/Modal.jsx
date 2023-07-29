@@ -11,7 +11,6 @@ export const Modal = ({children, closeFunction, classNames, ...extra}) => {
         };
 
         window.addEventListener('mousedown', handleOutsideClick);
-
         return () => {
             window.removeEventListener('mousedown', handleOutsideClick);
         };

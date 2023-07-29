@@ -233,7 +233,6 @@ const VideoCallSocket = ({children, accessToken, roomId, setAccessToken}) => {
             if (gotLocalStream) {
                 localStream.current.getAudioTracks().forEach(track => {
                     if (track.kind === 'audio') {
-                        console.log(track)
                         track.enabled = state;
                     }
                 })
