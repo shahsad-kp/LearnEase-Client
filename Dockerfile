@@ -6,6 +6,8 @@ COPY . .
 RUN npm run build
 
 FROM nginx:1.25-alpine
-COPY --from=build /usr/src/app/dist /usr/share/nginx/html
+WORKDIR /usr/share/nginx/html
+RUN rm -rf ./*
+COPY --from=build /usr/src/app/dist/ .
 EXPOSE 8080
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
