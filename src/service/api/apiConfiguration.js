@@ -3,7 +3,6 @@ import {store} from "../../redux/store.js";
 import {logout} from "../../redux/authSlice/authSlice.js";
 
 const baseURL = import.meta.env.VITE_BACKEND_URL;
-const imageBaseURL = import.meta.env.VITE_IMAGE_BASE_URL;
 
 const axiosAuthorized = axios.create({
     baseURL: baseURL,
@@ -59,4 +58,4 @@ const refreshToken = async () => {
         return Promise.reject(e);
     }
 }
-export {axiosAuthorized, axiosInstance, imageBaseURL, refreshToken};
+export {axiosAuthorized, axiosInstance, refreshToken};

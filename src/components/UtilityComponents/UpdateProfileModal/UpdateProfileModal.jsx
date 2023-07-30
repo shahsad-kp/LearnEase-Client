@@ -2,7 +2,6 @@ import {Modal} from "../Modal/Modal.jsx";
 import {InputField} from "../InputFields/InputField.jsx";
 import {useCallback, useRef, useState} from "react";
 import {useSelector} from "react-redux";
-import {imageBaseURL} from "../../../service/api/apiConfiguration.js";
 import {homePageButton} from "../../styles.js";
 import {updateUserApi} from "../../../service/api/user.js";
 
@@ -112,7 +111,7 @@ export const UpdateProfileModal = ({closeFunction}) => {
                         src={
                             values.profilePicture ?
                                 URL.createObjectURL(values.profilePicture) :
-                                (imageBaseURL + user.profilePicture)
+                                user.profilePicture
                         }
                         onClick={() => {
                             profilePictureInput.current.click();

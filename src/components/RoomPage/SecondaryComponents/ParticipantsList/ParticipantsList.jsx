@@ -1,6 +1,5 @@
 import {useSelector} from "react-redux";
 import {Skeleton} from "@mui/material";
-import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
 
 export const ParticipantsList = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom)
@@ -53,7 +52,7 @@ export const ParticipantsList = () => {
                         className={'h-[40px] w-[40px] rounded-full'}
                     >
                         <img
-                            src={`${imageBaseURL}${classRoom.lecturer.profilePicture}`}
+                            src={classRoom.lecturer.profilePicture}
                             alt={'Lecturer Profile Image'}
                             className={'object-contain rounded-full'}
                         />
@@ -78,7 +77,7 @@ export const ParticipantsList = () => {
                             className={'h-[40px] w-[40px] rounded-full'}
                         >
                             <img
-                                src={`${imageBaseURL}${student.profilePicture}`}
+                                src={student.profilePicture}
                                 alt={'Lecturer Profile Image'}
                                 className={'object-contain rounded-full'}
                             />

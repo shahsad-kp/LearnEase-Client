@@ -4,7 +4,6 @@ import {useContext, useEffect, useMemo, useRef, useState} from "react";
 import {messageSocketContext} from "../../../../service/sockets/MessageSocket.jsx";
 import {getAllMessages} from "../../../../service/api/messages.js";
 import {setMessages} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
 
 export const Messages = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom);
@@ -76,7 +75,7 @@ export const Messages = () => {
                                     className={`flex w-full items-center gap-2 ${message.sender.isSelf? 'flex-row-reverse' : 'flex-row'}`}
                                 >
                                     <img
-                                        src={`${imageBaseURL}${message.sender.profilePicture}`}
+                                        src={message.sender.profilePicture}
                                         alt={''}
                                         className={'object-cover w-8 h-8 rounded-full'}
                                     />

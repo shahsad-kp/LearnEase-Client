@@ -5,7 +5,6 @@ import {useCallback, useContext, useEffect, useMemo, useState} from "react";
 import classNames from "classnames";
 import {logout} from "../../../redux/authSlice/authSlice.js";
 import {useNavigate} from "react-router-dom";
-import {imageBaseURL} from "../../../service/api/apiConfiguration.js";
 import {UpdateProfileModal} from "../UpdateProfileModal/UpdateProfileModal.jsx";
 import {DarkModeSwitch} from "react-toggle-dark-mode";
 import {themeCtx} from "../../../store/themeCtx.jsx";
@@ -76,7 +75,7 @@ export const NavBarDropDown = () => {
                     className={'h-full border-accent-color-one dark:border-dark-accent-color-one profile-picture cursor-pointer'}
                     onClick={() => setDrop(state => !state)}
                 >
-                    <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
+                    <img src={user ? user.profilePicture : ''} alt={'Profile'}
                          className={'object-cover h-full rounded-full border-accent-color-one dark:border-dark-accent-color-one'}/>
                 </div>
                 {drop &&
@@ -87,7 +86,7 @@ export const NavBarDropDown = () => {
                     >
                         <div className={'flex flex-row w-min justify-center gap-2.5 border border-primary dark:border-dark-primary shadow p-2.5 rounded m-2.5'}>
                             <div style={{width: '40px', height: '40px'}}>
-                                <img src={user ? `${imageBaseURL}${user.profilePicture}` : ''} alt={'Profile'}
+                                <img src={user ? user.profilePicture : ''} alt={'Profile'}
                                      className={'object-cover rounded h-full w-full border-accent-color-one dark:border-dark-accent-color-one'}/>
                             </div>
                             <div className={'w-max'}>

@@ -2,7 +2,6 @@ import {useDispatch, useSelector} from "react-redux";
 import {useEffect, useMemo} from "react";
 import {getAllActivities} from "../../../../service/api/activities.js";
 import {setActivities} from "../../../../redux/classRoomSlice/classRoomSlice.js";
-import {imageBaseURL} from "../../../../service/api/apiConfiguration.js";
 import {ProgressBar} from "../../../UtilityComponents/ProgressBar/ProgressBar.jsx";
 
 export const GradesPage = () => {
@@ -65,7 +64,7 @@ export const GradesPage = () => {
                             >
                                 <span className={'font-semibold'}>#{index+1}</span>
                                 <img
-                                    src={imageBaseURL + grade.profilePicture}
+                                    src={grade.profilePicture}
                                     alt={''}
                                     className={'object-cover w-8 h-8 rounded-full'}
                                 />
@@ -85,7 +84,7 @@ export const GradesPage = () => {
                             >
                                 <div className={'flex flex-row w-fit gap-2'}>
                                     <img
-                                        src={imageBaseURL + grade.profilePicture}
+                                        src={grade.profilePicture}
                                         alt={''}
                                         className={'object-cover w-8 h-8 rounded-full'}
                                     />
