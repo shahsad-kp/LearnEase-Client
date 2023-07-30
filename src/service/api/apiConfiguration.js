@@ -5,11 +5,11 @@ import {logout} from "../../redux/authSlice/authSlice.js";
 const baseURL = import.meta.env.VITE_BACKEND_URL;
 
 const axiosAuthorized = axios.create({
-    baseURL: baseURL,
+    baseURL: `https://${baseURL}/api/`,
 });
 
 const axiosInstance = axios.create({
-    baseURL: baseURL,
+    baseURL: `https://${baseURL}/api/`,
 });
 
 axiosAuthorized.interceptors.request.use((config) => {
