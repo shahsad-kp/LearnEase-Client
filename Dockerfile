@@ -1,8 +1,10 @@
-FROM node:16.15.1 AS build
+FROM node:20-alpine3.18 AS build
 WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
+ENV VITE_BACKEND_URL=https://api.learnease.tech/api/
+ENV VITE_IMAGE_BASE_URL=https://api.learnease.tech
 RUN npm run build
 
 FROM nginx:1.25-alpine
