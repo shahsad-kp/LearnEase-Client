@@ -39,7 +39,7 @@ export const TopicsPage = () => {
                 </div>
             </div>
             <div className={'w-full md:w-min md:flex-[1] flex h-min md:h-full'}>
-                <ul className={'w-max md:w-full h-min md:h-full md:bg-secondary md:dark:bg-dark-secondary md:shadow md:rounded flex flex-row gap-1'}>
+                <ul className={'w-max md:w-full h-min md:h-full md:bg-secondary md:dark:bg-dark-secondary md:shadow md:rounded flex flex-row md:flex-col gap-1'}>
                     {
                         topics.map((topic, index) => {
                             return (

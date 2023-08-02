@@ -62,7 +62,7 @@ export const GradesPage = () => {
                                 key={grade.id}
                                 className={'flex flex-row gap-2 items-center'}
                             >
-                                <span className={'font-semibold'}>#{index+1}</span>
+                                <span className={'font-semibold text-black dark:text-white'}>#{index+1}</span>
                                 <img
                                     src={grade.profilePicture}
                                     alt={''}
@@ -75,7 +75,7 @@ export const GradesPage = () => {
                 </div>
             </div>
             <div className={'w-full h-full flex-[4] overflow-x-auto'}>
-                <div className={'w-full h-full grid grid-rows-2 md:grid-cols-2 gap-2'}>
+                <div className={'w-full h-full md:h-min grid grid-rows-2 grid-cols-2 md:grid-rows-none md:grid-cols-2 gap-2'}>
                     {
                         grades.map(grade => (
                             <div
