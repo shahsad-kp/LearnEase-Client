@@ -16,7 +16,6 @@ export const WhiteboardPage = () => {
     const classRoom = useSelector(state => state.classRoom.classRoom)
     const user = useSelector(state => state.auth.user)
     const whiteboard = useSelector(state => state.whiteboard.whiteboard);
-    console.log(whiteboard);
     const whiteboardData = useContext(whiteboardCtx);
     const isDrawing = useRef(false);
     let previousPosition = useRef({x: 0, y: 0});
@@ -97,6 +96,7 @@ export const WhiteboardPage = () => {
             contextRef.current.strokeStyle = color
             contextRef.current.stroke()
         }
+
         for (let i = 0; i < whiteboard.pendingLines.length; i++) {
             const line = whiteboard.pendingLines[i];
             if (line.clear) {
@@ -200,6 +200,10 @@ export const WhiteboardPage = () => {
         canvas.addEventListener('mouseup', stopDrawing);
         canvas.addEventListener('mouseout', stopDrawing);
         canvas.addEventListener('mousemove', throttle(draw, 10));
+        canvas.addEventListener('touchstart', startDrawing);
+        canvas.addEventListener('touchend', stopDrawing);
+        canvas.addEventListener('touchcancel', stopDrawing);
+        canvas.addEventListener('touchmove', throttle(draw, 10));
 
         return () => {
             console.log('remove event listener')
@@ -207,6 +211,10 @@ export const WhiteboardPage = () => {
             canvas.removeEventListener('mouseup', stopDrawing);
             canvas.removeEventListener('mouseout', stopDrawing);
             canvas.removeEventListener('mousemove', throttle(draw, 10));
+            canvas.removeEventListener('touchstart', startDrawing);
+            canvas.removeEventListener('touchend', stopDrawing);
+            canvas.removeEventListener('touchcancel', stopDrawing);
+            canvas.removeEventListener('touchmove', throttle(draw, 10));
         }
     }, [isLecturer, sendLineToServer, whiteboard])
 

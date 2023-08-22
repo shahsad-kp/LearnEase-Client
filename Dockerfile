@@ -3,7 +3,8 @@ WORKDIR /usr/src/app
 COPY package*.json ./
 RUN npm install
 COPY . .
-ENV VITE_BACKEND_URL=learnease-backend.onrender.com
+ENV VITE_BACKEND_URL=https://learnease-backend.onrender.com
+ENV VITE_WEBSOCKET_URL=wss://learnease-backend.onrender.com
 RUN npm run build
 
 FROM nginx:1.25-alpine
