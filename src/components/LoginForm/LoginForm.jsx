@@ -13,7 +13,7 @@ export const LoginForm = () => {
         password: ''
     });
     const [errors, setErrors] = useState({});
-
+    const [logging, setLogging] = useState(false);
     const {colorTheme} = useContext(themeCtx);
 
     const getLogo = useCallback((theme) => {
@@ -33,6 +33,7 @@ export const LoginForm = () => {
             return
         }
 
+        setLogging(true);
         loginUser({email: values.email, password: values.password}).then(() => {
             navigator('/', {replace: true})
         }).catch(e => {
@@ -51,7 +52,9 @@ export const LoginForm = () => {
                 console.log(e)
                 setErrors(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
-        })
+        }).finally(() => {
+            setLogging(false);
+        });
     }
 
     const validateEmail = (value) => {
@@ -107,9 +110,10 @@ export const LoginForm = () => {
                     <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{errors.password}</li>
                 </ul>}
                 <button
-                    className={bannerPageButtonClass}
-                    onClick={handleSubmit}
-                >Login
+                    className={bannerPageButtonClass + (logging ? ' cursor-not-allowed' : '')}
+                    onClick={logging ? null : handleSubmit}
+                >
+                    {logging ? 'Logging in...' : 'Login'}
                 </button>
                 <Link className={'italic text-black dark:text-white'} to={'/register/'}>New here? Click here</Link>
             </form>

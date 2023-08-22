@@ -18,6 +18,7 @@ export const CreateRoomModal = ({closeFunction}) => {
     const [selectedTopicIdx, setSelectedTopicIdx] = useState(0);
     const topicsRef = useRef(null);
     const navigator = useNavigate();
+    const [creating, setCreating] = useState(false);
 
     const addNewTopic = (event) => {
         event.preventDefault();
@@ -86,12 +87,13 @@ export const CreateRoomModal = ({closeFunction}) => {
             setTopicError('At least one topic is required');
         }
 
+        setCreating(true)
         createClassRoom({
             title: roomName,
             topics: filteredTopics
         }).then(classRoomData =>
             navigator(`/${classRoomData.id}/room/`)
-        ).catch()
+        ).catch().finally(() => setCreating(false))
     }
 
     useEffect(() => {
@@ -177,9 +179,10 @@ export const CreateRoomModal = ({closeFunction}) => {
                         <li className={'text-danger-color font-serif text-xs'}>{topicError}</li>
                     </ul>}
                     <button
-                        className={homePageButton + ' !w-full'}
-                        onClick={handleSubmit}
-                    >Create Classroom
+                        className={homePageButton + ' !w-full' + (creating ? ' cursor-not-allowed' : '')}
+                        onClick={creating ? null : handleSubmit}
+                    >
+                        {creating ? 'Creating...' : 'Create class room'}
                     </button>
                 </form>
             </div>
