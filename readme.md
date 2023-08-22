@@ -63,7 +63,7 @@ To run this project, you will need to add the following environment variables to
 
 `VITE_BACKEND_URL`
 
-`VITE_IMAGE_BASE_URL`
+`VITE_WEBSOCKET_URL`
 
 
 ## Feedback

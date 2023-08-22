@@ -9,17 +9,9 @@ import LogoBannerDark from "../../assets/logo/dark-logo-banner.png";
 
 
 export const SignupForm = () => {
-    const passwordErrors = useMemo(() => [
-        "Must be at least 8 characters long.",
-        "Must contain at least one uppercase letter.",
-        "Must contain at least one lowercase letter.",
-        "Must contain at least one number."
-    ], [])
+    const passwordErrors = useMemo(() => ["Must be at least 8 characters long.", "Must contain at least one uppercase letter.", "Must contain at least one lowercase letter.", "Must contain at least one number."], [])
     const [values, setValues] = useState({
-        name: '',
-        email: '',
-        password: '',
-        repeatPassword: ''
+        name: '', email: '', password: '', repeatPassword: ''
     });
     const [error, setError] = useState({});
     const navigator = useNavigate();
@@ -33,6 +25,8 @@ export const SignupForm = () => {
     }, []);
     const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
     const [passwordFocus, setPasswordFocus] = useState(false);
+    const [registering, setRegistering] = useState(false);
+
     const validateName = useCallback((value) => {
         if (value.trim() === '') {
             setError(prev => ({...prev, name: 'Name can\'t be empty..'}));
@@ -111,15 +105,14 @@ export const SignupForm = () => {
 
     const handleSubmit = useCallback((event) => {
         event.preventDefault();
-        if (!(validateName(values.name) &&
-            validateEmail(values.email) &&
-            validatePassword(values.password) &&
-            validateRepeatPassword(values.repeatPassword))) {
+        if (!(validateName(values.name) && validateEmail(values.email) && validatePassword(values.password) && validateRepeatPassword(values.repeatPassword))) {
             return;
         }
-        registerUser({name: values.name, email: values.email, password: values.password}).then(
-            () => navigator('/', {replace: true})
-        ).catch(e => {
+
+        setRegistering(true);
+        registerUser({
+            name: values.name, email: values.email, password: values.password
+        }).then(() => navigator('/', {replace: true})).catch(e => {
             if (e.response.status === 401) {
                 setError(prev => ({...prev, password: e.response.data.detail}));
             } else if (e.response.status === 400) {
@@ -135,78 +128,72 @@ export const SignupForm = () => {
             } else {
                 setError(prevState => ({...prevState, password: 'Unknown error occurred...'}))
             }
-        })
-    }, [
-        navigator,
-        validateEmail,
-        validateName,
-        validatePassword,
-        validateRepeatPassword,
-        values
-    ])
+        }).finally(() => {
+            setRegistering(false);
+        });
+
+    }, [navigator, validateEmail, validateName, validatePassword, validateRepeatPassword, values])
 
 
-    return (
-        <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
-            <div className={'w-3/4'}>
-                <img src={logo} className={'object-cover'} alt={'Logo'}/>
-            </div>
-            <h3 className={'font-semibold text-black dark:text-white'}>Register now</h3>
-            <form className={'flex flex-col items-center gap-2.5 w-3/4'} onSubmit={handleSubmit}>
-                <InputField type={'text'}
-                            className={bannerPageInputClass}
-                            placeholder={'Name'}
-                            value={values.name}
-                            onChange={updateName}/>
-                {error.name && <ul>
-                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.name}</li>
-                </ul>}
-                <InputField type={'email'}
-                            className={bannerPageInputClass}
-                            placeholder={'Email'}
-                            value={values.email}
-                            onChange={updateEmail}/>
-                {error.email && <ul>
-                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.email}</li>
-                </ul>}
-                <PasswordField placeholder={'Password'}
-                               value={values.password}
-                               onFocus={() => {
-                                   setPasswordFocus(true);
-                               }}
-                               onBlur={() => setPasswordFocus(false)}
-                               onChange={updatePassword}/>
-                {
-                    (passwordFocus && (error.password && error.password.length > 0) && values.password !== '') &&
-                    <Fragment>
-                        <ProgressBar className={'max-w-[60%]'} current={4 - error.password.length} max={4}/>
-                    </Fragment>
-                }
-                {
-                    (error.password && error.password.length > 0) && <ul style={{listStyleType: 'none', padding: 0}}>
-                        {
-                            error.password.map((error, index) => {
-                                    return <li key={index} className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>
-                                        {error}
-                                    </li>
-                                }
-                            )
-                        }
-                    </ul>
-                }
-                <PasswordField placeholder={'Repeat Password'}
-                               value={values.repeatPassword}
-                               onChange={updateRepeatPassword}/>
-                {error.repeatPassword && <ul>
-                    <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.repeatPassword}</li>
-                </ul>}
+    return (<section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
+        <div className={'w-3/4'}>
+            <img src={logo} className={'object-cover'} alt={'Logo'}/>
+        </div>
+        <h3 className={'font-semibold text-black dark:text-white'}>Register now</h3>
+        <form className={'flex flex-col items-center gap-2.5 w-3/4'} onSubmit={registering ? null : handleSubmit}>
+            <InputField
+                type={'text'}
+                className={bannerPageInputClass}
+                placeholder={'Name'}
+                value={values.name}
+                onChange={updateName}/>
+            {error.name && <ul>
+                <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.name}</li>
+            </ul>}
+            <InputField
+                type={'email'}
+                className={bannerPageInputClass}
+                placeholder={'Email'}
+                value={values.email}
+                onChange={updateEmail}/>
+            {error.email && <ul>
+                <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.email}</li>
+            </ul>}
+            <PasswordField
+                placeholder={'Password'}
+                value={values.password}
+                onFocus={() => {
+                    setPasswordFocus(true);
+                }}
+                onBlur={() => setPasswordFocus(false)}
+                onChange={updatePassword}/>
+            {(passwordFocus && (error.password && error.password.length > 0) && values.password !== '') && <Fragment>
+                <ProgressBar className={'max-w-[60%]'} current={4 - error.password.length} max={4}/>
+            </Fragment>}
+            {(error.password && error.password.length > 0) && <ul style={{listStyleType: 'none', padding: 0}}>
+                {error.password.map((error, index) => {
+                    return <li key={index}
+                               className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>
+                        {error}
+                    </li>
+                })}
+            </ul>}
+            <PasswordField
+                placeholder={'Repeat Password'}
+                value={values.repeatPassword}
+                onChange={updateRepeatPassword}
+            />
+            {error.repeatPassword && <ul>
+                <li className={'text-danger-color dark:text-dark-danger-color font-serif text-xs'}>{error.repeatPassword}</li>
+            </ul>}
 
-                <button
-                    className={bannerPageButtonClass}
-                >Signup
-                </button>
-                <Link className={'italic text-black dark:text-white'} to={'/login/'}>Already have account? Click here</Link>
-            </form>
-        </section>
-    )
+            <button
+                className={bannerPageButtonClass + (registering ? ' cursor-not-allowed' : '')}
+            >
+                {registering ? 'Registering...' : 'Register'}
+            </button>
+            <Link className={'italic text-black dark:text-white'} to={'/login/'}>Already have account? Click
+                here</Link>
+        </form>
+    </section>)
 }

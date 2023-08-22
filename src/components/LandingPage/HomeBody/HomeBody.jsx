@@ -13,6 +13,7 @@ export const HomeBody = () => {
     const [roomId, setRoomId] = useState('');
     const navigator = useNavigate();
     const {colorTheme} = useContext(themeCtx);
+    const [joining, setJoining] = useState(false);
 
     useEffect(() => {
         getHistory().then(totalHistory => {
@@ -28,6 +29,7 @@ export const HomeBody = () => {
     const joinClassroom = (event) => {
         event.preventDefault();
         if (!roomId) return;
+        setJoining(true);
         navigator(`/${roomId}/room/`);
     }
 
@@ -50,20 +52,21 @@ export const HomeBody = () => {
                                     placeholder={'Enter room id'}
                                     classNames={'md:max-w-xs !max-w-full font-mono text-black dark:text-white'}
                                     value={roomId}
-                                    onChange={(e) => setRoomId(e.target.value)
-                                    }
+                                    onChange={(e) => setRoomId(e.target.value)}
                                 />
                                 <button
-                                    className={homePageButton}
+                                    className={homePageButton + (joining ? ' cursor-not-allowed' : '')}
                                     onClick={joinClassroom}
-                                >Join
+                                >
+                                    {joining ? 'Joining...' : 'Join'}
                                 </button>
                             </div>
                             <div>
                                 <button
                                     className={homePageButton + ' !w-full'}
                                     onClick={() => setCreateRoomModal(true)}
-                                >Create Room
+                                >
+                                    Create Room
                                 </button>
                             </div>
                         </div>
