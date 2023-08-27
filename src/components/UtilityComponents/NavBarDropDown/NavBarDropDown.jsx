@@ -8,6 +8,7 @@ import {useNavigate} from "react-router-dom";
 import {UpdateProfileModal} from "../UpdateProfileModal/UpdateProfileModal.jsx";
 import {DarkModeSwitch} from "react-toggle-dark-mode";
 import {themeCtx} from "../../../store/themeCtx.jsx";
+import {CgDanger} from "react-icons/cg";
 
 export const NavBarDropDown = () => {
     const user = useSelector(state => state.auth.user)
@@ -92,6 +93,12 @@ export const NavBarDropDown = () => {
                             <div className={'w-max'}>
                                 <p className={'text-sm font-thin text-dark dark:text-white'}>Logined as</p>
                                 <p className={'text-sm font-semibold text-dark dark:text-white'}>{user ? user.name : 'User'}</p>
+                                {!user.isVerified &&
+                                    <div className={'flex flex-row gap-1 text-danger-color dark:text-dark-danger-color'}>
+                                        <CgDanger/>
+                                        <p className={'text-xs font-thin text-danger-color dark:text-dark-danger-color'}>Not Verified</p>
+                                    </div>
+                                }
                             </div>
                         </div>
                         <ul className={'w-full flex flex-col'}>

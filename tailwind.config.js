@@ -15,7 +15,7 @@ export default {
                 'logo-yellow': '#FCBD02',
                 'danger-color': '#FF6C6C',
 
-// Dark Mode Colors (Darker Versions)
+                // Dark Mode Colors (Darker Versions)
                 'dark-primary': 'rgba(45, 55, 64, 0.98)', // Brighter blueish color
                 'dark-secondary': 'rgb(30, 30, 30)', // Brighter blackish color for the secondary background
                 'dark-accent-color-one': 'rgba(25, 90, 85, 0.5)', // Brighter teal color
