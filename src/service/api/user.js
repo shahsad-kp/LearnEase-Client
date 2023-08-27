@@ -43,4 +43,14 @@ const updateUserApi = async (data) => {
     }
 }
 
-export {loginUser, registerUser, updateUserApi};
+const verifyEmail = async (token) => {
+    try{
+        const response = await axiosAuthorized.get(`/auth/verify/${token}/`, {token});
+        return await Promise.resolve(response);
+    }
+    catch(error){
+        return await Promise.reject(error);
+    }
+}
+
+export {loginUser, registerUser, updateUserApi, verifyEmail};
