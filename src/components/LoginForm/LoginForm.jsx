@@ -61,7 +61,7 @@ export const LoginForm = () => {
         }).finally(() => {
             setLogging(false);
         });
-    }, [values.email, values.password, navigator, location.state?.from])
+    }, [validateEmail, validatePassword, values.email, values.password, navigator, location.state?.from])
 
     const validateEmail = useCallback((value) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
