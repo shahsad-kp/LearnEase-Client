@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import {bannerPageButtonClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {useCallback, useContext, useMemo, useState} from "react";
@@ -25,9 +25,10 @@ export const LoginForm = () => {
     }, []);
     const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
 
-    const navigator = useNavigate()
+    const navigator = useNavigate();
+    const location = useLocation();
 
-    const handleSubmit = (event) => {
+    const handleSubmit = useCallback((event) => {
         event.preventDefault();
         if (!(validateEmail(values.email) && validatePassword(values.password))) {
             return
@@ -35,7 +36,12 @@ export const LoginForm = () => {
 
         setLogging(true);
         loginUser({email: values.email, password: values.password}).then(() => {
-            navigator('/', {replace: true})
+            if (location.state?.from) {
+                navigator(location.state.from, {replace: true});
+            }
+            else{
+                navigator('/', {replace: true});
+            }
         }).catch(e => {
             if (e.response.status === 401) {
                 setErrors(prev => ({...prev, password: e.response.data.detail}));
@@ -55,9 +61,9 @@ export const LoginForm = () => {
         }).finally(() => {
             setLogging(false);
         });
-    }
+    }, [values.email, values.password, navigator, location.state?.from])
 
-    const validateEmail = (value) => {
+    const validateEmail = useCallback((value) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
 
         if (regex.test(value)) {
@@ -70,9 +76,9 @@ export const LoginForm = () => {
             setErrors(prev => ({...prev, email: 'Email is not valid..'}));
             return false;
         }
-    }
+    }, []);
 
-    const validatePassword = (value) => {
+    const validatePassword = useCallback((value) => {
         if (value.trim() === '') {
             setErrors(prev => ({...prev, password: 'Password can\'t be empty..'}));
             return false;
@@ -80,17 +86,17 @@ export const LoginForm = () => {
             setErrors(prev => ({...prev, password: ''}));
             return true;
         }
-    }
+    }, []);
 
-    const updateEmail = (event) => {
+    const updateEmail = useCallback((event) => {
         validateEmail(event.target.value);
         setValues(prev => ({...prev, email: event.target.value}));
-    }
+    }, [validateEmail]);
 
-    const updatePassword = (event) => {
+    const updatePassword = useCallback((event) => {
         validatePassword(event.target.value);
         setValues(prev => ({...prev, password: event.target.value}));
-    }
+    }, [validatePassword]);
 
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
@@ -115,7 +121,11 @@ export const LoginForm = () => {
                 >
                     {logging ? 'Logging in...' : 'Login'}
                 </button>
-                <Link className={'italic text-black dark:text-white'} to={'/register/'}>New here? Click here</Link>
+                <Link
+                    className={'italic text-black dark:text-white'}
+                    to={'/register/'}
+                    state={location.state}
+                >New here? Click here</Link>
             </form>
         </section>
     )

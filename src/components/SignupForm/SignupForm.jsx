@@ -1,4 +1,4 @@
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useLocation} from "react-router-dom";
 import {bannerPageButtonClass, bannerPageInputClass} from "../styles.js";
 import LogoBanner from '../../assets/logo/logo-banner.png'
 import {Fragment, useCallback, useContext, useMemo, useState} from "react";
@@ -26,6 +26,7 @@ export const SignupForm = () => {
     const logo = useMemo(() => getLogo(colorTheme), [colorTheme, getLogo]);
     const [passwordFocus, setPasswordFocus] = useState(false);
     const [registering, setRegistering] = useState(false);
+    const location = useLocation();
 
     const validateName = useCallback((value) => {
         if (value.trim() === '') {
@@ -35,7 +36,8 @@ export const SignupForm = () => {
             setError(prev => ({...prev, name: ''}));
             return true;
         }
-    }, [])
+    }, []);
+
     const validateEmail = useCallback((value) => {
         const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
         if (regex.test(value)) {
@@ -48,7 +50,8 @@ export const SignupForm = () => {
             setError(prev => ({...prev, email: 'Email is not valid..'}))
             return false;
         }
-    }, [])
+    }, []);
+
     const validatePassword = useCallback((value) => {
         const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/;
         const errors = [];
@@ -71,7 +74,7 @@ export const SignupForm = () => {
         setError(prev => ({...prev, password: errors}));
         return !(errors && errors.length > 0);
 
-    }, [passwordErrors])
+    }, [passwordErrors]);
 
     const validateRepeatPassword = useCallback((value) => {
         if (value !== values.password) {
@@ -81,27 +84,27 @@ export const SignupForm = () => {
             setError(prev => ({...prev, repeatPassword: ''}));
             return true;
         }
-    }, [values.password])
+    }, [values.password]);
 
     const updateName = useCallback((event) => {
         validateName(event.target.value);
         setValues(prev => ({...prev, name: event.target.value}));
-    }, [validateName])
+    }, [validateName]);
 
     const updateEmail = useCallback((event) => {
         validateEmail(event.target.value);
         setValues(prev => ({...prev, email: event.target.value}));
-    }, [validateEmail])
+    }, [validateEmail]);
 
     const updatePassword = useCallback((event) => {
         validatePassword(event.target.value);
         setValues(prev => ({...prev, password: event.target.value}));
-    }, [validatePassword])
+    }, [validatePassword]);
 
     const updateRepeatPassword = useCallback((event) => {
         validateRepeatPassword(event.target.value);
         setValues(prev => ({...prev, repeatPassword: event.target.value}));
-    }, [validateRepeatPassword])
+    }, [validateRepeatPassword]);
 
     const handleSubmit = useCallback((event) => {
         event.preventDefault();
@@ -112,7 +115,13 @@ export const SignupForm = () => {
         setRegistering(true);
         registerUser({
             name: values.name, email: values.email, password: values.password
-        }).then(() => navigator('/', {replace: true})).catch(e => {
+        }).then(() => {
+            if (location.state && location.state.from) {
+                navigator(location.state.from, {replace: true});
+            } else {
+                navigator('/', {replace: true});
+            }
+        }).catch(e => {
             if (e.response.status === 401) {
                 setError(prev => ({...prev, password: e.response.data.detail}));
             } else if (e.response.status === 400) {
@@ -132,7 +141,7 @@ export const SignupForm = () => {
             setRegistering(false);
         });
 
-    }, [navigator, validateEmail, validateName, validatePassword, validateRepeatPassword, values])
+    }, [location.state, navigator, validateEmail, validateName, validatePassword, validateRepeatPassword, values]);
 
 
     return (<section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
@@ -192,8 +201,11 @@ export const SignupForm = () => {
             >
                 {registering ? 'Registering...' : 'Register'}
             </button>
-            <Link className={'italic text-black dark:text-white'} to={'/login/'}>Already have account? Click
-                here</Link>
+            <Link
+                className={'italic text-black dark:text-white'}
+                to={'/login/'}
+                state={location.state}
+            >Already have account? Click here</Link>
         </form>
     </section>)
 }
