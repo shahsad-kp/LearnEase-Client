@@ -28,6 +28,41 @@ export const LoginForm = () => {
     const navigator = useNavigate();
     const location = useLocation();
 
+    const validateEmail = useCallback((value) => {
+        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
+
+        if (regex.test(value)) {
+            setErrors(prev => ({...prev, email: ''}));
+            return true;
+        } else if (value.trim() === '') {
+            setErrors(prev => ({...prev, email: 'Email can\'t be empty..'}));
+            return false;
+        } else {
+            setErrors(prev => ({...prev, email: 'Email is not valid..'}));
+            return false;
+        }
+    }, []);
+
+    const validatePassword = useCallback((value) => {
+        if (value.trim() === '') {
+            setErrors(prev => ({...prev, password: 'Password can\'t be empty..'}));
+            return false;
+        } else {
+            setErrors(prev => ({...prev, password: ''}));
+            return true;
+        }
+    }, []);
+
+    const updateEmail = useCallback((event) => {
+        validateEmail(event.target.value);
+        setValues(prev => ({...prev, email: event.target.value}));
+    }, [validateEmail]);
+
+    const updatePassword = useCallback((event) => {
+        validatePassword(event.target.value);
+        setValues(prev => ({...prev, password: event.target.value}));
+    }, [validatePassword]);
+
     const handleSubmit = useCallback((event) => {
         event.preventDefault();
         if (!(validateEmail(values.email) && validatePassword(values.password))) {
@@ -63,40 +98,6 @@ export const LoginForm = () => {
         });
     }, [validateEmail, validatePassword, values.email, values.password, navigator, location.state?.from])
 
-    const validateEmail = useCallback((value) => {
-        const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/i;
-
-        if (regex.test(value)) {
-            setErrors(prev => ({...prev, email: ''}));
-            return true;
-        } else if (value.trim() === '') {
-            setErrors(prev => ({...prev, email: 'Email can\'t be empty..'}));
-            return false;
-        } else {
-            setErrors(prev => ({...prev, email: 'Email is not valid..'}));
-            return false;
-        }
-    }, []);
-
-    const validatePassword = useCallback((value) => {
-        if (value.trim() === '') {
-            setErrors(prev => ({...prev, password: 'Password can\'t be empty..'}));
-            return false;
-        } else {
-            setErrors(prev => ({...prev, password: ''}));
-            return true;
-        }
-    }, []);
-
-    const updateEmail = useCallback((event) => {
-        validateEmail(event.target.value);
-        setValues(prev => ({...prev, email: event.target.value}));
-    }, [validateEmail]);
-
-    const updatePassword = useCallback((event) => {
-        validatePassword(event.target.value);
-        setValues(prev => ({...prev, password: event.target.value}));
-    }, [validatePassword]);
 
     return (
         <section className={'w-full md:w-2/4 flex flex-col justify-center items-center gap-2.5 p-2 md:p-8'}>
