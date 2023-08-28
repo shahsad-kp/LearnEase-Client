@@ -1,19 +1,23 @@
 import {useEffect, useState} from "react";
 import {useParams} from "react-router-dom";
 import {verifyEmail} from "../../service/api/user.js";
+import {useDispatch} from "react-redux";
 import BannerImage from "../../assets/banner-images/verify-email.png"
+import {emailVerified} from "../../redux/authSlice/authSlice.js";
 
 export const VerifyEmailPage = () => {
     const {token} = useParams();
     const [status, setStatus] = useState("error");
+    const dispatch = useDispatch();
 
     useEffect(() => {
         verifyEmail(token).then(() => {
+            dispatch(emailVerified())
             setStatus("success");
         }).catch(() => {
             setStatus("error");
         });
-    }, [token]);
+    }, [token, dispatch]);
 
     return (
         <div className={'min-h-[100vh] min-w-[100vw] h-fit w-fit flex justify-center items-center bg-primary'}>
